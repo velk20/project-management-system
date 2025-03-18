@@ -32,7 +32,7 @@ public class TasksController {
 
     @GetMapping("/{taskId}")
     @Operation(summary = "Get task by id")
-    public ResponseEntity<?> getTicket(@Parameter(description = "ID of the task") @PathVariable Long taskId) {
+    public ResponseEntity<?> getTaskById(@Parameter(description = "ID of the task") @PathVariable Long taskId) {
         TaskDTO taskDTO = taskService.getTaskByID(taskId);
 
         return AppResponseUtil.success()
@@ -43,10 +43,10 @@ public class TasksController {
     @GetMapping
     @Operation(summary = "Get all tasks")
     public ResponseEntity<?> getAllTasks() {
-        List<TaskDTO> tickets = taskService.getAllTasks();
+        List<TaskDTO> tasks = taskService.getAllTasks();
 
         return AppResponseUtil.success()
-                .withData(tickets)
+                .withData(tasks)
                 .build();
     }
 

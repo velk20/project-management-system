@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 public @interface ValidateTaskType {
     TaskType[] anyOf();
 
-    String message() default "Invalid Ticket Type, must be any of {anyOf}";
+    String message() default "Invalid Task Type, must be any of {anyOf}";
 
     Class<?>[] groups() default {};
 
