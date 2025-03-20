@@ -11,5 +11,7 @@ public class UserPrincipalUtil {
         if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails userDetails) {
             return userDetails.getId();
         }
+
+        return null;
     }
 }

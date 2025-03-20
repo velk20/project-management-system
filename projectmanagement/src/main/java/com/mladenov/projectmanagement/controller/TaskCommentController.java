@@ -65,7 +65,7 @@ public class TaskCommentController {
                 .build();
     }
 
-    @PutMapping("{/commentId}")
+    @PutMapping("/{commentId}")
     @Operation(summary = "Update task comment")
     public ResponseEntity<?> updateTaskComment(@Parameter(description = "ID of the task") @PathVariable Long taskId,
                                                @Parameter(description = "Comment ID of the task") @PathVariable Long commentId,
@@ -90,7 +90,7 @@ public class TaskCommentController {
                 .build();
     }
 
-    @DeleteMapping("{/commentId}")
+    @DeleteMapping("/{commentId}")
     @Operation(summary = "Delete task comment")
     public ResponseEntity<?> deleteTaskComment(@Parameter(description = "ID of the task") @PathVariable Long taskId,
                                                @Parameter(description = "Comment ID of the task") @PathVariable Long commentId){

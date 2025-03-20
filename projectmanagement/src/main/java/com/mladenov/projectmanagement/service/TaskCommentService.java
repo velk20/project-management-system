@@ -1,15 +1,13 @@
 package com.mladenov.projectmanagement.service;
 
-import com.mladenov.projectmanagement.auth.service.CustomUserDetails;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.task.TaskCommentDTO;
 import com.mladenov.projectmanagement.model.entity.TaskCommentEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.repository.TaskCommentRepository;
+import com.mladenov.projectmanagement.repository.TaskRepository;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,19 +18,23 @@ import java.util.stream.Collectors;
 @Service
 public class TaskCommentService {
     private final TaskCommentRepository taskCommentRepository;
-    private final TaskService taskService;
+    private final TaskRepository taskRepository;
     private final UserService userService;
 
-    public TaskCommentService(TaskCommentRepository taskCommentRepository, TaskService taskService, UserService userService) {
+    public TaskCommentService(TaskCommentRepository taskCommentRepository, TaskRepository taskRepository, UserService userService) {
         this.taskCommentRepository = taskCommentRepository;
-        this.taskService = taskService;
+        this.taskRepository = taskRepository;
         this.userService = userService;
     }
 
     public List<TaskCommentDTO> getTaskComments(Long taskId) {
-        TaskEntity task = taskService.getTaskEntityById(taskId);
+        TaskEntity task = getTaskEntity(taskId);
         List<TaskCommentEntity> taskComments = taskCommentRepository.findAllByTask(task);
         return taskComments.stream().map(this::mapCommentToDTO).collect(Collectors.toList());
+    }
+
+    private TaskEntity getTaskEntity(Long taskId) {
+        return taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task not found"));
     }
 
     private TaskCommentDTO mapCommentToDTO(TaskCommentEntity taskCommentEntity) {
@@ -46,7 +48,7 @@ public class TaskCommentService {
     }
 
     public TaskCommentDTO createTaskComment(Long taskId, TaskCommentDTO taskCommentDTO) {
-        TaskEntity taskEntity = taskService.getTaskEntityById(taskId);
+        TaskEntity taskEntity = getTaskEntity(taskId);
         UserEntity authorEntity = userService.getById(taskCommentDTO.getAuthorId());
 
         TaskCommentEntity taskCommentEntity = new TaskCommentEntity(taskEntity,
@@ -59,7 +61,7 @@ public class TaskCommentService {
     }
 
     public TaskCommentDTO updateTaskComment(Long taskId, Long commentId, TaskCommentDTO taskCommentDTO) {
-        TaskEntity taskEntity = taskService.getTaskEntityById(taskId);
+        TaskEntity taskEntity = getTaskEntity(taskId);
         UserEntity authorEntity = userService.getById(taskCommentDTO.getAuthorId());
         TaskCommentEntity taskComment = getTaskCommentEntityById(commentId);
 
@@ -84,7 +86,7 @@ public class TaskCommentService {
     }
 
     public void deleteTaskComment(Long taskId, Long commentId) {
-        TaskEntity taskEntity = taskService.getTaskEntityById(taskId);
+        TaskEntity taskEntity = getTaskEntity(taskId);
         TaskCommentEntity taskComment = getTaskCommentEntityById(commentId);
 
         if (!Objects.equals(taskComment.getTask().getId(), taskEntity.getId())) {

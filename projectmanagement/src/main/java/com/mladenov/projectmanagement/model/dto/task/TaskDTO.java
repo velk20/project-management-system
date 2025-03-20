@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,9 +25,8 @@ public class TaskDTO {
     private TaskType type;
     @NotNull(message = "creatorId is required.")
     private Long creatorId;
-
     private Long assigneeId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    private List<TaskCommentDTO> comments;
 }

@@ -1,13 +1,13 @@
 package com.mladenov.projectmanagement.service;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
+import com.mladenov.projectmanagement.model.dto.task.TaskCommentDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.enums.TaskStatus;
 import com.mladenov.projectmanagement.repository.TaskRepository;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
-import org.springframework.boot.task.ThreadPoolTaskExecutorBuilder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,15 +19,16 @@ import java.util.stream.Collectors;
 public class TaskService {
     private final TaskRepository taskRepository;
     private final UserService userService;
-    private final ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder;
+    private final TaskCommentService taskCommentService;
 
-    public TaskService(TaskRepository taskRepository, UserService userService, ThreadPoolTaskExecutorBuilder threadPoolTaskExecutorBuilder) {
+    public TaskService(TaskRepository taskRepository, UserService userService, TaskCommentService taskCommentService) {
         this.taskRepository = taskRepository;
         this.userService = userService;
-        this.threadPoolTaskExecutorBuilder = threadPoolTaskExecutorBuilder;
+        this.taskCommentService = taskCommentService;
     }
 
     private TaskDTO mapTaskToDTO(TaskEntity taskEntity) {
+        List<TaskCommentDTO> taskComments = taskCommentService.getTaskComments(taskEntity.getId());
         return TaskDTO.builder()
                 .id(taskEntity.getId())
                 .title(taskEntity.getTitle())
@@ -38,6 +39,7 @@ public class TaskService {
                 .updatedAt(taskEntity.getUpdatedAt())
                 .creatorId(taskEntity.getCreatedBy().getId())
                 .assigneeId(taskEntity.getAssignedTo() != null ? taskEntity.getAssignedTo().getId() : null)
+                .comments(taskComments)
                 .build();
     }
 
