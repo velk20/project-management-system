@@ -12,12 +12,14 @@ import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
+    private final Long id;
     private final String name;
     private final String password;
     private final boolean isActive;
     private final List<GrantedAuthority> authorities;
 
     public CustomUserDetails(UserEntity userEntity) {
+        id = userEntity.getId();
         name = userEntity.getUsername();
         password = userEntity.getPassword();
         isActive = userEntity.isActive();
@@ -59,5 +61,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isActive;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

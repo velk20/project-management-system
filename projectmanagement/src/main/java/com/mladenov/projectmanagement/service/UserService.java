@@ -14,6 +14,8 @@ public class UserService {
     }
 
     public UserEntity getById(Long userId) {
-        return this.userRepository.findById(userId).orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found."));
+        return this.userRepository
+                .findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found."));
     }
 }

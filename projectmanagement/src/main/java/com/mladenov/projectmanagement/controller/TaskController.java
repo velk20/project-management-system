@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/tasks")
 @SecurityRequirement(name = "bearerAuth")
-public class TasksController {
+public class TaskController {
     private final TaskService taskService;
 
-    public TasksController(TaskService taskService) {
+    public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
