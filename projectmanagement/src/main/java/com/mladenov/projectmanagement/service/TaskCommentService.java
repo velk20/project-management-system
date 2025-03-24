@@ -7,6 +7,7 @@ import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.repository.TaskCommentRepository;
 import com.mladenov.projectmanagement.repository.TaskRepository;
+import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
 import org.springframework.stereotype.Service;
 
@@ -30,22 +31,14 @@ public class TaskCommentService {
     public List<TaskCommentDTO> getTaskComments(Long taskId) {
         TaskEntity task = getTaskEntity(taskId);
         List<TaskCommentEntity> taskComments = taskCommentRepository.findAllByTask(task);
-        return taskComments.stream().map(this::mapCommentToDTO).collect(Collectors.toList());
+        return taskComments.stream().map(MappingEntityUtil::mapCommentToDTO).collect(Collectors.toList());
     }
 
     private TaskEntity getTaskEntity(Long taskId) {
         return taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task not found"));
     }
 
-    private TaskCommentDTO mapCommentToDTO(TaskCommentEntity taskCommentEntity) {
-        return TaskCommentDTO.builder()
-                .authorId(taskCommentEntity.getAuthor().getId())
-                .taskId(taskCommentEntity.getTask().getId())
-                .content(taskCommentEntity.getContent())
-                .createdAt(taskCommentEntity.getCreatedAt())
-                .updatedAt(taskCommentEntity.getUpdatedAt())
-                .build();
-    }
+
 
     public TaskCommentDTO createTaskComment(Long taskId, TaskCommentDTO taskCommentDTO) {
         TaskEntity taskEntity = getTaskEntity(taskId);
@@ -57,7 +50,7 @@ public class TaskCommentService {
                                                                     LocalDateTime.now(),
                                                                     LocalDateTime.now());
 
-        return mapCommentToDTO(taskCommentRepository.save(taskCommentEntity));
+        return MappingEntityUtil.mapCommentToDTO(taskCommentRepository.save(taskCommentEntity));
     }
 
     public TaskCommentDTO updateTaskComment(Long taskId, Long commentId, TaskCommentDTO taskCommentDTO) {
@@ -76,7 +69,7 @@ public class TaskCommentService {
         taskComment.setUpdatedAt(LocalDateTime.now());
         taskComment.setContent(taskCommentDTO.getContent());
 
-        return mapCommentToDTO(taskCommentRepository.save(taskComment));
+        return MappingEntityUtil.mapCommentToDTO(taskCommentRepository.save(taskComment));
     }
 
     public TaskCommentEntity getTaskCommentEntityById(Long commentId) {

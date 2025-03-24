@@ -35,6 +35,10 @@ public class TaskEntity extends BaseEntity {
     @JoinColumn(name = "assigned_to")
     private UserEntity assignedTo;
 
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
+    private ProjectEntity project;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

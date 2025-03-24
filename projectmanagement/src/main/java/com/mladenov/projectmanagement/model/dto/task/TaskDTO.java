@@ -26,6 +26,8 @@ public class TaskDTO {
     @NotNull(message = "creatorId is required.")
     private Long creatorId;
     private Long assigneeId;
+    @NotNull(message = "projectId is required.")
+    private Long projectId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<TaskCommentDTO> comments;
