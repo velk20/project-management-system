@@ -2,7 +2,7 @@ package com.mladenov.projectmanagement.model.dto.task;
 
 import com.mladenov.projectmanagement.model.enums.TaskStatus;
 import com.mladenov.projectmanagement.model.enums.TaskType;
-import com.mladenov.projectmanagement.util.validation.ValidateTaskType;
+import com.mladenov.projectmanagement.util.validation.ValidEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -20,9 +20,12 @@ public class TaskDTO {
     @NotEmpty(message = "Title is required.")
     private String title;
     private String description;
-    private TaskStatus status;
-    @ValidateTaskType(anyOf = {TaskType.Bug, TaskType.Idea, TaskType.Epic, TaskType.Feature, TaskType.Test, TaskType.Story})
-    private TaskType type;
+    @NotNull(message = "status is required")
+    @ValidEnum(key="status", enumClass = TaskStatus.class, message = "Invalid status. Allowed values: Open, In_Progress, Resolved, Closed")
+    private String status;
+    @NotNull(message = "type is required")
+    @ValidEnum(key="type", enumClass = TaskType.class, message = "Invalid type. Allowed values: Feature, Story, Bug, Epic, Test, Idea")
+    private String type;
     @NotNull(message = "creatorId is required.")
     private Long creatorId;
     private Long assigneeId;

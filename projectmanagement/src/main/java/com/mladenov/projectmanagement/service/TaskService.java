@@ -7,6 +7,7 @@ import com.mladenov.projectmanagement.model.entity.ProjectEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.enums.TaskStatus;
+import com.mladenov.projectmanagement.model.enums.TaskType;
 import com.mladenov.projectmanagement.repository.ProjectRepository;
 import com.mladenov.projectmanagement.repository.TaskRepository;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
@@ -57,8 +58,8 @@ public class TaskService {
         TaskEntity task = TaskEntity.builder()
                 .title(taskDTO.getTitle())
                 .description(taskDTO.getDescription())
-                .status(taskDTO.getStatus() != null ? taskDTO.getStatus() : TaskStatus.OPEN)
-                .type(taskDTO.getType())
+                .status(TaskStatus.valueOf(taskDTO.getStatus()))
+                .type(TaskType.valueOf(taskDTO.getType()))
                 .project(projectEntity)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -95,8 +96,8 @@ public class TaskService {
         taskEntity.setUpdatedAt(LocalDateTime.now());
         taskEntity.setTitle(taskDTO.getTitle());
         taskEntity.setDescription(taskDTO.getDescription());
-        taskEntity.setStatus(taskDTO.getStatus());
-        taskEntity.setType(taskDTO.getType());
+        taskEntity.setStatus(TaskStatus.valueOf(taskDTO.getStatus()));
+        taskEntity.setType(TaskType.valueOf(taskDTO.getType()));
 
         TaskEntity saved = taskRepository.save(taskEntity);
         List<TaskCommentDTO> commentDTOS = taskCommentService.getTaskComments(saved.getId());
