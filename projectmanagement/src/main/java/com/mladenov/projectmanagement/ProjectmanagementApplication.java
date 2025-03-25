@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @OpenAPIDefinition(
 		info = @Info(
-				title = "Stream Line API",
+				title = "Project Management System API",
 				version = "1.0",
 				description = "API documentation for Project Management System",
 				contact = @Contact(name = "Angel Mladenov", email = "angelmladenov3@gmail.com")
