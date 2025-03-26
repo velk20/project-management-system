@@ -1,0 +1,72 @@
+<section class="bg-light py-5">
+  <div class="container px-5 my-5 px-5">
+    <div class="text-center mb-5">
+      <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-person-add" viewBox="0 0 16 16">
+          <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+          <path d="M8.256 14a4.5 4.5 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10q.39 0 .74.025c.226-.341.496-.65.804-.918Q8.844 9.002 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+        </svg>
+      </div>
+      <h2 class="fw-bolder">Login</h2>
+      <p class="lead mb-0">Login to your user profile</p>
+    </div>
+    <div class="row gx-5 justify-content-center">
+      <div class="col-lg-6">
+        <!-- * * * * * * * * * * * * * * *-->
+        <!-- * * SB Forms Contact Form * *-->
+        <!-- * * * * * * * * * * * * * * *-->
+        <!-- This form is pre-integrated with SB Forms.-->
+        <!-- To make this form functional, sign up at-->
+        <!-- https://startbootstrap.com/solution/contact-forms-->
+        <!-- to get an API token!-->
+        <form id="contactForm" (ngSubmit)="onSubmit()" [formGroup]="loginForm" data-sb-form-api-token="API_TOKEN">
+          <!-- Username input-->
+          <div class="form-floating mb-3">
+            <input class="form-control"
+                   id="username"
+                   name="username"
+                   formControlName="username"
+                   type="text"
+                   placeholder="Enter your username..."
+                   required
+                   data-sb-validations="required"/>
+            <label for="username">Username</label>
+            <span *ngIf="loginForm.get('username')?.touched">
+            <div *ngIf="loginForm.get('username')?.errors?.['required']"
+                 style="color: #de2d2d">Username is required.</div>
+
+            </span>
+          </div>
+          <!-- Password input-->
+          <div class="form-floating mb-3">
+            <input class="form-control"
+                   id="password"
+                   name="password"
+                   formControlName="password"
+                   type="password"
+                   placeholder="Enter your password..."
+                   required
+                   data-sb-validations="required"/>
+            <label for="password">Password</label>
+            <span *ngIf="loginForm.get('password')?.touched">
+            <div *ngIf="loginForm.get('password')?.errors?.['required']"
+                 style="color: #de2d2d">Password is required.</div>
+
+            </span>
+          </div>
+
+          <!-- Submit Button-->
+          <div class="d-grid">
+            <button class="btn btn-primary btn-lg"
+                    id="registerButton"
+                    [style]="{ backgroundColor: loginForm.invalid ? 'grey' : '' }"
+                    [disabled]="loginForm.invalid"
+                    type="submit">Login
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -10832,3 +10832,18 @@ textarea.form-control-lg {
   width: 4rem;
   font-size: 2rem;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+}
