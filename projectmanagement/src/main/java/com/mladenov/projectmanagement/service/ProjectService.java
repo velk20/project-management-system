@@ -2,24 +2,31 @@ package com.mladenov.projectmanagement.service;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
+import com.mladenov.projectmanagement.model.dto.project.UpdateProjectDTO;
 import com.mladenov.projectmanagement.model.entity.ProjectEntity;
+import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.repository.ProjectRepository;
+import com.mladenov.projectmanagement.repository.TaskRepository;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserService userService;
+    private final TaskRepository taskRepository;
 
-    public ProjectService(ProjectRepository projectRepository, UserService userService) {
+    public ProjectService(ProjectRepository projectRepository, UserService userService, TaskRepository taskRepository) {
         this.projectRepository = projectRepository;
         this.userService = userService;
+        this.taskRepository = taskRepository;
     }
 
     public ProjectDTO getProjectByID(Long projectId) {
@@ -64,16 +71,67 @@ public class ProjectService {
         projectRepository.delete(projectEntity);
     }
 
-    public ProjectDTO updateProject(Long projectId, ProjectDTO projectDTO) {
+    public ProjectDTO updateProject(Long projectId, UpdateProjectDTO projectDTO) {
         ProjectEntity projectEntity = getProjectEntity(projectId);
+
+        projectEntity.setDescription(projectDTO.getDescription());
+        projectEntity.setUpdatedAt(LocalDateTime.now());
+
+
+        validateProjectName(projectDTO, projectEntity);
+
+        validateProjectTasks(projectDTO, projectEntity);
+
+        validateProjectTeamMembers(projectDTO, projectEntity);
+
+        ProjectEntity project = projectRepository.save(projectEntity);
+        return MappingEntityUtil.mapProjectDTO(project);
+    }
+
+    private void validateProjectTeamMembers(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {
+        if (!projectDTO.getTeamMembersId().isEmpty()) {
+            List<Long> teamMembersId = projectDTO.getTeamMembersId();
+            List<Long> existingTeamMembersIds = projectEntity.getTeamMembers()
+                    .stream()
+                    .map(UserEntity::getId)
+                    .toList();
+            
+            teamMembersId = teamMembersId.stream()
+                    .filter(id->!existingTeamMembersIds.contains(id))
+                    .toList();
+
+            for (Long id : teamMembersId) {
+                UserEntity userEntity = userService.getUserEntityById(id);
+                projectEntity.addTeamMember(userEntity);
+            }
+
+        }
+    }
+
+    private void validateProjectTasks(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {
+        if (!projectDTO.getTasksId().isEmpty()) {
+            List<Long> tasksId = projectDTO.getTasksId();
+            Set<Long> existingTaskIds  = projectEntity.getTasks()
+                                                      .stream()
+                                                      .map(TaskEntity::getId)
+                                                      .collect(Collectors.toSet());
+
+            tasksId = tasksId.stream()
+                    .filter(id -> !existingTaskIds.contains(id))
+                    .toList();
+
+            for (Long taskId : tasksId) {
+                TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task with id=" + taskId + " not found"));
+                projectEntity.addTask(taskEntity);
+            }
+
+        }
+    }
+
+    private void validateProjectName(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {
         if (!projectEntity.getName().equals(projectDTO.getName())) {
             isProjectWithNameExist(projectDTO.getName());
             projectEntity.setName(projectDTO.getName());
         }
-        projectEntity.setDescription(projectDTO.getDescription());
-        projectEntity.setUpdatedAt(LocalDateTime.now());
-
-        ProjectEntity project = projectRepository.save(projectEntity);
-        return MappingEntityUtil.mapProjectDTO(project);
     }
 }

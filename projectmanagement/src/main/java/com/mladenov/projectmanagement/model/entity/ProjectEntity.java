@@ -41,4 +41,20 @@ public class ProjectEntity extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<UserEntity> teamMembers = new ArrayList<>();
+
+    public void addTask(TaskEntity task) {
+        tasks.add(task);
+    }
+
+    public void removeTask(TaskEntity task) {
+        tasks.remove(task);
+    }
+
+    public void addTeamMember(UserEntity teamMember) {
+        teamMembers.add(teamMember);
+    }
+
+    public void removeTeamMember(UserEntity teamMember) {
+        teamMembers.remove(teamMember);
+    }
 }

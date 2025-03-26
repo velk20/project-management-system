@@ -2,6 +2,7 @@ package com.mladenov.projectmanagement.controller;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
+import com.mladenov.projectmanagement.model.dto.project.UpdateProjectDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.service.ProjectService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
@@ -75,8 +76,8 @@ public class ProjectController {
     @PutMapping("/{projectId}")
     @Operation(summary = "Update project")
     public ResponseEntity<?> updateProject(@Parameter(description = "ID of the project") @PathVariable Long projectId,
-                                        @Valid @RequestBody ProjectDTO projectDTO,
-                                        BindingResult bindingResult) {
+                                           @Valid @RequestBody UpdateProjectDTO projectDTO,
+                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errorMessages = bindingResult.getAllErrors()
                     .stream()
