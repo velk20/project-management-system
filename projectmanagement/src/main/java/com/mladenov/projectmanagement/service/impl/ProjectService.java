@@ -11,7 +11,6 @@ import com.mladenov.projectmanagement.service.IProjectService;
 import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
-import jdk.jfr.Label;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
