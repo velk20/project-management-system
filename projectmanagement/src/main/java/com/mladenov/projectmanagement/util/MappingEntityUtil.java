@@ -9,7 +9,9 @@ import com.mladenov.projectmanagement.model.entity.TaskCommentEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MappingEntityUtil {
     public static UserDTO mapUserDTO(UserEntity userEntity) {
@@ -22,7 +24,10 @@ public class MappingEntityUtil {
                 .active(userEntity.isActive())
                 .build();
     }
-    public static ProjectDTO mapProjectDTO(ProjectEntity projectEntity, List<TaskDTO> tasksDTO, List<UserDTO> teamMembersDTO) {
+    public static ProjectDTO mapProjectDTO(ProjectEntity projectEntity) {
+        List<TaskDTO> taskDTOS = projectEntity.getTasks().stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+        List<UserDTO> teamMembersDTOS = projectEntity.getTeamMembers().stream().map(MappingEntityUtil::mapUserDTO).toList();
+
         return ProjectDTO.builder()
                 .id(projectEntity.getId())
                 .name(projectEntity.getName())
@@ -30,11 +35,11 @@ public class MappingEntityUtil {
                 .ownerId(projectEntity.getOwner().getId())
                 .createdAt(projectEntity.getCreatedAt())
                 .updatedAt(projectEntity.getUpdatedAt())
-                .tasks(tasksDTO)
-                .teamMembers(teamMembersDTO)
+                .tasks(taskDTOS)
+                .teamMembers(teamMembersDTOS)
                 .build();
     }
-    public static TaskDTO mapTaskToDTO(TaskEntity taskEntity, List<TaskCommentDTO> taskComments) {
+    public static TaskDTO mapTaskToDTO(TaskEntity taskEntity) {
         return TaskDTO.builder()
                 .id(taskEntity.getId())
                 .title(taskEntity.getTitle())
@@ -46,7 +51,9 @@ public class MappingEntityUtil {
                 .updatedAt(taskEntity.getUpdatedAt())
                 .creatorId(taskEntity.getCreatedBy().getId())
                 .assigneeId(taskEntity.getAssignedTo() != null ? taskEntity.getAssignedTo().getId() : null)
-                .comments(taskComments)
+                .comments(taskEntity.getComments() != null
+                        ? taskEntity.getComments().stream().map(MappingEntityUtil::mapCommentToDTO).collect(Collectors.toList())
+                        : new ArrayList<>())
                 .build();
     }
 

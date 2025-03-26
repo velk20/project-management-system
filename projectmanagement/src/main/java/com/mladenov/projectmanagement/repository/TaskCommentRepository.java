@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface TaskCommentRepository extends JpaRepository<TaskCommentEntity, Long> {
     List<TaskCommentEntity> findAllByTask(TaskEntity task);
+
 }

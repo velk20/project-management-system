@@ -1,14 +1,12 @@
 package com.mladenov.projectmanagement.service;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
-import com.mladenov.projectmanagement.model.dto.task.TaskCommentDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.model.entity.ProjectEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.enums.TaskStatus;
 import com.mladenov.projectmanagement.model.enums.TaskType;
-import com.mladenov.projectmanagement.repository.ProjectRepository;
 import com.mladenov.projectmanagement.repository.TaskRepository;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
@@ -22,38 +20,32 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
-    private final ProjectRepository projectRepository;
     private final UserService userService;
-    private final TaskCommentService taskCommentService;
+    private final ProjectService projectService;
 
-    public TaskService(TaskRepository taskRepository, ProjectRepository projectRepository, UserService userService, TaskCommentService taskCommentService) {
+    public TaskService(TaskRepository taskRepository, UserService userService, ProjectService projectService) {
         this.taskRepository = taskRepository;
-        this.projectRepository = projectRepository;
         this.userService = userService;
-        this.taskCommentService = taskCommentService;
+        this.projectService = projectService;
     }
 
     public TaskDTO getTaskByID(Long taskId) {
         TaskEntity taskEntity = getTaskEntityById(taskId);
-        List<TaskCommentDTO> commentDTOS = taskCommentService.getTaskComments(taskEntity.getId());
 
-        return MappingEntityUtil.mapTaskToDTO(taskEntity, commentDTOS);
+        return MappingEntityUtil.mapTaskToDTO(taskEntity);
     }
 
     public List<TaskDTO> getAllTasks() {
         return taskRepository
                 .findAll()
                 .stream()
-                .map(t->{
-                    List<TaskCommentDTO> commentDTOS = taskCommentService.getTaskComments(t.getId());
-                    return MappingEntityUtil.mapTaskToDTO(t, commentDTOS);
-                })
+                .map(MappingEntityUtil::mapTaskToDTO)
                 .collect(Collectors.toList());
     }
 
     public TaskDTO createTask(TaskDTO taskDTO) {
-        UserEntity creator = userService.getById(taskDTO.getCreatorId());
-        ProjectEntity projectEntity = this.getProjectEntityById(taskDTO.getProjectId());
+        UserEntity creator = userService.getUserEntityById(taskDTO.getCreatorId());
+        ProjectEntity projectEntity = projectService.getProjectEntity(taskDTO.getProjectId());
 
         TaskEntity task = TaskEntity.builder()
                 .title(taskDTO.getTitle())
@@ -68,27 +60,26 @@ public class TaskService {
                 .build();
 
         if(taskDTO.getAssigneeId() != null) {
-            UserEntity assignee = userService.getById(taskDTO.getAssigneeId());
+            UserEntity assignee = userService.getUserEntityById(taskDTO.getAssigneeId());
             task.setAssignedTo(assignee);
         }
 
         TaskEntity created = taskRepository.save(task);
-        List<TaskCommentDTO> commentDTOS = taskCommentService.getTaskComments(created.getId());
 
-        return MappingEntityUtil.mapTaskToDTO(created, commentDTOS);
+        return MappingEntityUtil.mapTaskToDTO(created);
     }
 
     public TaskDTO updateTask(Long taskId, TaskDTO taskDTO) {
         TaskEntity taskEntity = getTaskEntityById(taskId);
-        UserEntity author = userService.getById(taskDTO.getCreatorId());
-        ProjectEntity projectEntity = this.getProjectEntityById(taskDTO.getProjectId());
+        UserEntity author = userService.getUserEntityById(taskDTO.getCreatorId());
+        ProjectEntity projectEntity = projectService.getProjectEntity(taskDTO.getProjectId());
 
         if (!Objects.equals(author.getId(), UserPrincipalUtil.getCurrentLoggedUserId())) {
             throw new IllegalArgumentException("You are not the author of this task");
         }
 
         if(taskDTO.getAssigneeId() != null) {
-            UserEntity assignee = userService.getById(taskDTO.getAssigneeId());
+            UserEntity assignee = userService.getUserEntityById(taskDTO.getAssigneeId());
             taskEntity.setAssignedTo(assignee);
         }
 
@@ -100,21 +91,14 @@ public class TaskService {
         taskEntity.setType(TaskType.valueOf(taskDTO.getType()));
 
         TaskEntity saved = taskRepository.save(taskEntity);
-        List<TaskCommentDTO> commentDTOS = taskCommentService.getTaskComments(saved.getId());
 
-        return MappingEntityUtil.mapTaskToDTO(saved, commentDTOS);
+        return MappingEntityUtil.mapTaskToDTO(saved);
     }
 
     public TaskEntity getTaskEntityById(Long taskId) {
         return taskRepository
                 .findById(taskId)
                 .orElseThrow(() -> new EntityNotFoundException("Task with id=" + taskId + " not found"));
-    }
-
-    private ProjectEntity getProjectEntityById(Long projectId) {
-        return projectRepository
-                .findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id=" + projectId + " not found"));
     }
 
     public void deleteTaskById(Long taskId) {

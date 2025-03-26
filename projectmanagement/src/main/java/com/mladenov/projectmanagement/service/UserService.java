@@ -13,7 +13,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserEntity getById(Long userId) {
+    public UserEntity getUserEntityById(Long userId) {
         return this.userRepository
                 .findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found."));
