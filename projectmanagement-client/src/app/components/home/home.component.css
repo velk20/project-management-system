@@ -1,0 +1,20 @@
+header {
+  background-image: url('../../../assets/img/background.png'); /* Replace with the path to your image */
+  background-size: cover; /* Ensures the image covers the entire area */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  height: 100vh; /* Sets the height to full viewport height */
+  color: white; /* Optional: Sets text color for better visibility */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  text-align: center; /* Align text content to the center */
+}
+
+.header-title {
+  background-color: rgba(0, 0, 0, 0.6); /* Black background with 60% transparency */
+  padding: 20px; /* Adds some space inside the div */
+  border-radius: 10px; /* Optional: Rounds the corners of the box */
+  color: white; /* Ensures the text color contrasts with the background */
+  display: inline-block; /* Makes the div size fit the text */
+}
