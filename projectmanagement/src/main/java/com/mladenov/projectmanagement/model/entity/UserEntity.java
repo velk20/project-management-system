@@ -15,10 +15,8 @@ import java.time.LocalDateTime;
 public class UserEntity extends BaseEntity{
     @Column(unique = true, nullable = false)
     private String username;
-
     @Column(nullable = false)
     private String password;
-
     @Column(unique = true, nullable = false)
     private String email;
     private String firstName;
@@ -27,6 +25,5 @@ public class UserEntity extends BaseEntity{
     private LocalDateTime lastModified;
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private UserRoleEntity userRole;
-
     private boolean active = true;
 }

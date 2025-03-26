@@ -1,8 +1,12 @@
 package com.mladenov.projectmanagement.model.enums;
 
 public enum TaskStatus {
-    Open,
+    New,
+    Reopened,
+    Feedback,
     In_Progress,
     Resolved,
-    Closed
+    Closed,
+    Rejected,
+    Duplicate
 }
