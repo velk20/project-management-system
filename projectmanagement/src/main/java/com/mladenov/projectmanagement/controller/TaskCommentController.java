@@ -2,8 +2,7 @@ package com.mladenov.projectmanagement.controller;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.task.TaskCommentDTO;
-import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
-import com.mladenov.projectmanagement.service.TaskCommentService;
+import com.mladenov.projectmanagement.service.ITaskCommentService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -25,9 +24,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/tasks/{taskId}/comments")
 @SecurityRequirement(name = "bearerAuth")
 public class TaskCommentController {
-    private final TaskCommentService taskCommentService;
+    private final ITaskCommentService taskCommentService;
 
-    public TaskCommentController(TaskCommentService taskCommentService) {
+    public TaskCommentController(ITaskCommentService taskCommentService) {
         this.taskCommentService = taskCommentService;
     }
 

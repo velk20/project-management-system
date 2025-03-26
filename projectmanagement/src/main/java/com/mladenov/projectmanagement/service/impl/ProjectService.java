@@ -1,4 +1,4 @@
-package com.mladenov.projectmanagement.service;
+package com.mladenov.projectmanagement.service.impl;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
@@ -7,8 +7,12 @@ import com.mladenov.projectmanagement.model.entity.ProjectEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.repository.ProjectRepository;
-import com.mladenov.projectmanagement.repository.TaskRepository;
+import com.mladenov.projectmanagement.service.IProjectService;
+import com.mladenov.projectmanagement.service.ITaskService;
+import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
+import jdk.jfr.Label;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,22 +22,24 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class ProjectService {
+public class ProjectService implements IProjectService {
     private final ProjectRepository projectRepository;
-    private final UserService userService;
-    private final TaskRepository taskRepository;
+    private final IUserService userService;
+    private final ITaskService taskService;
 
-    public ProjectService(ProjectRepository projectRepository, UserService userService, TaskRepository taskRepository) {
+    public ProjectService(ProjectRepository projectRepository, IUserService userService, @Lazy ITaskService taskService) {
         this.projectRepository = projectRepository;
         this.userService = userService;
-        this.taskRepository = taskRepository;
+        this.taskService = taskService;
     }
 
+    @Override
     public ProjectDTO getProjectByID(Long projectId) {
         ProjectEntity projectEntity = getProjectEntity(projectId);
         return MappingEntityUtil.mapProjectDTO(projectEntity);
     }
 
+    @Override
     public ProjectEntity getProjectEntity(Long projectId) {
         return projectRepository
                 .findById(projectId)
@@ -46,10 +52,12 @@ public class ProjectService {
         });
     }
 
+    @Override
     public List<ProjectDTO> getAllProjects() {
         return this.projectRepository.findAll().stream().map(MappingEntityUtil::mapProjectDTO).toList();
     }
 
+    @Override
     public ProjectDTO createProject(ProjectDTO projectDTO) {
         isProjectWithNameExist(projectDTO.getName());
         UserEntity owner = userService.getUserEntityById(projectDTO.getOwnerId());
@@ -66,11 +74,13 @@ public class ProjectService {
         return MappingEntityUtil.mapProjectDTO(projectRepository.save(projectEntity));
     }
 
+    @Override
     public void deleteProjectById(Long projectId) {
         ProjectEntity projectEntity = getProjectEntity(projectId);
         projectRepository.delete(projectEntity);
     }
 
+    @Override
     public ProjectDTO updateProject(Long projectId, UpdateProjectDTO projectDTO) {
         ProjectEntity projectEntity = getProjectEntity(projectId);
 
@@ -121,7 +131,7 @@ public class ProjectService {
                     .toList();
 
             for (Long taskId : tasksId) {
-                TaskEntity taskEntity = taskRepository.findById(taskId).orElseThrow(() -> new EntityNotFoundException("Task with id=" + taskId + " not found"));
+                TaskEntity taskEntity = taskService.getTaskEntityById(taskId);
                 projectEntity.addTask(taskEntity);
             }
 

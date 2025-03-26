@@ -3,8 +3,7 @@ package com.mladenov.projectmanagement.controller;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
 import com.mladenov.projectmanagement.model.dto.project.UpdateProjectDTO;
-import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
-import com.mladenov.projectmanagement.service.ProjectService;
+import com.mladenov.projectmanagement.service.IProjectService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,9 +25,9 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/projects")
 @SecurityRequirement(name = "bearerAuth")
 public class ProjectController {
-    private final ProjectService projectService;
+    private final IProjectService projectService;
 
-    public ProjectController(ProjectService projectService) {
+    public ProjectController(IProjectService projectService) {
         this.projectService = projectService;
     }
 
