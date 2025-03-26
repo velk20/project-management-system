@@ -3,8 +3,6 @@ package com.mladenov.projectmanagement.service;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
 
-import java.util.Optional;
-
 public interface IUserService {
     UserEntity getUserEntityById(Long userId);
     UserEntity getUserEntityByEmail(String email);
