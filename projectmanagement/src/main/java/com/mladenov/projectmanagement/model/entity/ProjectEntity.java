@@ -46,15 +46,7 @@ public class ProjectEntity extends BaseEntity{
         tasks.add(task);
     }
 
-    public void removeTask(TaskEntity task) {
-        tasks.remove(task);
-    }
-
     public void addTeamMember(UserEntity teamMember) {
         teamMembers.add(teamMember);
-    }
-
-    public void removeTeamMember(UserEntity teamMember) {
-        teamMembers.remove(teamMember);
     }
 }
