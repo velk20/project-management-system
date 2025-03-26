@@ -1,1 +1,19 @@
-<p>dashboard works!</p>
+<div style="display: flex; height: 100vh;">
+  <mat-sidenav-container style="flex: 1;">
+    <mat-sidenav mode="side" opened>
+      <mat-nav-list>
+        <mat-list-item *ngFor="let item of menuItems" (click)="onMenuItemClick(item)">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          {{ item.name }}
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content">
+        <!-- Here you will dynamically display content based on the selected option -->
+        <h1>{{ selectedMenu }}</h1>
+        <p>Content for {{ selectedMenu }} goes here.</p>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
