@@ -114,4 +114,10 @@ public class TaskService implements ITaskService {
         TaskEntity taskEntity = getTaskEntityById(taskId);
         taskRepository.delete(taskEntity);
     }
+
+    @Override
+    public List<TaskDTO> getTasksForUser(Long userId) {
+        UserEntity userEntity = userService.getUserEntityById(userId);
+        return taskRepository.findAllByCreatedByOrAssignedTo(userEntity, userEntity).stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+    }
 }

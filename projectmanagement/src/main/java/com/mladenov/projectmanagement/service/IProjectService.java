@@ -18,4 +18,6 @@ public interface IProjectService {
     void deleteProjectById(Long projectId);
 
     ProjectDTO updateProject(Long projectId, UpdateProjectDTO projectDTO);
+
+    List<ProjectDTO> getAllProjectsForUser(Long userId);
 }

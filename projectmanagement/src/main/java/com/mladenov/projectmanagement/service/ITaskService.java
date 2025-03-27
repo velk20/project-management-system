@@ -17,4 +17,6 @@ public interface ITaskService {
     TaskEntity getTaskEntityById(Long taskId);
 
     void deleteTaskById(Long taskId);
+
+    List<TaskDTO> getTasksForUser(Long userId);
 }

@@ -16,7 +16,7 @@ export interface JwtTokenResponse{
 
 export interface JwtPayload {
   role: string;
-  id: string;
+  id: number;
   email: string;
   username: string;
   sub: string;

@@ -50,6 +50,16 @@ public class TaskController {
                 .build();
     }
 
+    @GetMapping("/user/{userId}")
+    @Operation(summary = "Get all tasks for user")
+    public ResponseEntity<?> getAllTasksForUser(@Parameter(description = "ID of the user") @PathVariable Long userId) {
+        List<TaskDTO> tasks = taskService.getTasksForUser(userId);
+
+        return AppResponseUtil.success()
+                .withData(tasks)
+                .build();
+    }
+
     @PostMapping
     @Operation(summary = "Create task")
     public ResponseEntity<?> createTask(@Valid @RequestBody TaskDTO taskDTO, BindingResult bindingResult) {

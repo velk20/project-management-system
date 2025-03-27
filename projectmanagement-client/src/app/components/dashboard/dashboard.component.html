@@ -1,18 +1,131 @@
-<div style="display: flex; height: 100vh;">
-  <mat-sidenav-container style="flex: 1;">
-    <mat-sidenav mode="side" opened>
-      <mat-nav-list>
-        <mat-list-item *ngFor="let item of menuItems" (click)="onMenuItemClick(item)">
-          <mat-icon>{{ item.icon }}</mat-icon>
-          {{ item.name }}
+<div class="dashboard-container">
+  <mat-sidenav-container class="sidenav-container">
+    <!-- Sidebar -->
+    <mat-sidenav mode="side" opened class="sidebar">
+      <div class="sidebar-brand">
+        <mat-icon>dashboard</mat-icon>
+        <h2>ProTrack</h2>
+      </div>
+      <mat-nav-list class="menu-list">
+        <mat-list-item
+          *ngFor="let item of menuItems"
+          (click)="onMenuItemClick(item)"
+          [class.active]="selectedMenu === item.name"
+          class="menu-item"
+        >
+          <mat-icon [style.color]="item.color">{{ item.icon }}</mat-icon>
+          <span>{{ item.name }}</span>
         </mat-list-item>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content">
-        <!-- Here you will dynamically display content based on the selected option -->
+
+    <!-- Main Content -->
+    <mat-sidenav-content class="content-wrapper">
+      <div class="content-header">
         <h1>{{ selectedMenu }}</h1>
-        <p>Content for {{ selectedMenu }} goes here.</p>
+      </div>
+
+      <div class="content-area" [@contentAnimation]>
+        <ng-container [ngSwitch]="selectedMenu">
+          <!-- Dashboard Content -->
+          <div *ngSwitchCase="'Dashboard'" class="dashboard-grid">
+            <mat-card class="dashboard-card dashboard-card-projects">
+              <mat-card-header>
+                <mat-card-title>Total Projects</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="dashboard-card-content">
+                  <mat-icon>folder_open</mat-icon>
+                  <span class="count">{{ projects.length }}</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="dashboard-card dashboard-card-tasks">
+              <mat-card-header>
+                <mat-card-title>Pending Tasks</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="dashboard-card-content">
+                  <mat-icon>task</mat-icon>
+                  <span class="count">{{ tasks.length }}</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="dashboard-card dashboard-card-team">
+              <mat-card-header>
+                <mat-card-title>Team Members</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="dashboard-card-content">
+                  <mat-icon>group</mat-icon>
+                  <span class="count">{{ teamMembers.length }}</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <!-- Projects Content -->
+          <div *ngSwitchCase="'Projects'" class="projects-section">
+            <mat-card class="section-card">
+              <mat-card-header>
+                <mat-card-title>Active Projects</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item *ngFor="let project of projects" class="project-item">
+                  <mat-icon>folder</mat-icon>
+                  <span>{{ project.name }}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card>
+          </div>
+
+          <!-- Tasks Content -->
+          <div class="content-area" *ngSwitchCase="'Tasks'" >
+            <div class="tasks-container">
+              <div class="task-list">
+                <div *ngFor="let task of tasks" class="task-item">
+                  <div class="task-header">
+                    <h3 class="task-title">{{ task.title }}</h3>
+                    <span class="task-status">
+                      Status: {{ task.status }}
+                      <br>
+                      Project: {{ getProjectForTask(task)?.name }}
+                    </span>
+                  </div>
+                  <p class="task-description">{{ task.description }}</p>
+                  <div class="task-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Content -->
+          <div *ngSwitchCase="'Team'" class="team-section">
+            <mat-card class="section-card">
+              <mat-card-header>
+                <mat-card-title>Team Members</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item *ngFor="let member of teamMembers" class="team-member">
+                  <mat-icon>person</mat-icon>
+                  <span>{{ member }}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card>
+          </div>
+
+          <!-- Default Content -->
+          <div *ngSwitchDefault class="default-content">
+            <mat-card>
+              <mat-card-content>
+                <p>Select a menu item to explore your workspace.</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-container>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

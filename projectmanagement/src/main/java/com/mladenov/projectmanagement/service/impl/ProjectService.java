@@ -97,6 +97,15 @@ public class ProjectService implements IProjectService {
         return MappingEntityUtil.mapProjectDTO(project);
     }
 
+    @Override
+    public List<ProjectDTO> getAllProjectsForUser(Long userId) {
+        UserEntity userEntity = userService.getUserEntityById(userId);
+        
+        List<ProjectEntity> projects = projectRepository.findProjectsByUserOwnershipOrTeamMembership(userEntity);
+
+        return projects.stream().map(MappingEntityUtil::mapProjectDTO).toList();
+    }
+
     private void validateProjectTeamMembers(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {
         if (!projectDTO.getTeamMembersId().isEmpty()) {
             List<Long> teamMembersId = projectDTO.getTeamMembersId();

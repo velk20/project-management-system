@@ -51,6 +51,16 @@ public class ProjectController {
                 .build();
     }
 
+    @GetMapping("/user/{userId}")
+    @Operation(summary = "Get all projects for user")
+    public ResponseEntity<?> getAllProjectsForUser(@PathVariable Long userId) {
+        List<ProjectDTO> projects = projectService.getAllProjectsForUser(userId);
+
+        return AppResponseUtil.success()
+                .withData(projects)
+                .build();
+    }
+
     @PostMapping
     @Operation(summary = "Create project")
     public ResponseEntity<?> createProject(@Valid @RequestBody ProjectDTO projectDTO, BindingResult bindingResult) {
