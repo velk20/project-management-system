@@ -19,4 +19,6 @@ public interface ITaskService {
     void deleteTaskById(Long taskId);
 
     List<TaskDTO> getTasksForUser(Long userId);
+
+    List<TaskDTO> getTasksForProject(Long projectId);
 }

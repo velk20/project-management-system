@@ -14,6 +14,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Project} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -51,7 +52,8 @@ import {ProjectService} from "../../services/project.service";
 export class DashboardComponent implements OnInit {
   constructor(private readonly taskService: TaskService,
               private readonly projectService: ProjectService,
-              private readonly authService: AuthService,) {
+              private readonly authService: AuthService,
+              private readonly router: Router) {
   }
 
   tasks: Task[] = [];
@@ -93,6 +95,16 @@ export class DashboardComponent implements OnInit {
   private getUserProjects(userId: number) {
     this.projectService.getAllProjectsForUser(userId).subscribe(res=>{
       this.projects = res.data as Project[];
+    })
+  }
+
+  onProjectClick(project: Project) {
+    this.taskService.getAllTasksForProject(project.id).subscribe(res=>{
+      const tasks = res.data as Task[];
+      console.log(tasks)
+      this.router.navigate(['/tasks'],{
+        state: {tasks: tasks},
+      })
     })
   }
 }

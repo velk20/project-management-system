@@ -1,0 +1,16 @@
+<div class="tasks-container">
+  <div class="task-list">
+    <div *ngFor="let task of tasks" class="task-item">
+      <div class="task-header">
+        <h3 class="task-title">{{ task.title }}</h3>
+        <span class="task-status">
+                      Status: {{ task.status }}
+          <br>
+                    </span>
+      </div>
+      <p class="task-description">{{ task.description }}</p>
+      <div class="task-footer">
+      </div>
+    </div>
+  </div>
+</div>

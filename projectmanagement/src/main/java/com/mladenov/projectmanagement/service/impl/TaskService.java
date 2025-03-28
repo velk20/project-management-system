@@ -120,4 +120,12 @@ public class TaskService implements ITaskService {
         UserEntity userEntity = userService.getUserEntityById(userId);
         return taskRepository.findAllByCreatedByOrAssignedTo(userEntity, userEntity).stream().map(MappingEntityUtil::mapTaskToDTO).toList();
     }
+
+    @Override
+    public List<TaskDTO> getTasksForProject(Long projectId) {
+        ProjectEntity projectEntity = projectService.getProjectEntity(projectId);
+        List<TaskEntity> tasks = taskRepository.findAllByProject(projectEntity);
+
+        return tasks.stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+    }
 }

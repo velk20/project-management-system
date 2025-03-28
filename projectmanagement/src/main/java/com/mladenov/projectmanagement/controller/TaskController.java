@@ -40,6 +40,16 @@ public class TaskController {
                 .build();
     }
 
+    @GetMapping("/project/{projectId}")
+    @Operation(summary = "Get all tasks by project id")
+    public ResponseEntity<?> getAllTasksByProject(@Parameter(description = "ID of the project") @PathVariable Long projectId) {
+        List<TaskDTO> tasks = taskService.getTasksForProject(projectId);
+
+        return AppResponseUtil.success()
+                .withData(tasks)
+                .build();
+    }
+
     @GetMapping
     @Operation(summary = "Get all tasks")
     public ResponseEntity<?> getAllTasks() {

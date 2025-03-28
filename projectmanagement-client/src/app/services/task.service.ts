@@ -16,4 +16,8 @@ export class TaskService {
   getAllTasksForUser(userId: number): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${Constant.TASKS_URL}/user/${userId}`);
   }
+
+  getAllTasksForProject(projectId: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/project/${projectId}`);
+  }
 }

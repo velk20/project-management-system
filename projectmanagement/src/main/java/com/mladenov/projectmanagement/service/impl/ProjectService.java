@@ -100,7 +100,7 @@ public class ProjectService implements IProjectService {
     @Override
     public List<ProjectDTO> getAllProjectsForUser(Long userId) {
         UserEntity userEntity = userService.getUserEntityById(userId);
-        
+
         List<ProjectEntity> projects = projectRepository.findProjectsByUserOwnershipOrTeamMembership(userEntity);
 
         return projects.stream().map(MappingEntityUtil::mapProjectDTO).toList();
