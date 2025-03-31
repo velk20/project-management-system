@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ project?.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p>{{ project?.description }}</p>
+    <p><strong>Created At:</strong> {{ project?.createdAt }}</p>
+    <p><strong>Updated At:</strong> {{ project?.updatedAt }}</p>
+
+    <h3>Team Members</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let member of project?.teamMembers">
+        {{ member.username }}
+      </mat-list-item>
+    </mat-list>
+
+    <h3>Tasks</h3>
+    <mat-list>
+      <mat-list-item *ngFor="let task of project?.tasks">
+        {{ task.title }}
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

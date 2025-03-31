@@ -14,7 +14,7 @@ import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Project} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-dashboard',
@@ -36,7 +36,8 @@ import {Router} from "@angular/router";
     MatGridList,
     MatCardHeader,
     MatGridTile,
-    NgClass
+    NgClass,
+    RouterLink
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',

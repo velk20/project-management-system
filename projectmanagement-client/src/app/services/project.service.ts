@@ -14,4 +14,8 @@ export class ProjectService {
   getAllProjectsForUser(userId: number): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}/user/${userId}`);
   }
+
+  getProjectById(projectId: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}/${projectId}`);
+  }
 }

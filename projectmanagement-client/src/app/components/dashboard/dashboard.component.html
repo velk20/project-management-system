@@ -29,7 +29,7 @@
         <ng-container [ngSwitch]="selectedMenu">
           <!-- Dashboard Content -->
           <div *ngSwitchCase="'Dashboard'" class="dashboard-grid">
-            <mat-card class="dashboard-card dashboard-card-projects">
+            <mat-card class="dashboard-card dashboard-card-projects" routerLink="/">
               <mat-card-header>
                 <mat-card-title>Total Projects</mat-card-title>
               </mat-card-header>
@@ -73,7 +73,7 @@
                 <mat-card-title>Active Projects</mat-card-title>
               </mat-card-header>
               <mat-list>
-                <mat-list-item *ngFor="let project of projects" class="project-item" (click)="onProjectClick(project)">
+                <mat-list-item *ngFor="let project of projects" class="project-item" routerLink="/project/{{project.id}}">
                   <mat-icon>folder</mat-icon>
                   <span>{{ project.name }}</span>
                 </mat-list-item>

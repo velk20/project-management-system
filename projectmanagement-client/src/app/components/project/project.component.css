@@ -1,0 +1,8 @@
+mat-card {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 16px;
+}
+mat-list {
+  margin-top: 10px;
+}
