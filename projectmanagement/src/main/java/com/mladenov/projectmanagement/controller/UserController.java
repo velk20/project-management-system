@@ -1,6 +1,5 @@
 package com.mladenov.projectmanagement.controller;
 
-import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
