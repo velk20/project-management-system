@@ -1,5 +1,6 @@
 package com.mladenov.projectmanagement.service;
 
+import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
 
@@ -9,4 +10,6 @@ public interface IUserService {
     UserEntity getUserEntityByUsername(String username);
     UserEntity saveUserEntity(UserEntity userEntity);
     UserRoleEntity getUserRoleEntityByUserRole(String userRole);
+
+    UserDTO getUserById(Long userId);
 }

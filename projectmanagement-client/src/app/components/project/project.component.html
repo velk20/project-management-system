@@ -1,24 +1,34 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>{{ project?.name }}</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <p>{{ project?.description }}</p>
-    <p><strong>Created At:</strong> {{ project?.createdAt }}</p>
-    <p><strong>Updated At:</strong> {{ project?.updatedAt }}</p>
+<div class="container mt-4">
+  <h4 class="fw-bold"><i class="bi bi-journal-text me-2"></i>{{project.name}}</h4>
 
-    <h3>Team Members</h3>
-    <mat-list>
-      <mat-list-item *ngFor="let member of project?.teamMembers">
-        {{ member.username }}
-      </mat-list-item>
-    </mat-list>
+  <table class="table table-hover mt-3">
+    <thead class="table-light">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Type</th>
+      <th scope="col">Status</th>
+      <th scope="col">Author</th>
+      <th scope="col">Updated On</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let task of project.tasks">
+      <td><a href="#">{{ task.id }}</a></td>
+      <td>{{ task.title }}</td>
+      <td>
+        <app-type type="{{task.type}}" />
+      </td>
+      <td>
+        <app-status status="{{task.status}}" />
+      </td>
+      <td>
+        <span class="badge bg-primary">{{ task.creatorId }}</span>
+      </td>
+      <td>{{ task.updatedAt | date: 'short' }}</td>
+    </tr>
+    </tbody>
+  </table>
 
-    <h3>Tasks</h3>
-    <mat-list>
-      <mat-list-item *ngFor="let task of project?.tasks">
-        {{ task.title }}
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+  <a href="#" class="text-primary"><i class="bi bi-plus-lg"></i> Create new task</a>
+</div>

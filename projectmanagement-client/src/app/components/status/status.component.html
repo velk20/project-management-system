@@ -1,0 +1,37 @@
+@switch (status){
+  @case ('New'){
+    <span class="badge color-sky-blue rounded-pill">{{ status }}</span>
+  }
+  @case ('Reopened'){
+    <span class="badge color-light-orange rounded-pill">{{ status }}</span>
+
+  }
+  @case ('Feedback'){
+    <span class="badge color-amber rounded-pill">{{ status }}</span>
+
+  }
+  @case ('In_Progress'){
+    <span class="badge color-green rounded-pill">In Progress</span>
+
+  }
+  @case ('Resolved'){
+    <span class="badge color-deep-blue rounded-pill">{{ status }}</span>
+
+  }
+  @case ('Closed'){
+    <span class="badge color-light-gray rounded-pill">{{ status }}</span>
+
+  }
+  @case ('Rejected'){
+    <span class="badge bg-danger rounded-pill">{{ status }}</span>
+
+  }
+  @case ('Duplicate'){
+    <span class="badge bg-info rounded-pill">{{ status }}</span>
+
+  }
+  @default {
+    <span class="badge bg-danger rounded-pill">Error</span>
+
+  }
+}

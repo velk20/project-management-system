@@ -4,7 +4,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {TaskService} from "../../services/task.service";
 import {Task} from "../../models/task";
 import {JwtPayload} from "../../models/auth";
@@ -15,6 +15,11 @@ import {animate, style, transition, trigger} from "@angular/animations";
 import {Project} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
 import {Router, RouterLink} from "@angular/router";
+import {TypeComponent} from "../type/type.component";
+import {StatusComponent} from "../status/status.component";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
+import {TasksComponent} from "../tasks/tasks.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -37,7 +42,11 @@ import {Router, RouterLink} from "@angular/router";
     MatCardHeader,
     MatGridTile,
     NgClass,
-    RouterLink
+    RouterLink,
+    DatePipe,
+    TypeComponent,
+    StatusComponent,
+    TasksComponent
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -53,19 +62,18 @@ import {Router, RouterLink} from "@angular/router";
 export class DashboardComponent implements OnInit {
   constructor(private readonly taskService: TaskService,
               private readonly projectService: ProjectService,
+              private readonly userService: UserService,
               private readonly authService: AuthService,
               private readonly router: Router) {
   }
 
   tasks: Task[] = [];
   projects: Project[] = [];
-  teamMembers: string[] = ['Alice', 'Bob', 'Charlie'];
 
   menuItems = [
     { name: 'Dashboard', icon: 'dashboard', color: '#3498db' },
     { name: 'Projects', icon: 'folder', color: '#2ecc71' },
-    { name: 'Tasks', icon: 'checklist', color: '#e74c3c' },
-    { name: 'Team', icon: 'groups', color: '#f39c12' }
+    { name: 'Your Tasks', icon: 'checklist', color: '#e74c3c' }
   ];
   selectedMenu: string = 'Dashboard';
 
@@ -107,5 +115,16 @@ export class DashboardComponent implements OnInit {
         state: {tasks: tasks},
       })
     })
+  }
+
+  resolveUserById(creatorId: number): string {
+    let username: string = "";
+
+    this.userService.getUserById(creatorId).subscribe(res => {
+        const user = res.data as User;
+        username = user.username;
+    })
+
+    return username;
   }
 }

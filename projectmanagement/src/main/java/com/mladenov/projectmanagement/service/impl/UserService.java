@@ -1,11 +1,13 @@
 package com.mladenov.projectmanagement.service.impl;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
+import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
 import com.mladenov.projectmanagement.repository.UserRepository;
 import com.mladenov.projectmanagement.repository.UserRoleRepository;
 import com.mladenov.projectmanagement.service.IUserService;
+import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -45,5 +47,11 @@ public class UserService implements IUserService {
     public UserRoleEntity getUserRoleEntityByUserRole(String userRole) {
        return userRoleRepository.findUserRoleByUserRole(userRole)
                 .orElseThrow(() -> new EntityNotFoundException("No role=" + userRole + " was found!"));
+    }
+
+    @Override
+    public UserDTO getUserById(Long userId) {
+        UserEntity user = this.getUserEntityById(userId);
+        return MappingEntityUtil.mapUserDTO(user);
     }
 }

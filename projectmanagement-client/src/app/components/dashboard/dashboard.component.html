@@ -4,7 +4,7 @@
     <mat-sidenav mode="side" opened class="sidebar">
       <div class="sidebar-brand">
         <mat-icon>dashboard</mat-icon>
-        <h2>ProTrack</h2>
+        <h2>TaskFlow</h2>
       </div>
       <mat-nav-list class="menu-list">
         <mat-list-item
@@ -60,7 +60,7 @@
               <mat-card-content>
                 <div class="dashboard-card-content">
                   <mat-icon>group</mat-icon>
-                  <span class="count">{{ teamMembers.length }}</span>
+                  <span class="count">69</span>
                 </div>
               </mat-card-content>
             </mat-card>
@@ -82,39 +82,8 @@
           </div>
 
           <!-- Tasks Content -->
-          <div class="content-area" *ngSwitchCase="'Tasks'" >
-            <div class="tasks-container">
-              <div class="task-list">
-                <div *ngFor="let task of tasks" class="task-item">
-                  <div class="task-header">
-                    <h3 class="task-title">{{ task.title }}</h3>
-                    <span class="task-status">
-                      Status: {{ task.status }}
-                      <br>
-                      Project: {{ getProjectForTask(task)?.name }}
-                    </span>
-                  </div>
-                  <p class="task-description">{{ task.description }}</p>
-                  <div class="task-footer">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Team Content -->
-          <div *ngSwitchCase="'Team'" class="team-section">
-            <mat-card class="section-card">
-              <mat-card-header>
-                <mat-card-title>Team Members</mat-card-title>
-              </mat-card-header>
-              <mat-list>
-                <mat-list-item *ngFor="let member of teamMembers" class="team-member">
-                  <mat-icon>person</mat-icon>
-                  <span>{{ member }}</span>
-                </mat-list-item>
-              </mat-list>
-            </mat-card>
+          <div class="content-area" *ngSwitchCase="'Your Tasks'" >
+            <app-tasks [tasks]="tasks"></app-tasks>
           </div>
 
           <!-- Default Content -->

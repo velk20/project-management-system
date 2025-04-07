@@ -1,0 +1,23 @@
+@switch (type){
+  @case ('Feature'){
+    <span class="fw-bold text-success">{{ type }}</span>
+  }
+  @case ('Story'){
+    <span class="fw-bold text-primary">{{ type }}</span>
+  }
+  @case ('Bug'){
+    <span class="fw-bold text-warning">{{ type }}</span>
+  }
+  @case ('Epic'){
+    <span class="fw-bold text-danger">{{ type }}</span>
+  }
+  @case ('Test'){
+    <span class="fw-bold text-info">{{ type }}</span>
+  }
+  @case ('Idea'){
+    <span class="fw-bold text-secondary">{{ type }}</span>
+  }
+  @default {
+    <span class="fw-bold text-danger bg-dark">Error</span>
+  }
+}

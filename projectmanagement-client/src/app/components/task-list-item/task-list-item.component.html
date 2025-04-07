@@ -1,0 +1,13 @@
+
+<td><a href="#">{{ task.id }}</a></td>
+<td>{{ task.title }}</td>
+<td>
+  <app-type type="{{task.type}}" />
+</td>
+<td>
+  <app-status status="{{task.status}}" />
+</td>
+<td>
+  <span class="badge bg-primary">{{ fullUserName }}</span>
+</td>
+<td>{{ task.updatedAt | date: 'short' }}</td>
