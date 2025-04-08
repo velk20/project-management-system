@@ -20,6 +20,7 @@ import {StatusComponent} from "../status/status.component";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {TasksComponent} from "../tasks/tasks.component";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -87,14 +88,8 @@ export class DashboardComponent implements OnInit {
     this.getUserProjects(user.id)
   }
 
-
-
   onMenuItemClick(item: any): void {
     this.selectedMenu = item.name;
-  }
-
-  getProjectForTask(task: Task): Project | undefined {
-    return this.projects.find(project => project.id === task.projectId);
   }
 
   private getUserTasks(userId: number){
@@ -111,24 +106,48 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  onProjectClick(project: Project) {
-    this.taskService.getAllTasksForProject(project.id).subscribe(res=>{
-      const tasks = res.data as Task[];
-      console.log(tasks)
-      this.router.navigate(['/tasks'],{
-        state: {tasks: tasks},
-      })
-    })
+  onCreateProject() {
+    Swal.fire({
+      title: 'Create New Project',
+      html:
+        `<input id="project-name" class="swal2-input" placeholder="Project Name (required)">` +
+        `<textarea id="project-description" class="swal2-textarea" placeholder="Project Description (optional)"></textarea>`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Create',
+      preConfirm: () => {
+        const name = (document.getElementById('project-name') as HTMLInputElement).value.trim();
+        const description = (document.getElementById('project-description') as HTMLTextAreaElement).value.trim();
+
+        if (!name) {
+          Swal.showValidationMessage('Project name is required');
+          return false;
+        }
+
+        return { name, description };
+      }
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        this.createProject(result);
+      }
+    });
   }
 
-  resolveUserById(creatorId: number): string {
-    let username: string = "";
+  private createProject(result:any) {
+    const {name, description} = result.value;
+    const newProject: Project = {
+      name: name,
+      description: description,
+      ownerId: this.authService.getUserFromJwt().id
+    };
 
-    this.userService.getUserById(creatorId).subscribe(res => {
-        const user = res.data as User;
-        username = user.username;
+    this.projectService.createProject(newProject).subscribe(res => {
+      let data = res.data as Project;
+      this.projects.push(data);
+
+      Swal.fire('Success', `You have added "${data.name}" project!`, 'success');
+    }, error => {
+      Swal.fire('Error', error.error.message, 'error');
     })
-
-    return username;
   }
 }

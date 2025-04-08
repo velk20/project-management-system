@@ -3,7 +3,7 @@ import {User} from "./user";
 
 
 export interface Project {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   ownerId: number;
