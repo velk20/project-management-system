@@ -5,6 +5,7 @@ import {TypeComponent} from "../type/type.component";
 import {Task} from "../../models/task";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: '[app-task-list-item]',
@@ -12,7 +13,8 @@ import {User} from "../../models/user";
   imports: [
     DatePipe,
     StatusComponent,
-    TypeComponent
+    TypeComponent,
+    RouterLink
   ],
   templateUrl: './task-list-item.component.html',
   styleUrl: './task-list-item.component.css'

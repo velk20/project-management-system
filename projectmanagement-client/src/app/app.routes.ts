@@ -7,6 +7,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {TasksComponent} from "./components/tasks/tasks.component";
 import {ProjectComponent} from "./components/project/project.component";
+import {TaskViewComponent} from "./components/task-view/task-view.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,5 +16,6 @@ export const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent},
   {path: 'tasks', component: TasksComponent},
   {path: 'project/:id', component: ProjectComponent},
+  {path: 'task/:id', component: TaskViewComponent},
   {path: '**', component: NotfoundComponent}
 ];

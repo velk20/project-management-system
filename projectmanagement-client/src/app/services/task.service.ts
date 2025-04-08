@@ -25,4 +25,8 @@ export class TaskService {
   createTask(newTask: Task): Observable<AppResponseWithMessage> {
     return this.http.post<AppResponseWithMessage>(`${Constant.TASKS_URL}`, newTask);
   }
+
+  getTaskById(taskId: string) : Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/${taskId}`);
+  }
 }

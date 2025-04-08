@@ -1,0 +1,80 @@
+<div class="container py-4">
+  <button type="button" class="btn btn-outline-secondary d-flex align-items-center gap-2 mb-2" (click)="goBack()">
+    <i class="bi bi-arrow-left"></i>
+    Back
+  </button>
+  <div class="row">
+    <!-- Task Details -->
+    <div class="col-md-7">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          Task Details
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              id="title"
+              [(ngModel)]="task.title"
+              class="form-control"
+              placeholder="Enter title"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              id="description"
+              [(ngModel)]="task.description"
+              class="form-control"
+              placeholder="Enter description"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" [(ngModel)]="task.status" class="form-select">
+              <option *ngFor="let status of taskStatuses" [ngValue]="status" [ngClass]="getStatusClass(status)">{{ status }}</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="type" class="form-label">Type</label>
+            <select id="type" [(ngModel)]="task.type" class="form-select">
+              <option *ngFor="let type of taskTypes" [ngValue]="type" [ngClass]="getTypeClass(type)">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="col-md-5">
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          Comments
+        </div>
+        <div class="card-body">
+          <div *ngFor="let comment of task.comments" class="mb-3 border-bottom pb-2">
+            <p class="mb-1"><strong>{{ comment.authorId }}</strong> <small class="text-muted">({{ comment.createdAt | date:'short' }})</small></p>
+            <p class="mb-0">{{ comment.content }}</p>
+          </div>
+
+          <div class="mt-4">
+            <label for="newComment" class="form-label">Add a Comment</label>
+            <textarea
+              id="newComment"
+              [(ngModel)]="newComment"
+              class="form-control mb-2"
+              rows="3"
+              placeholder="Write your comment here..."
+            ></textarea>
+            <button class="btn btn-primary w-100" (click)="addComment()">Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
