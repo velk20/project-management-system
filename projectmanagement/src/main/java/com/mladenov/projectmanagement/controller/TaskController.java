@@ -125,6 +125,14 @@ public class TaskController {
     }
 
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex) {
+        return AppResponseUtil.error(HttpStatus.BAD_REQUEST)
+                .logStackTrace(Arrays.toString(ex.getStackTrace()))
+                .withMessage(ex.getMessage())
+                .build();
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFoundException(EntityNotFoundException ex) {
         return AppResponseUtil.error(HttpStatus.NOT_FOUND)

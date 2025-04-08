@@ -8,14 +8,19 @@ import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {TasksComponent} from "./components/tasks/tasks.component";
 import {ProjectComponent} from "./components/project/project.component";
 import {TaskViewComponent} from "./components/task-view/task-view.component";
+import {authGuard} from "./auth/auth.guard";
+import {ProfileComponent} from "./components/profile/profile.component";
+import {ChangePasswordComponent} from "./components/change-password/change-password.component";
 
 export const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'tasks', component: TasksComponent},
-  {path: 'project/:id', component: ProjectComponent},
-  {path: 'task/:id', component: TaskViewComponent},
+  {path: '', component: HomeComponent, canActivate: [homeGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [homeGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [homeGuard]},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [authGuard]},
+  {path: 'tasks', component: TasksComponent, canActivate: [authGuard]},
+  {path: 'profile', component: ProfileComponent, canActivate: [authGuard]},
+  {path: 'change-password', component: ChangePasswordComponent, canActivate: [authGuard]},
+  {path: 'project/:id', component: ProjectComponent, canActivate: [authGuard]},
+  {path: 'task/:id', component: TaskViewComponent, canActivate: [authGuard]},
   {path: '**', component: NotfoundComponent}
 ];

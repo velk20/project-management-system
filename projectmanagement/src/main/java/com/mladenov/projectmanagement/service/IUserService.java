@@ -1,5 +1,6 @@
 package com.mladenov.projectmanagement.service;
 
+import com.mladenov.projectmanagement.model.dto.user.ChangeUserPasswordDTO;
 import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
@@ -18,4 +19,10 @@ public interface IUserService {
     List<UserDTO> getAllUsers();
 
     List<UserDTO> searchUsersByUsername(String username);
+
+    UserDTO updateProfile(Long userId, UserDTO userDTO);
+
+    void deleteProfile(Long userId);
+
+    void changePassword(ChangeUserPasswordDTO dto);
 }
