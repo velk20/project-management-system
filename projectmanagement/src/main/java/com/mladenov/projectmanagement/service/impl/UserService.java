@@ -10,6 +10,9 @@ import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService implements IUserService {
     private final UserRepository userRepository;
@@ -53,5 +56,11 @@ public class UserService implements IUserService {
     public UserDTO getUserById(Long userId) {
         UserEntity user = this.getUserEntityById(userId);
         return MappingEntityUtil.mapUserDTO(user);
+    }
+
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<UserEntity> users = this.userRepository.findAll();
+        return users.stream().map(MappingEntityUtil::mapUserDTO).collect(Collectors.toList());
     }
 }

@@ -87,7 +87,7 @@
 
           <!-- Tasks Content -->
           <div class="content-area" *ngSwitchCase="'Your Tasks'" >
-            <button type="button" class="btn btn-success d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-success d-flex align-items-center gap-2" (click)="onCreateTask()">
               <i class="bi bi-plus-lg"></i>
               Create New Task
             </button>

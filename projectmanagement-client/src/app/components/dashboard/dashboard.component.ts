@@ -21,6 +21,8 @@ import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {TasksComponent} from "../tasks/tasks.component";
 import Swal from 'sweetalert2';
+import {TaskStatus} from "../../models/task-status.enum";
+import {TaskType} from "../../models/task-type.enum";
 
 @Component({
   selector: 'app-dashboard',
@@ -70,6 +72,7 @@ export class DashboardComponent implements OnInit {
 
   tasks: Task[] = [];
   projects: Project[] = [];
+  users: User[] = [];
   finishedTasks: number = 0;
   pendingTasks: number = 0;
 
@@ -148,6 +151,110 @@ export class DashboardComponent implements OnInit {
       Swal.fire('Success', `You have added "${data.name}" project!`, 'success');
     }, error => {
       Swal.fire('Error', error.error.message, 'error');
+    })
+  }
+
+  onCreateTask() {
+    this.getAllUsers();
+
+    const statusOptions = Object.values(TaskStatus)
+      .map(status => `<option value="${status}">${status.replace(/_/g, ' ')}</option>`)
+      .join('');
+
+    const typeOptions = Object.values(TaskType)
+      .map(type => `<option value="${type}">${type}</option>`)
+      .join('');
+
+    const projectOptions = this.projects.map(prj=> `<option value="${prj.id}">${prj.name}</option>`).join('');
+
+    Swal.fire({
+      title: 'Create New Task',
+      html: `<input id="task-title" class="swal2-input" placeholder="Title (required)">` +
+        `<textarea id="task-description" class="swal2-textarea" placeholder="Description (optional)" rows="5" style="height: 120px; resize: vertical;"></textarea>` +
+        `<select id="task-status" class="swal2-select">${statusOptions}</select>` +
+        `<select id="task-type" class="swal2-select">${typeOptions}</select>` +
+        `<select id="task-project" class="swal2-select">${projectOptions}</select>` +
+        `<input id="task-assignee-id" class="swal2-input" hidden="hidden" placeholder="Assignee" type="number">` +
+        `<input id="task-assignee" class="swal2-input" placeholder="Assignee" type="text">
+        <div id="assignee-suggestions" style="max-height: 100px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; display: none; background: white; position: relative; z-index: 9999;"></div>`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Create',
+      didOpen: () => {
+        const assigneeInput = document.getElementById('task-assignee') as HTMLInputElement;
+        const assigneeId = document.getElementById('task-assignee-id') as HTMLInputElement;
+        const suggestionsContainer = document.getElementById('assignee-suggestions') as HTMLDivElement;
+
+        assigneeInput.addEventListener('input', () => {
+          const query = assigneeInput.value.toLowerCase();
+          suggestionsContainer.innerHTML = '';
+
+          if (!query) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          const filteredUsers = this.users.filter(user => user.username.toLowerCase().includes(query));
+
+          if (filteredUsers.length === 0) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          filteredUsers.forEach(user => {
+            const option = document.createElement('div');
+            option.textContent = `${user.username}`;
+            option.style.padding = '5px 10px';
+            option.style.cursor = 'pointer';
+            option.addEventListener('click', () => {
+              assigneeInput.value = user.username;
+              assigneeId.value = user.id?.toString() ?? '0';
+              suggestionsContainer.style.display = 'none';
+            });
+            suggestionsContainer.appendChild(option);
+          });
+
+          suggestionsContainer.style.display = 'block';
+        });
+      },
+      preConfirm: () => {
+        const title = (document.getElementById('task-title') as HTMLInputElement).value.trim();
+        const description = (document.getElementById('task-description') as HTMLTextAreaElement).value.trim();
+        const status = (document.getElementById('task-status') as HTMLSelectElement).value;
+        const type = (document.getElementById('task-type') as HTMLSelectElement).value;
+        const projectId = (document.getElementById('task-project') as HTMLSelectElement).value;
+        const assigneeId = (document.getElementById('task-assignee-id') as HTMLInputElement).value;
+
+        if (!title) {
+          Swal.showValidationMessage('Title is required');
+          return false;
+        }
+
+        const newTask: Task = {
+          title,
+          description,
+          status: Object.values(TaskStatus).find(value => value === status) ?? TaskStatus.New,
+          type: Object.values(TaskType).find(value => value === type) ?? TaskType.Story,
+          creatorId: this.authService.getUserFromJwt().id,
+          assigneeId: Number(assigneeId) || undefined,
+          projectId: Number(projectId)
+        }
+
+        return newTask;
+      }
+    }).then((result: any) => {
+      if (result.isConfirmed && result.value) {
+        const newTask: Task = result.value;
+        this.taskService.createTask(newTask).subscribe(res => {
+          this.tasks.push(res.data as Task);
+        })
+      }
+    });
+  }
+
+  private getAllUsers(){
+    this.userService.getAllUsers().subscribe(res => {
+      this.users = res.data as User[];
     })
   }
 }

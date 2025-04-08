@@ -10,6 +10,8 @@ import {Task} from '../../models/task';
 import {TaskStatus} from "../../models/task-status.enum";
 import {TaskType} from "../../models/task-type.enum";
 import {TaskService} from "../../services/task.service";
+import {UserService} from "../../services/user.service";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'app-project',
@@ -25,11 +27,13 @@ import {TaskService} from "../../services/task.service";
 export class ProjectComponent implements OnInit {
   constructor(private readonly route: ActivatedRoute,
               private readonly authService: AuthService,
+              private readonly userService: UserService,
               private readonly taskService: TaskService,
               private readonly projectService: ProjectService,
               private readonly location: Location) {}
 
   project: Project  = {} as Project;
+  users: User[] = [];
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('id'));
@@ -91,6 +95,8 @@ export class ProjectComponent implements OnInit {
   }
 
   onCreateTask() {
+    this.getAllUsers();
+
     const statusOptions = Object.values(TaskStatus)
       .map(status => `<option value="${status}">${status.replace(/_/g, ' ')}</option>`)
       .join('');
@@ -106,21 +112,61 @@ export class ProjectComponent implements OnInit {
         `<textarea id="task-description" class="swal2-textarea" placeholder="Description (optional)" rows="5" style="height: 120px; resize: vertical;"></textarea>` +
         `<select id="task-status" class="swal2-select">${statusOptions}</select>` +
         `<select id="task-type" class="swal2-select">${typeOptions}</select>` +
-        `<input id="task-assignee" class="swal2-input" placeholder="Assignee ID (optional)" type="number">`,
+        `<input id="task-assignee-id" class="swal2-input" hidden="hidden" placeholder="Assignee" type="number">` +
+        `<input id="task-assignee" class="swal2-input" placeholder="Assignee" type="text">
+        <div id="assignee-suggestions" style="max-height: 100px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; display: none; background: white; position: relative; z-index: 9999;"></div>`,
       focusConfirm: false,
       showCancelButton: true,
       confirmButtonText: 'Create',
+      didOpen: () => {
+        const assigneeInput = document.getElementById('task-assignee') as HTMLInputElement;
+        const assigneeId = document.getElementById('task-assignee-id') as HTMLInputElement;
+        const suggestionsContainer = document.getElementById('assignee-suggestions') as HTMLDivElement;
+
+        assigneeInput.addEventListener('input', () => {
+          const query = assigneeInput.value.toLowerCase();
+          suggestionsContainer.innerHTML = '';
+
+          if (!query) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          const filteredUsers = this.users.filter(user => user.username.toLowerCase().includes(query));
+
+          if (filteredUsers.length === 0) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          filteredUsers.forEach(user => {
+            const option = document.createElement('div');
+            option.textContent = `${user.username}`;
+            option.style.padding = '5px 10px';
+            option.style.cursor = 'pointer';
+            option.addEventListener('click', () => {
+              assigneeInput.value = user.username;
+              assigneeId.value = user.id?.toString() ?? '0';
+              suggestionsContainer.style.display = 'none';
+            });
+            suggestionsContainer.appendChild(option);
+          });
+
+          suggestionsContainer.style.display = 'block';
+        });
+      },
       preConfirm: () => {
         const title = (document.getElementById('task-title') as HTMLInputElement).value.trim();
         const description = (document.getElementById('task-description') as HTMLTextAreaElement).value.trim();
         const status = (document.getElementById('task-status') as HTMLSelectElement).value;
         const type = (document.getElementById('task-type') as HTMLSelectElement).value;
-        const assigneeId = (document.getElementById('task-assignee') as HTMLInputElement).value;
+        const assigneeId = (document.getElementById('task-assignee-id') as HTMLInputElement).value;
 
         if (!title) {
           Swal.showValidationMessage('Title is required');
           return false;
         }
+
 
         const newTask: Task = {
           title,
@@ -128,6 +174,7 @@ export class ProjectComponent implements OnInit {
           status: Object.values(TaskStatus).find(value => value === status) ?? TaskStatus.New,
           type: Object.values(TaskType).find(value => value === type) ?? TaskType.Story,
           creatorId: this.authService.getUserFromJwt().id,
+          assigneeId: Number(assigneeId) || undefined,
           projectId: this.project.id ?? 0
         }
 
@@ -143,5 +190,11 @@ export class ProjectComponent implements OnInit {
        })
       }
     });
+  }
+
+  private getAllUsers(){
+    this.userService.getAllUsers().subscribe(res => {
+      this.users = res.data as User[];
+    })
   }
 }

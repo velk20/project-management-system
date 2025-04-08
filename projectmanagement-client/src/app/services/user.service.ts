@@ -15,4 +15,7 @@ export class UserService {
     return this.http.get<AppResponse>(`${Constant.USERS_URL}/${userId}`);
   }
 
+  getAllUsers():Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.USERS_URL}`)
+  }
 }

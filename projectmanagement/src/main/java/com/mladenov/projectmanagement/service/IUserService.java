@@ -4,6 +4,8 @@ import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
 
+import java.util.List;
+
 public interface IUserService {
     UserEntity getUserEntityById(Long userId);
     UserEntity getUserEntityByEmail(String email);
@@ -12,4 +14,7 @@ public interface IUserService {
     UserRoleEntity getUserRoleEntityByUserRole(String userRole);
 
     UserDTO getUserById(Long userId);
+
+    List<UserDTO> getAllUsers();
+
 }

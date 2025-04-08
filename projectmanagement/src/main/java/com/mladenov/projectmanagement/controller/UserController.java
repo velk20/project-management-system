@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Tag(name = "Users Controller", description = "Operations related to user management")
 @RestController
 @RequestMapping("/api/v1/users")
@@ -31,6 +33,16 @@ public class UserController {
 
         return AppResponseUtil.success()
                 .withData(userDTO)
+                .build();
+    }
+
+    @GetMapping
+    @Operation(summary = "Get all users")
+    public ResponseEntity<?> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
+
+        return AppResponseUtil.success()
+                .withData(users)
                 .build();
     }
 }
