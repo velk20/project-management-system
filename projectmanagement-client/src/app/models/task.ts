@@ -1,11 +1,13 @@
 import {TaskComment} from "./comment";
+import {TaskStatus} from "./task-status.enum";
+import {TaskType} from "./task-type.enum";
 
 export interface Task {
   id?: number;
   title: string;
   description?: string;
-  status: string
-  type: string
+  status: TaskStatus;
+  type: TaskType;
   creatorId: number;
   assigneeId?: number;
   projectId: number;

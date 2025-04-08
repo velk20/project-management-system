@@ -23,4 +23,8 @@ export class ProjectService {
   createProject(newProject: Project): Observable<AppResponseWithMessage> {
     return this.http.post<AppResponseWithMessage>(`${Constant.PROJECTS_URL}`, newProject);
   }
+
+  updateProject(id: number, updatedProject: Project):Observable<AppResponseWithMessage> {
+    return this.http.put<AppResponseWithMessage>(`${Constant.PROJECTS_URL}/${id}`, updatedProject);
+  }
 }
