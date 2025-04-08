@@ -1,4 +1,5 @@
 export interface TaskComment {
+  id?: number;
   taskId: number;
   authorId: number;
   content: string;

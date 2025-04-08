@@ -18,4 +18,8 @@ export class UserService {
   getAllUsers():Observable<AppResponse> {
     return this.http.get<AppResponse>(`${Constant.USERS_URL}`)
   }
+
+  searchUsers(username: string): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.USERS_URL}/search?username=${username}`);
+  }
 }

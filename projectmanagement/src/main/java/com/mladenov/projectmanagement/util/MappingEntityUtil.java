@@ -59,6 +59,7 @@ public class MappingEntityUtil {
 
     public static TaskCommentDTO mapCommentToDTO(TaskCommentEntity taskCommentEntity) {
         return TaskCommentDTO.builder()
+                .id(taskCommentEntity.getId())
                 .authorId(taskCommentEntity.getAuthor().getId())
                 .taskId(taskCommentEntity.getTask().getId())
                 .content(taskCommentEntity.getContent())

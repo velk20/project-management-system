@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class TaskCommentDTO
 {
+    private Long id;
     @NotNull(message = "Task Id is required")
     private Long taskId;
     @NotNull(message = "Author Id is required")

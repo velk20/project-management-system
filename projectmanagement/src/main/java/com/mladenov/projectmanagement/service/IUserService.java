@@ -17,4 +17,5 @@ public interface IUserService {
 
     List<UserDTO> getAllUsers();
 
+    List<UserDTO> searchUsersByUsername(String username);
 }

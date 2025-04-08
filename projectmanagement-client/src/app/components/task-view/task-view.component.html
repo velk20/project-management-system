@@ -12,6 +12,16 @@
         </div>
         <div class="card-body">
           <div class="mb-3">
+            <label class="form-label">Task ID</label>
+            <input
+              type="number"
+              [value]="task.id"
+              class="form-control"
+              readonly
+            />
+          </div>
+
+          <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input
               type="text"
@@ -46,6 +56,42 @@
               <option *ngFor="let type of taskTypes" [ngValue]="type" [ngClass]="getTypeClass(type)">{{ type }}</option>
             </select>
           </div>
+
+          <div class="mb-3 position-relative">
+            <label for="assignee" class="form-label">Assignee</label>
+            <input
+              type="text"
+              id="assignee"
+              [(ngModel)]="assigneeSearch"
+              (input)="onAssigneeInput()"
+              class="form-control"
+              placeholder="Search assignee username"
+              autocomplete="off"
+            />
+            <ul *ngIf="filteredUsers.length > 0" class="list-group position-absolute w-100" style="z-index: 1000;">
+              <li
+                *ngFor="let user of filteredUsers"
+                class="list-group-item list-group-item-action"
+                (click)="selectAssignee(user)"
+              >
+                {{ user.username }}
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Creator</label>
+            <input
+              type="text"
+              [value]="creatorUsername"
+              class="form-control"
+              readonly
+            />
+          </div>
+
+          <button class="btn btn-success w-100" (click)="saveTask()">
+            <i class="bi bi-save"></i> Save Changes
+          </button>
         </div>
       </div>
     </div>
@@ -58,8 +104,7 @@
         </div>
         <div class="card-body">
           <div *ngFor="let comment of task.comments" class="mb-3 border-bottom pb-2">
-            <p class="mb-1"><strong>{{ comment.authorId }}</strong> <small class="text-muted">({{ comment.createdAt | date:'short' }})</small></p>
-            <p class="mb-0">{{ comment.content }}</p>
+            <app-comment [comment]="comment" (commentDeleted)="onCommentDeleted($event)"></app-comment>
           </div>
 
           <div class="mt-4">

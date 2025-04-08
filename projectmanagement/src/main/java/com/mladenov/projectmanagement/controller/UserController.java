@@ -8,10 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +37,15 @@ public class UserController {
     @Operation(summary = "Get all users")
     public ResponseEntity<?> getAllUsers() {
         List<UserDTO> users = userService.getAllUsers();
+
+        return AppResponseUtil.success()
+                .withData(users)
+                .build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchUsers(@RequestParam("username") String username) {
+        List<UserDTO> users = userService.searchUsersByUsername(username);
 
         return AppResponseUtil.success()
                 .withData(users)

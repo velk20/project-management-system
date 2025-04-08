@@ -29,4 +29,8 @@ export class TaskService {
   getTaskById(taskId: string) : Observable<AppResponse> {
     return this.http.get<AppResponse>(`${Constant.TASKS_URL}/${taskId}`);
   }
+
+  updateTask(id: number | undefined, task: Task): Observable<AppResponseWithMessage> {
+    return this.http.put<AppResponseWithMessage>(`${Constant.TASKS_URL}/${id}`, task);
+  }
 }

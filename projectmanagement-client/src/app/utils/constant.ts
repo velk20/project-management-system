@@ -4,5 +4,4 @@ export class Constant {
   static PROJECTS_URL = `${Constant.BASE_URL}/projects`;
   static USERS_URL = `${Constant.BASE_URL}/users`;
   static TASKS_URL = `${Constant.BASE_URL}/tasks`;
-  static COMMENTS_URL = `${Constant.TASKS_URL}/{taskId}/comments`;
 }

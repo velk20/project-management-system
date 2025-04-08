@@ -63,4 +63,10 @@ public class UserService implements IUserService {
         List<UserEntity> users = this.userRepository.findAll();
         return users.stream().map(MappingEntityUtil::mapUserDTO).collect(Collectors.toList());
     }
+
+    @Override
+    public List<UserDTO> searchUsersByUsername(String username) {
+        List<UserEntity> userEntities = userRepository.searchByUsername(username);
+        return userEntities.stream().map(MappingEntityUtil::mapUserDTO).collect(Collectors.toList());
+    }
 }
