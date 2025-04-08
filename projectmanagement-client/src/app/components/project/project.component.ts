@@ -8,13 +8,14 @@ import {
   MatCardTitle
 } from "@angular/material/card";
 import {MatList, MatListItem} from "@angular/material/list";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf, Location} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {Project} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
 import {MatButton} from "@angular/material/button";
 import {StatusComponent} from "../status/status.component";
 import {TypeComponent} from "../type/type.component";
+import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
 
 @Component({
   selector: 'app-project',
@@ -33,14 +34,16 @@ import {TypeComponent} from "../type/type.component";
     NgIf,
     MatButton,
     StatusComponent,
-    TypeComponent
+    TypeComponent,
+    TaskListItemComponent
   ],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
 })
 export class ProjectComponent implements OnInit {
   constructor(private readonly route: ActivatedRoute,
-              private readonly projectService: ProjectService,) {}
+              private readonly projectService: ProjectService,
+              private readonly location: Location) {}
 
   project: Project  = {} as Project;
 
@@ -51,13 +54,7 @@ export class ProjectComponent implements OnInit {
     })
   }
 
-  getOwnerName(ownerId: number): string {
-    // Mocked function to return owner name
-    const users = [
-      { id: 1, name: 'John Doe' },
-      { id: 2, name: 'Jane Smith' }
-    ];
-    const user = users.find(user => user.id === ownerId);
-    return user ? user.name : 'Unknown';
+  goBack() {
+    this.location.back();
   }
 }

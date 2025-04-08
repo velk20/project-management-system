@@ -69,6 +69,8 @@ export class DashboardComponent implements OnInit {
 
   tasks: Task[] = [];
   projects: Project[] = [];
+  finishedTasks: number = 0;
+  pendingTasks: number = 0;
 
   menuItems = [
     { name: 'Dashboard', icon: 'dashboard', color: '#3498db' },
@@ -98,6 +100,8 @@ export class DashboardComponent implements OnInit {
   private getUserTasks(userId: number){
     this.taskService.getAllTasksForUser(userId).subscribe(res=>{
       this.tasks = res.data as Task[];
+      this.finishedTasks = this.tasks.filter(task => task.status === 'Closed').length;
+      this.pendingTasks = this.tasks.length - this.finishedTasks;
     });
   }
 
