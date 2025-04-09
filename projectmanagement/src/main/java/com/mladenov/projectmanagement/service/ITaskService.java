@@ -1,7 +1,9 @@
 package com.mladenov.projectmanagement.service;
 
+import com.mladenov.projectmanagement.model.dto.task.PageableTasksDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface ITaskService {
 
     void deleteTaskById(Long taskId);
 
-    List<TaskDTO> getTasksForUser(Long userId);
+    PageableTasksDTO getTasksForUser(Long userId, Pageable pageable);
 
-    List<TaskDTO> getTasksForProject(Long projectId);
+    List<TaskDTO> getTasksForProject(Long projectId, Pageable pageable);
 }

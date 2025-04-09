@@ -6,7 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {DatePipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {TaskService} from "../../services/task.service";
-import {Task} from "../../models/task";
+import {PageableTasks, Task} from "../../models/task";
 import {JwtPayload} from "../../models/auth";
 import {AuthService} from "../../services/auth.service";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
@@ -23,6 +23,7 @@ import {TasksComponent} from "../tasks/tasks.component";
 import Swal from 'sweetalert2';
 import {TaskStatus} from "../../models/task-status.enum";
 import {TaskType} from "../../models/task-type.enum";
+import {Pageable} from "../../models/page";
 
 @Component({
   selector: 'app-dashboard',
@@ -76,6 +77,9 @@ export class DashboardComponent implements OnInit {
   finishedTasks: number = 0;
   pendingTasks: number = 0;
 
+  pageable: Pageable={ page:0, size: 10}
+  totalPages: number = 0;
+
   menuItems = [
     { name: 'Dashboard', icon: 'dashboard', color: '#3498db' },
     { name: 'Projects', icon: 'folder', color: '#2ecc71' },
@@ -96,8 +100,10 @@ export class DashboardComponent implements OnInit {
   }
 
   private getUserTasks(userId: number){
-    this.taskService.getAllTasksForUser(userId).subscribe(res=>{
-      this.tasks = res.data as Task[];
+    this.taskService.getAllTasksForUser(userId, this.pageable).subscribe(res=>{
+      let data = res.data as PageableTasks;
+      this.totalPages = data.totalPages;
+      this.tasks = data.tasks;
       this.finishedTasks = this.tasks.filter(task => task.status === 'Closed').length;
       this.pendingTasks = this.tasks.length - this.finishedTasks;
     });
@@ -256,5 +262,21 @@ export class DashboardComponent implements OnInit {
     this.userService.getAllUsers().subscribe(res => {
       this.users = res.data as User[];
     })
+  }
+
+  previousPage() {
+    const user: JwtPayload  = this.authService.getUserFromJwt();
+    this.pageable.page -= 1;
+    if (this.pageable.page < 1) {
+      this.pageable.page = 0;
+    }
+    this.getUserTasks(user.id)
+  }
+
+  nextPage() {
+    const user: JwtPayload  = this.authService.getUserFromJwt();
+    this.pageable.page += 1;
+
+    this.getUserTasks(user.id)
   }
 }

@@ -15,3 +15,9 @@ export interface Task {
   updatedAt?: string;
   comments?: TaskComment[];
 }
+
+export interface PageableTasks {
+  totalPages: number;
+  totalElements: number;
+  tasks: Task[];
+}

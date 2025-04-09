@@ -1,6 +1,7 @@
 package com.mladenov.projectmanagement.controller;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
+import com.mladenov.projectmanagement.model.dto.task.PageableTasksDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
@@ -10,6 +11,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -42,8 +45,11 @@ public class TaskController {
 
     @GetMapping("/project/{projectId}")
     @Operation(summary = "Get all tasks by project id")
-    public ResponseEntity<?> getAllTasksByProject(@Parameter(description = "ID of the project") @PathVariable Long projectId) {
-        List<TaskDTO> tasks = taskService.getTasksForProject(projectId);
+    public ResponseEntity<?> getAllTasksByProject(@Parameter(description = "ID of the project") @PathVariable Long projectId,
+                                                  @RequestParam(defaultValue = "0") int page,
+                                                  @RequestParam(defaultValue = "1000") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        List<TaskDTO> tasks = taskService.getTasksForProject(projectId, pageable);
 
         return AppResponseUtil.success()
                 .withData(tasks)
@@ -62,8 +68,11 @@ public class TaskController {
 
     @GetMapping("/user/{userId}")
     @Operation(summary = "Get all tasks for user")
-    public ResponseEntity<?> getAllTasksForUser(@Parameter(description = "ID of the user") @PathVariable Long userId) {
-        List<TaskDTO> tasks = taskService.getTasksForUser(userId);
+    public ResponseEntity<?> getAllTasksForUser(@Parameter(description = "ID of the user") @PathVariable Long userId,
+                                                @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "1000") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        PageableTasksDTO tasks = taskService.getTasksForUser(userId, pageable);
 
         return AppResponseUtil.success()
                 .withData(tasks)

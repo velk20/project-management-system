@@ -4,6 +4,7 @@ import {AppResponse, AppResponseWithMessage} from "../utils/app.response";
 import {Observable} from "rxjs";
 import {Constant} from "../utils/constant";
 import { Task } from '../models/task';
+import {Pageable} from "../models/page";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,13 @@ export class TaskService {
 
   }
 
-  getAllTasksForUser(userId: number): Observable<AppResponse> {
-    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/user/${userId}`);
+  getAllTasksForUser(userId: number,  pageable: Pageable): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/user/${userId}`, {
+      params: {
+        page: pageable.page,
+        size: pageable.size
+      }
+    });
   }
 
   getAllTasksForProject(projectId: number): Observable<AppResponse> {

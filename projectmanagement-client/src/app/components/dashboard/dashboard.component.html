@@ -92,6 +92,21 @@
               Create New Task
             </button>
             <app-tasks [tasks]="tasks"></app-tasks>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button class="btn btn-outline-primary"
+                      (click)="previousPage()"
+                      [disabled]="pageable.page === 0">
+                Previous
+              </button>
+
+              <span>Page {{ pageable.page + 1 }} of {{ totalPages }}</span>
+
+              <button class="btn btn-outline-primary"
+                      (click)="nextPage()"
+                      [disabled]="pageable.page + 1 >= totalPages">
+                Next
+              </button>
+            </div>
           </div>
 
           <!-- Default Content -->

@@ -1,6 +1,7 @@
 package com.mladenov.projectmanagement.service.impl;
 
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
+import com.mladenov.projectmanagement.model.dto.task.PageableTasksDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
 import com.mladenov.projectmanagement.model.entity.ProjectEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
@@ -13,6 +14,8 @@ import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -116,16 +119,19 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<TaskDTO> getTasksForUser(Long userId) {
+    public PageableTasksDTO getTasksForUser(Long userId, Pageable pageable) {
         UserEntity userEntity = userService.getUserEntityById(userId);
-        return taskRepository.findAllByCreatedByOrAssignedTo(userEntity, userEntity).stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+        Page<TaskEntity> entityPage = taskRepository.findAllByCreatedByOrAssignedTo(userEntity, userEntity, pageable);
+        return new PageableTasksDTO(
+                entityPage.stream().map(MappingEntityUtil::mapTaskToDTO).toList(),
+                entityPage.getTotalPages(),
+                entityPage.getTotalElements()
+        );
     }
 
     @Override
-    public List<TaskDTO> getTasksForProject(Long projectId) {
+    public List<TaskDTO> getTasksForProject(Long projectId, Pageable pageable) {
         ProjectEntity projectEntity = projectService.getProjectEntity(projectId);
-        List<TaskEntity> tasks = taskRepository.findAllByProject(projectEntity);
-
-        return tasks.stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+        return taskRepository.findAllByProject(projectEntity, pageable).stream().map(MappingEntityUtil::mapTaskToDTO).toList();
     }
 }
