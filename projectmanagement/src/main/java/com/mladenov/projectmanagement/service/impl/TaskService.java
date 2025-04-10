@@ -16,6 +16,7 @@ import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -116,6 +117,38 @@ public class TaskService implements ITaskService {
     public void deleteTaskById(Long taskId) {
         TaskEntity taskEntity = getTaskEntityById(taskId);
         taskRepository.delete(taskEntity);
+    }
+
+    @Override
+    public List<TaskDTO> searchTasks(Long userId, String title, String status, String type) {
+        Specification<TaskEntity> spec = Specification.where(null);
+
+        UserEntity userEntity = this.userService.getUserEntityById(userId);
+
+        if (userEntity != null ) {
+            spec = spec.and((root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("assignedTo"), userEntity));
+        }
+
+        if (title != null && !title.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + title.toLowerCase() + "%")
+            );
+        }
+
+        if (status != null && !status.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("status")), "%" + status.toLowerCase() + "%")
+            );
+        }
+
+        if (type != null && !type.isEmpty()) {
+            spec = spec.and((root, query, criteriaBuilder) ->
+                    criteriaBuilder.like(criteriaBuilder.lower(root.get("type")), "%" + type.toLowerCase() + "%")
+            );
+        }
+
+        List<TaskEntity> searchedData = taskRepository.findAll(spec);
+        return searchedData.stream().map(MappingEntityUtil::mapTaskToDTO).collect(Collectors.toList());
     }
 
     @Override

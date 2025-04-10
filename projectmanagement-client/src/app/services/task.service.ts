@@ -44,4 +44,8 @@ export class TaskService {
   updateTask(id: number | undefined, task: Task): Observable<AppResponseWithMessage> {
     return this.http.put<AppResponseWithMessage>(`${Constant.TASKS_URL}/${id}`, task);
   }
+
+  searchTask(userId: number, title: string, status: string, type:string): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/search?userId=${userId}&title=${title}&status=${status}&type=${type}`)
+  }
 }

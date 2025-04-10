@@ -4,19 +4,16 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {DatePipe, NgClass, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {NgForOf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {TaskService} from "../../services/task.service";
 import {PageableTasks, Task} from "../../models/task";
 import {JwtPayload} from "../../models/auth";
 import {AuthService} from "../../services/auth.service";
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {animate, style, transition, trigger} from "@angular/animations";
 import {Project} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
 import {Router, RouterLink} from "@angular/router";
-import {TypeComponent} from "../type/type.component";
-import {StatusComponent} from "../status/status.component";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {TasksComponent} from "../tasks/tasks.component";
@@ -35,21 +32,14 @@ import {Pageable} from "../../models/page";
     MatIconModule,
     MatButtonModule,
     NgForOf,
-    NgIf,
     NgSwitchCase,
     NgSwitch,
     NgSwitchDefault,
     MatCard,
     MatCardTitle,
     MatCardContent,
-    MatGridList,
     MatCardHeader,
-    MatGridTile,
-    NgClass,
     RouterLink,
-    DatePipe,
-    TypeComponent,
-    StatusComponent,
     TasksComponent
   ],
   templateUrl: './dashboard.component.html',
@@ -74,8 +64,8 @@ export class DashboardComponent implements OnInit {
   tasks: Task[] = [];
   projects: Project[] = [];
   users: User[] = [];
-  finishedTasks: number = 0;
-  pendingTasks: number = 0;
+  finishedTasks: Task[] = [];
+  pendingTasks: Task[] = [];
 
   pageable: Pageable={ page:0, size: 10}
   totalPages: number = 0;
@@ -93,6 +83,8 @@ export class DashboardComponent implements OnInit {
 
     this.getUserTasks(user.id)
     this.getUserProjects(user.id)
+    this.getFinishedTasks(user.id)
+    this.getPendingTasks(user.id)
   }
 
   onMenuItemClick(item: any): void {
@@ -104,8 +96,6 @@ export class DashboardComponent implements OnInit {
       let data = res.data as PageableTasks;
       this.totalPages = data.totalPages;
       this.tasks = data.tasks;
-      this.finishedTasks = this.tasks.filter(task => task.status === 'Closed').length;
-      this.pendingTasks = this.tasks.length - this.finishedTasks;
     });
   }
 
@@ -278,5 +268,19 @@ export class DashboardComponent implements OnInit {
     this.pageable.page += 1;
 
     this.getUserTasks(user.id)
+  }
+
+  private getFinishedTasks(userId: number) {
+    this.taskService.searchTask(userId, '', TaskStatus.Closed,'').subscribe(res => {
+      let tasks = res.data as Task[];
+      this.finishedTasks = tasks;
+    });
+  }
+
+  private getPendingTasks(userId: number) {
+    this.taskService.searchTask(userId, '','','').subscribe(res => {
+      let tasks = res.data as Task[];
+      this.pendingTasks = tasks.filter(t => t.status !== TaskStatus.Closed);
+    });
   }
 }

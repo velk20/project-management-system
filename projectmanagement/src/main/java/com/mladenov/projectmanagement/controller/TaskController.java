@@ -3,6 +3,7 @@ package com.mladenov.projectmanagement.controller;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.task.PageableTasksDTO;
 import com.mladenov.projectmanagement.model.dto.task.TaskDTO;
+import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,6 +61,19 @@ public class TaskController {
     @Operation(summary = "Get all tasks")
     public ResponseEntity<?> getAllTasks() {
         List<TaskDTO> tasks = taskService.getAllTasks();
+
+        return AppResponseUtil.success()
+                .withData(tasks)
+                .build();
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search task")
+    public ResponseEntity<?> searchTask( @RequestParam(required = false) Long userId,
+                                         @RequestParam(required = false) String title,
+                                         @RequestParam(required = false) String status,
+                                         @RequestParam(required = false) String type) {
+        List<TaskDTO> tasks = taskService.searchTasks(userId, title, status, type);
 
         return AppResponseUtil.success()
                 .withData(tasks)
