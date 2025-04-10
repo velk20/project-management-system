@@ -130,8 +130,13 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<TaskDTO> getTasksForProject(Long projectId, Pageable pageable) {
+    public PageableTasksDTO getTasksForProject(Long projectId, Pageable pageable) {
         ProjectEntity projectEntity = projectService.getProjectEntity(projectId);
-        return taskRepository.findAllByProject(projectEntity, pageable).stream().map(MappingEntityUtil::mapTaskToDTO).toList();
+        Page<TaskEntity> allByProject = taskRepository.findAllByProject(projectEntity, pageable);
+        return new PageableTasksDTO(
+                allByProject.stream().map(MappingEntityUtil::mapTaskToDTO).toList(),
+                allByProject.getTotalPages(),
+                allByProject.getTotalElements()
+        );
     }
 }

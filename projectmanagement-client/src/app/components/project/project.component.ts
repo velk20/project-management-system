@@ -6,12 +6,14 @@ import {ProjectService} from "../../services/project.service";
 import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
 import {AuthService} from "../../services/auth.service";
 import Swal from "sweetalert2";
-import {Task} from '../../models/task';
+import {PageableTasks, Task} from '../../models/task';
 import {TaskStatus} from "../../models/task-status.enum";
 import {TaskType} from "../../models/task-type.enum";
 import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
+import {Pageable} from "../../models/page";
+import {JwtPayload} from "../../models/auth";
 
 @Component({
   selector: 'app-project',
@@ -33,10 +35,26 @@ export class ProjectComponent implements OnInit {
               private readonly location: Location) {}
 
   project: Project  = {} as Project;
+  tasks: Task[] = [];
+  pageable: Pageable={ page:0, size: 10}
+  totalPages: number = 0;
   users: User[] = [];
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('id'));
+    this.getProjectById(projectId);
+    this.getProjectTasksById(projectId);
+  }
+
+  private getProjectTasksById(id: number): void {
+    this.taskService.getAllTasksForProject(id, this.pageable).subscribe(res=>{
+      let data = res.data as PageableTasks;
+      this.tasks = data.tasks;
+      this.totalPages = data.totalPages;
+    })
+  }
+
+  private getProjectById(projectId: number) {
     this.projectService.getProjectById(projectId).subscribe(res => {
       this.project = res.data as Project;
     })
@@ -196,5 +214,19 @@ export class ProjectComponent implements OnInit {
     this.userService.getAllUsers().subscribe(res => {
       this.users = res.data as User[];
     })
+  }
+
+  previousPage() {
+    this.pageable.page -= 1;
+    if (this.pageable.page < 1) {
+      this.pageable.page = 0;
+    }
+    this.getProjectTasksById(this.project.id ?? 0)
+  }
+
+  nextPage() {
+    this.pageable.page += 1;
+
+    this.getProjectTasksById(this.project.id ?? 0)
   }
 }

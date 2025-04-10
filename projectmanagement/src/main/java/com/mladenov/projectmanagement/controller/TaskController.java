@@ -49,7 +49,7 @@ public class TaskController {
                                                   @RequestParam(defaultValue = "0") int page,
                                                   @RequestParam(defaultValue = "1000") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        List<TaskDTO> tasks = taskService.getTasksForProject(projectId, pageable);
+        PageableTasksDTO tasks = taskService.getTasksForProject(projectId, pageable);
 
         return AppResponseUtil.success()
                 .withData(tasks)

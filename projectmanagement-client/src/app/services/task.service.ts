@@ -24,8 +24,13 @@ export class TaskService {
     });
   }
 
-  getAllTasksForProject(projectId: number): Observable<AppResponse> {
-    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/project/${projectId}`);
+  getAllTasksForProject(projectId: number, pageable: Pageable): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/project/${projectId}`, {
+      params: {
+        page: pageable.page,
+        size: pageable.size
+      }
+    });
   }
 
   createTask(newTask: Task): Observable<AppResponseWithMessage> {

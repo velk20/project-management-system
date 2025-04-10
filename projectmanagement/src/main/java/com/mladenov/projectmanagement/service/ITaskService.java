@@ -22,5 +22,5 @@ public interface ITaskService {
 
     PageableTasksDTO getTasksForUser(Long userId, Pageable pageable);
 
-    List<TaskDTO> getTasksForProject(Long projectId, Pageable pageable);
+    PageableTasksDTO getTasksForProject(Long projectId, Pageable pageable);
 }
