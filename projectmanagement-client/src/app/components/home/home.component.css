@@ -18,3 +18,14 @@ header {
   color: white; /* Ensures the text color contrasts with the background */
   display: inline-block; /* Makes the div size fit the text */
 }
+
+header {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+.btn {
+  border-radius: 50px;
+}
