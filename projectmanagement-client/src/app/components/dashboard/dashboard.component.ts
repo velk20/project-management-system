@@ -271,16 +271,18 @@ export class DashboardComponent implements OnInit {
   }
 
   private getFinishedTasks(userId: number) {
-    this.taskService.searchTask(userId, '', TaskStatus.Closed,'').subscribe(res => {
-      let tasks = res.data as Task[];
-      this.finishedTasks = tasks;
+    this.taskService.searchTask(userId, '', TaskStatus.Closed,'', this.pageable).subscribe(res => {
+      let tasks = res.data as PageableTasks;
+      this.finishedTasks = tasks.tasks;
     });
   }
 
   private getPendingTasks(userId: number) {
-    this.taskService.searchTask(userId, '','','').subscribe(res => {
-      let tasks = res.data as Task[];
-      this.pendingTasks = tasks.filter(t => t.status !== TaskStatus.Closed);
+    this.taskService.searchTask(userId, '','','', this.pageable).subscribe(res => {
+      let tasks = res.data as PageableTasks;
+      this.pendingTasks = tasks.tasks.filter(t => t.status !== TaskStatus.Closed);
     });
   }
+
+  protected readonly TaskStatus = TaskStatus;
 }

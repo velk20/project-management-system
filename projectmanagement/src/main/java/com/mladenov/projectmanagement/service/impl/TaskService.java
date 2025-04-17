@@ -120,7 +120,7 @@ public class TaskService implements ITaskService {
     }
 
     @Override
-    public List<TaskDTO> searchTasks(Long userId, String title, String status, String type) {
+    public PageableTasksDTO searchTasks(Long userId, String title, String status, String type, Pageable pageable) {
         Specification<TaskEntity> spec = Specification.where(null);
 
         UserEntity userEntity = this.userService.getUserEntityById(userId);
@@ -147,8 +147,11 @@ public class TaskService implements ITaskService {
             );
         }
 
-        List<TaskEntity> searchedData = taskRepository.findAll(spec);
-        return searchedData.stream().map(MappingEntityUtil::mapTaskToDTO).collect(Collectors.toList());
+        Page<TaskEntity> entityPage = taskRepository.findAll(spec, pageable);
+        return new PageableTasksDTO(
+                entityPage.stream().map(MappingEntityUtil::mapTaskToDTO).toList(),
+                entityPage.getTotalPages(),
+                entityPage.getTotalElements());
     }
 
     @Override

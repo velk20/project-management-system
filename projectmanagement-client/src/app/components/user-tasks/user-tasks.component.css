@@ -1,0 +1,26 @@
+.project-card {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+.project-details {
+  margin-bottom: 20px;
+}
+
+.project-details div {
+  margin-bottom: 10px;
+}
+
+.task-list, .team-list {
+  margin-top: 20px;
+}
+
+mat-list-item {
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+}

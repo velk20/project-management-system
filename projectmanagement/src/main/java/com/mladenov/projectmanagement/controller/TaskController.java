@@ -69,11 +69,14 @@ public class TaskController {
 
     @GetMapping("/search")
     @Operation(summary = "Search task")
-    public ResponseEntity<?> searchTask( @RequestParam(required = false) Long userId,
-                                         @RequestParam(required = false) String title,
-                                         @RequestParam(required = false) String status,
-                                         @RequestParam(required = false) String type) {
-        List<TaskDTO> tasks = taskService.searchTasks(userId, title, status, type);
+    public ResponseEntity<?> searchTask(@RequestParam(required = false) Long userId,
+                                        @RequestParam(required = false) String title,
+                                        @RequestParam(required = false) String status,
+                                        @RequestParam(required = false) String type,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "1000") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        PageableTasksDTO tasks = taskService.searchTasks(userId, title, status, type, pageable);
 
         return AppResponseUtil.success()
                 .withData(tasks)

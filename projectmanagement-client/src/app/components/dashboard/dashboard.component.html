@@ -41,7 +41,7 @@
               </mat-card-content>
             </mat-card>
 
-            <mat-card class="dashboard-card dashboard-card-tasks" (click)="selectedMenu = 'Your Tasks'">
+            <mat-card class="dashboard-card dashboard-card-tasks" [routerLink]="['/user-tasks']" [queryParams]="{ status: TaskStatus.Closed }">
               <mat-card-header>
                 <mat-card-title>Finished tasks</mat-card-title>
               </mat-card-header>
@@ -53,7 +53,7 @@
               </mat-card-content>
             </mat-card>
 
-            <mat-card class="dashboard-card dashboard-card-team" (click)="selectedMenu = 'Your Tasks'">
+            <mat-card class="dashboard-card dashboard-card-team" [routerLink]="['/user-tasks']" [queryParams]="{ not_status: TaskStatus.Closed }">
               <mat-card-header>
                 <mat-card-title>Pending Tasks</mat-card-title>
               </mat-card-header>

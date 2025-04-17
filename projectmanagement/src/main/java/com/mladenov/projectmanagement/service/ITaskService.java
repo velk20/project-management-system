@@ -20,7 +20,7 @@ public interface ITaskService {
 
     void deleteTaskById(Long taskId);
 
-    List<TaskDTO> searchTasks(Long userId, String title, String status, String type);
+    PageableTasksDTO searchTasks(Long userId, String title, String status, String type, Pageable pageable);
 
     PageableTasksDTO getTasksForUser(Long userId, Pageable pageable);
 

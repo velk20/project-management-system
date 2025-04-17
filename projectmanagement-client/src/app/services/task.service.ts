@@ -45,7 +45,12 @@ export class TaskService {
     return this.http.put<AppResponseWithMessage>(`${Constant.TASKS_URL}/${id}`, task);
   }
 
-  searchTask(userId: number, title: string, status: string, type:string): Observable<AppResponse> {
-    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/search?userId=${userId}&title=${title}&status=${status}&type=${type}`)
+  searchTask(userId: number, title: string, status: string, type:string, pageable: Pageable): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.TASKS_URL}/search?userId=${userId}&title=${title}&status=${status}&type=${type}`, {
+      params: {
+        page: pageable.page,
+        size: pageable.size
+      }
+    });
   }
 }

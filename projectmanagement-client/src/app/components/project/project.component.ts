@@ -13,7 +13,6 @@ import {TaskService} from "../../services/task.service";
 import {UserService} from "../../services/user.service";
 import {User} from "../../models/user";
 import {Pageable} from "../../models/page";
-import {JwtPayload} from "../../models/auth";
 
 @Component({
   selector: 'app-project',
