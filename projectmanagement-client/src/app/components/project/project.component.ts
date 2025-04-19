@@ -204,6 +204,8 @@ export class ProjectComponent implements OnInit {
          if (this.project.tasks){
            this.project.tasks.push(res.data as Task);
          }
+           this.tasks.push(res.data as Task);
+
        })
       }
     });

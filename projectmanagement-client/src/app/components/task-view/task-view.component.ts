@@ -23,7 +23,8 @@ import {ToastrService} from "ngx-toastr";
     FormsModule,
     NgClass,
     CommentComponent,
-    NgIf
+    NgIf,
+    DatePipe
   ],
   templateUrl: './task-view.component.html',
   styleUrl: './task-view.component.css'
