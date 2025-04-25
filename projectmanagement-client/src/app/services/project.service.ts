@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AppResponse, AppResponseWithMessage} from "../utils/app.response";
 import {Constant} from "../utils/constant";
-import {Project} from "../models/project";
+import {Project, UpdateProject} from "../models/project";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class ProjectService {
     return this.http.post<AppResponseWithMessage>(`${Constant.PROJECTS_URL}`, newProject);
   }
 
-  updateProject(id: number, updatedProject: Project):Observable<AppResponseWithMessage> {
+  updateProject(id: number, updatedProject: UpdateProject):Observable<AppResponseWithMessage> {
     return this.http.put<AppResponseWithMessage>(`${Constant.PROJECTS_URL}/${id}`, updatedProject);
   }
 }

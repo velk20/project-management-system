@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Location, NgForOf, NgIf} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
-import {Project} from "../../models/project";
+import {Project, UpdateProject} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
 import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
 import {AuthService} from "../../services/auth.service";
@@ -206,6 +206,9 @@ export class ProjectComponent implements OnInit {
          }
            this.tasks.push(res.data as Task);
 
+         Swal.fire('Success', `You created task successful!`, 'success');
+       }, error => {
+         Swal.fire('Error', error.error.message, 'error');
        })
       }
     });
@@ -229,5 +232,94 @@ export class ProjectComponent implements OnInit {
     this.pageable.page += 1;
 
     this.getProjectTasksById(this.project.id ?? 0)
+  }
+
+  onAddUserToProject() {
+    this.getAllUsers();
+
+    Swal.fire({
+      title: 'Add member to project',
+      html:
+        `<input id="task-assignee-id" class="swal2-input" hidden="hidden" placeholder="Assignee" type="number">` +
+        `<input id="task-assignee" class="swal2-input" placeholder="Assignee" type="text">
+        <div id="assignee-suggestions" style="max-height: 100px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px; display: none; background: white; position: relative; z-index: 9999;"></div>`,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Add',
+      didOpen: () => {
+        const assigneeInput = document.getElementById('task-assignee') as HTMLInputElement;
+        const assigneeId = document.getElementById('task-assignee-id') as HTMLInputElement;
+        const suggestionsContainer = document.getElementById('assignee-suggestions') as HTMLDivElement;
+
+        assigneeInput.addEventListener('input', () => {
+          const query = assigneeInput.value.toLowerCase();
+          suggestionsContainer.innerHTML = '';
+
+          if (!query) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          const filteredUsers = this.users.filter(user =>
+            user.username.toLowerCase().includes(query) &&
+            user.id !== this.project.ownerId &&
+            !this.project.teamMembers?.some(m => m.id === user.id));
+
+          if (filteredUsers.length === 0) {
+            suggestionsContainer.style.display = 'none';
+            return;
+          }
+
+          filteredUsers.forEach(user => {
+            const option = document.createElement('div');
+            option.textContent = `${user.username}`;
+            option.style.padding = '5px 10px';
+            option.style.cursor = 'pointer';
+            option.addEventListener('click', () => {
+              assigneeInput.value = user.username;
+              assigneeId.value = user.id?.toString() ?? '0';
+              suggestionsContainer.style.display = 'none';
+            });
+            suggestionsContainer.appendChild(option);
+          });
+
+          suggestionsContainer.style.display = 'block';
+        });
+      },
+      preConfirm: () => {
+        const assigneeId = (document.getElementById('task-assignee-id') as HTMLInputElement).value;
+
+        if (!assigneeId) {
+          Swal.showValidationMessage('Username of user is required');
+          return false;
+        }
+
+        const tasksIds: number[] = (this.project.tasks || []).map(task => task.id as number);
+        const membersIds: number [] = this.project.teamMembers?.map(teamMember => teamMember.id as number) ?? [];
+        membersIds.push(Number(assigneeId));
+
+        const project: UpdateProject = {
+          name: this.project.name,
+          description: this.project.description,
+          tasksId: tasksIds,
+          teamMembersId: membersIds,
+
+        }
+        console.log(project)
+        return project;
+      }
+    }).then((result: any) => {
+      if (result.isConfirmed && result.value) {
+        const updatedProject: UpdateProject = result.value;
+        this.projectService.updateProject(this.project.id ?? 0, updatedProject).subscribe(res => {
+          const project = res.data as Project;
+          this.project = project;
+          this.getProjectTasksById(project.id ?? 0);
+          Swal.fire('Success', `User was added to project members!`, 'success');
+        }, error => {
+          Swal.fire('Error', error.error.message, 'error');
+        })
+      }
+    });
   }
 }
