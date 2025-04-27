@@ -4,6 +4,7 @@ import com.mladenov.projectmanagement.auth.models.AuthRequest;
 import com.mladenov.projectmanagement.auth.models.AuthResponse;
 import com.mladenov.projectmanagement.auth.models.RegisterDTO;
 import com.mladenov.projectmanagement.auth.service.AuthService;
+import com.mladenov.projectmanagement.auth.service.TokenInvalidationService;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,8 @@ import jakarta.validation.Valid;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +27,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final AuthService authService;
+    private final TokenInvalidationService tokenInvalidationService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, TokenInvalidationService tokenInvalidationService) {
         this.authService = authService;
+        this.tokenInvalidationService = tokenInvalidationService;
     }
 
     @PostMapping("/register")
@@ -70,10 +75,27 @@ public class AuthController {
                 .build();
     }
 
+    @PostMapping("/invalidate-all-tokens")
+    @Operation(summary = "Invalidate all tokens")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> invalidateAllTokens() {
+        tokenInvalidationService.invalidateAllTokens();
+
+        return AppResponseUtil.success()
+                .withMessage("All tokens were invalidated")
+                .build();
+    }
+
+    @ExceptionHandler(AuthenticationServiceException.class)
+    public ResponseEntity<?> handleAuthenticationServiceException(AuthenticationServiceException ex) {
+        return AppResponseUtil.error(HttpStatus.UNAUTHORIZED)
+                .withMessage(ex.getMessage())
+                .build();
+    }
+
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> handleEntityNotFoundException(EntityNotFoundException ex) {
         return AppResponseUtil.error(HttpStatus.NOT_FOUND)
-                .logStackTrace(Arrays.toString(ex.getStackTrace()))
                 .withMessage(ex.getMessage())
                 .build();
     }

@@ -1,5 +1,6 @@
 package com.mladenov.projectmanagement.auth.util;
 
+import com.mladenov.projectmanagement.auth.service.TokenInvalidationService;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,9 +19,14 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
+    private final TokenInvalidationService tokenInvalidationService;
 
     @Value("${jwt.secret.key}")
     public String SECRET;
+
+    public JwtUtil(TokenInvalidationService tokenInvalidationService) {
+        this.tokenInvalidationService = tokenInvalidationService;
+    }
 
     public String generateToken(UserEntity user) {
         Map<String, Object> claims = new HashMap<>();
@@ -53,6 +59,10 @@ public class JwtUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    public Date extractIssuedAt(String token) {
+        return extractClaim(token, Claims::getIssuedAt);
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -66,12 +76,15 @@ public class JwtUtil {
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
+    public boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        Date issuedAt = extractIssuedAt(token);
+        return (username.equals(userDetails.getUsername())
+                && !isTokenExpired(token)
+                && !tokenInvalidationService.isTokenInvalid(issuedAt.toInstant()));
     }
 }
