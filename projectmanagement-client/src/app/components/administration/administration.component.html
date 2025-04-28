@@ -1,1 +1,51 @@
-<p>administration works!</p>
+<!-- admin-page.component.html -->
+<div class="container py-5">
+  <h2 class="text-center mb-4">Users Administration</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead class="thead-dark">
+      <tr class="text-center">
+        <th>ID</th>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of paginatedUsers" class="text-center align-middle">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+            <span class="badge" [ngClass]="user.active ? 'bg-success' : 'bg-danger'">
+              {{ user.active ? 'Active' : 'Disabled' }}
+            </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="changeRole(user)">
+            Change Role
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="disableUser(user)" [hidden]="!user.active">
+            Disable
+          </button>
+          <button class="btn btn-sm btn-success" (click)="enableUser(user)" [hidden]="user.active">
+            Enable
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <button class="btn btn-outline-primary" (click)="previousPage()" [disabled]="currentPage === 0">
+      Previous
+    </button>
+    <span>Page {{ currentPage + 1 }} of {{ Math.ceil(users.length / pageSize) }}</span>
+    <button class="btn btn-outline-primary" (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= users.length">
+      Next
+    </button>
+  </div>
+</div>

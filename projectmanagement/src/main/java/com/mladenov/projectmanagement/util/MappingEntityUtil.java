@@ -22,6 +22,7 @@ public class MappingEntityUtil {
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
                 .active(userEntity.isActive())
+                .role(userEntity.getUserRole().getUserRole())
                 .build();
     }
     public static ProjectDTO mapProjectDTO(ProjectEntity projectEntity) {

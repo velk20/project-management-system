@@ -88,6 +88,7 @@ public class UserService implements IUserService {
         userEntity.setEmail(userDTO.getEmail());
         userEntity.setFirstName(userDTO.getFirstName());
         userEntity.setLastName(userDTO.getLastName());
+        userEntity.setActive(userDTO.isActive());
 
         UserEntity save = userRepository.save(userEntity);
         return MappingEntityUtil.mapUserDTO(save);
@@ -109,6 +110,15 @@ public class UserService implements IUserService {
                 throw new IllegalArgumentException("Email " + dto.getEmail() + " is already taken");
             } else {
                 userEntity.setEmail(dto.getEmail());
+            }
+        }
+
+        if (!userEntity.getUserRole().getUserRole().equals(dto.getRole())) {
+            Optional<UserRoleEntity> roleEntity = this.userRoleRepository.findUserRoleByUserRole(dto.getRole());
+            if (roleEntity.isPresent()) {
+                userEntity.setUserRole(roleEntity.get());
+            } else {
+                throw new IllegalArgumentException("Role " + dto.getRole() + " is not found");
             }
         }
 
