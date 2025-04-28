@@ -35,4 +35,8 @@ export class UserService {
   changePassword(changePassword:ChangeUserPassword):Observable<AppResponseWithNoData> {
     return this.http.put<AppResponseWithNoData>(`${Constant.USERS_URL}/change-password`, changePassword);
   }
+
+  invalidateUsersTokens(): Observable<AppResponseWithNoData> {
+    return this.http.post<AppResponseWithNoData>(`${Constant.AUTH_URL}/invalidate-all-tokens`,{});
+  }
 }

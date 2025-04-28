@@ -1,6 +1,11 @@
 <!-- admin-page.component.html -->
 <div class="container py-5">
   <h2 class="text-center mb-4">Users Administration</h2>
+  <div class="text-center mb-4">
+    <button class="btn btn-lg btn-danger shadow" (click)="invalidateAllUsers()">
+      <i class="bi bi-person-x-fill me-2"></i> Invalidate All Users access
+    </button>
+  </div>
 
   <div class="table-responsive">
     <table class="table table-striped table-hover table-bordered">

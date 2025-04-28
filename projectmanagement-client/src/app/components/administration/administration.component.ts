@@ -3,6 +3,7 @@ import {UserDetails} from "../../models/user";
 import Swal from "sweetalert2";
 import {UserService} from "../../services/user.service";
 import {NgClass, NgForOf} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-administration',
@@ -16,6 +17,7 @@ import {NgClass, NgForOf} from "@angular/common";
 })
 export class AdministrationComponent {
   private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
   protected readonly Math = Math;
 
   users: UserDetails[] = [];
@@ -126,4 +128,28 @@ export class AdministrationComponent {
       Swal.fire('Enabled!', `${user.username} has been enabled.`, 'success');
     }
   }
+
+  async invalidateAllUsers() {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'This will invalidate ALL users access to the system!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, disable them!',
+      customClass: {
+        popup: 'border rounded shadow p-3'
+      }
+    });
+
+    if (result.isConfirmed) {
+      this.userService.invalidateUsersTokens().subscribe(res=>{
+        let message = res.message;
+        Swal.fire('Success', message, 'success')
+        this.router.navigate(['/login']);
+      }, error => {
+        Swal.fire('Error', error.error.message, 'error');
+      })
+    }
+  }
+
 }
