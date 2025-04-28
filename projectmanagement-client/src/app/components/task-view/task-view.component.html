@@ -69,7 +69,9 @@
               placeholder="Search assignee username"
               autocomplete="off"
             />
-            <ul *ngIf="filteredUsers.length > 0" class="list-group position-absolute w-100" style="z-index: 1000;">
+            <ul *ngIf="filteredUsers.length > 0"
+                class="list-group position-absolute w-100"
+                style="z-index: 1000; max-height: 200px; overflow-y: auto;">
               <li
                 *ngFor="let user of filteredUsers"
                 class="list-group-item list-group-item-action"
@@ -79,6 +81,7 @@
               </li>
             </ul>
           </div>
+
 
           <div class="mb-3">
             <label class="form-label">Creator</label>
