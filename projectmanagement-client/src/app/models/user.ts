@@ -11,3 +11,13 @@ export interface ChangeUserPassword {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface UserDetails{
+  id: number;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  active: boolean;
+}
