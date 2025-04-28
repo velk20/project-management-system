@@ -51,6 +51,10 @@ export class AuthService {
     throw new Error('Unable to get user from Jwt');
   }
 
+  getUserRole(): string | null {
+    return this.getUserFromJwt().role;
+  }
+
   isLoggedIn(): boolean {
     return !!this.getJwtToken();
   }

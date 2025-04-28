@@ -19,6 +19,9 @@
         <li *ngIf="!isLoggedIn" class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
         </li>
+        <li *ngIf="isLoggedIn && isAdmin()" class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/administration">Administration</a>
+        </li>
         <li *ngIf="isLoggedIn" class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/profile">Profile</a>
         </li>

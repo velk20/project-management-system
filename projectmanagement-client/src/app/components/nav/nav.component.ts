@@ -31,6 +31,10 @@ export class NavComponent implements OnInit {
     return this.authService.getUserFromJwt().username;
   }
 
+  isAdmin(): boolean {
+    return this.authService.getUserRole() == 'ADMIN';
+  }
+
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/']);
