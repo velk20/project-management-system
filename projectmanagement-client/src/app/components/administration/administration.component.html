@@ -29,13 +29,13 @@
             </span>
         </td>
         <td>
-          <button class="btn btn-sm btn-primary me-2" (click)="changeRole(user)">
+          <button class="btn btn-sm btn-primary me-2" (click)="changeRole(user)" [disabled]="isUserYou(user)">
             Change Role
           </button>
-          <button class="btn btn-sm btn-danger" (click)="disableUser(user)" [hidden]="!user.active">
+          <button class="btn btn-sm btn-danger" (click)="disableUser(user)" [hidden]="!user.active" [disabled]="isUserYou(user)">
             Disable
           </button>
-          <button class="btn btn-sm btn-success" (click)="enableUser(user)" [hidden]="user.active">
+          <button class="btn btn-sm btn-success" (click)="enableUser(user)" [hidden]="user.active" [disabled]="isUserYou(user)">
             Enable
           </button>
         </td>

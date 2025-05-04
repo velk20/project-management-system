@@ -1,9 +1,10 @@
 import {Component, inject} from '@angular/core';
-import {UserDetails} from "../../models/user";
+import {User, UserDetails} from "../../models/user";
 import Swal from "sweetalert2";
 import {UserService} from "../../services/user.service";
 import {NgClass, NgForOf} from "@angular/common";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-administration',
@@ -17,9 +18,11 @@ import {Router} from "@angular/router";
 })
 export class AdministrationComponent {
   private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   protected readonly Math = Math;
 
+  loggedUserId: number = 0;
   users: UserDetails[] = [];
   paginatedUsers: UserDetails[] = [];
   availableRoles: string[] = ['USER', 'ADMIN'];
@@ -31,6 +34,8 @@ export class AdministrationComponent {
     this.userService.getAllUsers().subscribe(res => {
       this.users = res.data as UserDetails[];
       this.updatePagination();
+
+      this.loggedUserId = this.authService.getUserFromJwt().id;
     })
   }
 
@@ -152,4 +157,8 @@ export class AdministrationComponent {
     }
   }
 
+  isUserYou(user: UserDetails) {
+    return user.id == this.loggedUserId
+
+  }
 }
