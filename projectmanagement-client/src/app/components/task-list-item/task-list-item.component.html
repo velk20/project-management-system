@@ -9,6 +9,10 @@
   <app-status status="{{task.status}}" />
 </td>
 <td>
+  <span class="badge bg-success" *ngIf="fullAssigneeName">{{ fullAssigneeName}}</span>
+  <span class="badge bg-danger" *ngIf="!fullAssigneeName">Not assigned</span>
+</td>
+<td>
   <span class="badge bg-primary">{{ fullUserName }}</span>
 </td>
 <td>{{ task.updatedAt | date: 'short' : '' : 'bg'  }}</td>

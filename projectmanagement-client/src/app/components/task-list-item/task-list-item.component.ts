@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {StatusComponent} from "../status/status.component";
 import {TypeComponent} from "../type/type.component";
 import {Task} from "../../models/task";
@@ -14,7 +14,8 @@ import {RouterLink} from "@angular/router";
     DatePipe,
     StatusComponent,
     TypeComponent,
-    RouterLink
+    RouterLink,
+    NgIf
   ],
   templateUrl: './task-list-item.component.html',
   styleUrl: './task-list-item.component.css'
@@ -23,12 +24,14 @@ export class TaskListItemComponent implements OnInit {
 
   @Input({required: true}) task!: Task;
   fullUserName: string = '';
+  fullAssigneeName: string = '';
 
   constructor(private readonly userService: UserService) {
   }
 
   ngOnInit(): void {
     this.resolveUserById(this.task.creatorId);
+    this.resolveAssigneeById(this.task.assigneeId ?? 0);
   }
 
 
@@ -37,5 +40,12 @@ export class TaskListItemComponent implements OnInit {
       const user = res.data as User;
       this.fullUserName = user.firstName + " " + user.lastName;
     });
+  }
+
+  resolveAssigneeById(assigneeId: number) {
+    this.userService.getUserById(assigneeId).subscribe(res => {
+      const user = res.data as User;
+      this.fullAssigneeName = user.firstName + " " + user.lastName;
+    })
   }
 }
