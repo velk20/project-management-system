@@ -20,6 +20,10 @@ export class ProjectService {
     return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}/${projectId}`);
   }
 
+  getProjectMembersById(projectId: number): Observable<AppResponse> {
+    return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}/${projectId}/users`);
+  }
+
   createProject(newProject: Project): Observable<AppResponseWithMessage> {
     return this.http.post<AppResponseWithMessage>(`${Constant.PROJECTS_URL}`, newProject);
   }

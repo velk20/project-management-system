@@ -3,6 +3,7 @@ package com.mladenov.projectmanagement.controller;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
 import com.mladenov.projectmanagement.model.dto.project.UpdateProjectDTO;
+import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.service.IProjectService;
 import com.mladenov.projectmanagement.util.AppResponseUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -38,6 +39,16 @@ public class ProjectController {
 
         return AppResponseUtil.success()
                 .withData(projectDTO)
+                .build();
+    }
+
+    @GetMapping("/{projectId}/users")
+    @Operation(summary = "Get all users for project by id")
+    public ResponseEntity<?> getProjectUsersById(@PathVariable("projectId") Long projectId) {
+        List<UserDTO> members = projectService.getProjectMemebersByID(projectId);
+
+        return AppResponseUtil.success()
+                .withData(members)
                 .build();
     }
 

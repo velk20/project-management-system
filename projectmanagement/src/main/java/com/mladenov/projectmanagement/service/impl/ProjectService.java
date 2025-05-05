@@ -3,6 +3,7 @@ package com.mladenov.projectmanagement.service.impl;
 import com.mladenov.projectmanagement.exception.EntityNotFoundException;
 import com.mladenov.projectmanagement.model.dto.project.ProjectDTO;
 import com.mladenov.projectmanagement.model.dto.project.UpdateProjectDTO;
+import com.mladenov.projectmanagement.model.dto.user.UserDTO;
 import com.mladenov.projectmanagement.model.entity.ProjectEntity;
 import com.mladenov.projectmanagement.model.entity.TaskEntity;
 import com.mladenov.projectmanagement.model.entity.UserEntity;
@@ -108,6 +109,14 @@ public class ProjectService implements IProjectService {
         List<ProjectEntity> projects = projectRepository.findProjectsByUserOwnershipOrTeamMembership(userEntity);
 
         return projects.stream().map(MappingEntityUtil::mapProjectDTO).toList();
+    }
+
+    @Override
+    public List<UserDTO> getProjectMemebersByID(Long projectId) {
+        ProjectEntity projectEntity = this.getProjectEntity(projectId);
+        List<UserEntity> teamMembers = projectEntity.getTeamMembers();
+
+        return teamMembers.stream().map(MappingEntityUtil::mapUserDTO).toList();
     }
 
     private void validateProjectTeamMembers(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {

@@ -14,6 +14,7 @@ import {ChangePasswordComponent} from "./components/change-password/change-passw
 import {UserTasksComponent} from "./components/user-tasks/user-tasks.component";
 import { adminGuard } from './auth/guards/admin.guard';
 import {AdministrationComponent} from "./components/administration/administration.component";
+import {ProjectUsersComponent} from "./components/project-users/project-users.component";
 
 export const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [homeGuard]},
@@ -27,5 +28,6 @@ export const routes: Routes = [
   {path: 'task/:id', component: TaskViewComponent, canActivate: [authGuard]},
   {path: 'user-tasks', component: UserTasksComponent, canActivate: [authGuard]},
   {path: 'administration', component: AdministrationComponent, canActivate: [adminGuard]},
+  {path: 'project-administration/:id', component: ProjectUsersComponent, canActivate: [authGuard]},
   {path: '**', component: NotfoundComponent}
 ];

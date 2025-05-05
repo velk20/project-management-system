@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Location, NgForOf, NgIf} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {Project, UpdateProject} from "../../models/project";
 import {ProjectService} from "../../services/project.service";
 import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
@@ -20,7 +20,8 @@ import {Pageable} from "../../models/page";
   imports: [
     NgForOf,
     NgIf,
-    TaskListItemComponent
+    TaskListItemComponent,
+    RouterLink
   ],
   templateUrl: './project.component.html',
   styleUrl: './project.component.css'
@@ -321,5 +322,9 @@ export class ProjectComponent implements OnInit {
         })
       }
     });
+  }
+
+  onProjectUserManage() {
+
   }
 }

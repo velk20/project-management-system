@@ -19,9 +19,11 @@
       Update Project
     </button>
 
-    <button type="button" class="btn btn-info d-flex align-items-center gap-2" (click)="onAddUserToProject()">
+    <button type="button"
+            class="btn btn-warning d-flex align-items-center gap-2"
+            *ngIf="isUserOwnerProject()" routerLink="/project-administration/{{project.id}}">
       <i class="bi bi-plus-lg"></i>
-      Add user to project
+      Manage Project Users
     </button>
   </div>
 
