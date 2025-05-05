@@ -199,8 +199,9 @@ export class ProjectUsersComponent implements OnInit{
           name: this.project.name,
           teamMembersId: (updatedUsers ?? []) as number[],
         }
-        this.projectService.updateProject(this.project?.id || 0, this.project ).subscribe(res=>{
+        this.projectService.updateProject(this.project?.id || 0, updateProject ).subscribe(res=>{
           let message = res.message;
+          this.project = res.data as Project;
           this.projectService.getProjectMembersById(this.project?.id || 0).subscribe(res => {
             this.users = res.data as UserDetails[];
             this.updatePagination();

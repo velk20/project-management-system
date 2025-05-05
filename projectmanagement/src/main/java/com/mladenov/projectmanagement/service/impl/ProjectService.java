@@ -120,22 +120,17 @@ public class ProjectService implements IProjectService {
     }
 
     private void validateProjectTeamMembers(UpdateProjectDTO projectDTO, ProjectEntity projectEntity) {
+        List<UserEntity> updatedTeamMembers = new ArrayList<>();
+
         if (!projectDTO.getTeamMembersId().isEmpty()) {
             List<Long> teamMembersId = projectDTO.getTeamMembersId();
-            List<Long> existingTeamMembersIds = projectEntity.getTeamMembers()
-                    .stream()
-                    .map(UserEntity::getId)
-                    .toList();
-            
-            teamMembersId = teamMembersId.stream()
-                    .filter(id->!existingTeamMembersIds.contains(id))
-                    .toList();
 
             for (Long id : teamMembersId) {
                 UserEntity userEntity = userService.getUserEntityById(id);
-                projectEntity.addTeamMember(userEntity);
+                updatedTeamMembers.add(userEntity);
             }
 
+            projectEntity.setTeamMembers(updatedTeamMembers);
         }
     }
 
