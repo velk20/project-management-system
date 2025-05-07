@@ -62,25 +62,35 @@ export class TaskViewComponent implements OnInit {
   ngOnInit(): void {
     const taskId = this.route.snapshot.paramMap.get('id');
     if (taskId) {
-      this.taskService.getTaskById(taskId).subscribe(res => {
-        let task = res.data as Task;
-        this.task = task;
-
-        if (task.creatorId) {
-          this.userService.getUserById(task.creatorId).subscribe(userRes => {
-            const user = userRes.data as User;
-            this.creatorUsername = user.username;
-
-            if (task.assigneeId){
-              this.userService.getUserById(task.assigneeId).subscribe(userRes => {
-                const user = userRes.data as User;
-                this.assigneeSearch = user.username;
-              })
-            }
-          });
-        }
-      });
+      this.loadTaskInfo(taskId);
     }
+
+    //Load new task info if search was used
+    this.route.params.subscribe(params => {
+      const newTaskId = +params['id'];
+      this.loadTaskInfo(newTaskId.toString());
+    });
+  }
+
+  private loadTaskInfo(taskId: string) {
+    this.taskService.getTaskById(taskId).subscribe(res => {
+      let task = res.data as Task;
+      this.task = task;
+
+      if (task.creatorId) {
+        this.userService.getUserById(task.creatorId).subscribe(userRes => {
+          const user = userRes.data as User;
+          this.creatorUsername = user.username;
+
+          if (task.assigneeId) {
+            this.userService.getUserById(task.assigneeId).subscribe(userRes => {
+              const user = userRes.data as User;
+              this.assigneeSearch = user.username;
+            })
+          }
+        });
+      }
+    });
   }
 
   onAssigneeInput() {

@@ -44,6 +44,13 @@ export class ProjectComponent implements OnInit {
     const projectId = Number(this.route.snapshot.paramMap.get('id'));
     this.getProjectById(projectId);
     this.getProjectTasksById(projectId);
+
+    //Load new project if search was used
+    this.route.params.subscribe(params => {
+      const projectId = +params['id'];
+      this.getProjectById(projectId);
+      this.getProjectTasksById(projectId);
+    });
   }
 
   private getProjectTasksById(id: number): void {

@@ -13,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
+    List<ProjectEntity> findByNameContainingIgnoreCaseOrId(String name, Long id);
+
     Optional<ProjectEntity> findByName(String name);
 
     @Query("SELECT DISTINCT p FROM ProjectEntity p " +

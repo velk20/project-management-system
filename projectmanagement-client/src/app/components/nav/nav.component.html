@@ -6,6 +6,26 @@
     <a class="navbar-brand" [routerLink]="isLoggedIn ? '/dashboard' : '/'">TaskFlow</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form class="d-flex me-3" role="search" (submit)="onSearch()">
+        <input class="form-control me-2"
+               type="search"
+               placeholder="Search tasks/projects"
+               aria-label="Search"
+               [(ngModel)]="searchQuery"
+               name="searchQuery"
+               (input)="onSearch()">
+        <div *ngIf="searchResults && searchResults.length > 0"
+             class="position-absolute bg-white shadow p-2 rounded mt-5 z-3"
+             style="min-width: 300px; max-height: 300px; overflow-y: auto;">
+          <div *ngFor="let item of searchResults">
+            <a class="dropdown-item"  (click)="clearSearch(item)">
+              <strong>{{ item.title }}</strong> <small class="text-muted">({{ item.type }})</small>
+            </a>
+          </div>
+        </div>
+      </form>
+
+
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li *ngIf="!isLoggedIn" class="nav-item">
           <a class="nav-link" routerLinkActive="active" routerLink="/">Home</a>
