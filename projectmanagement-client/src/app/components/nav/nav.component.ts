@@ -5,6 +5,7 @@ import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {SearchService} from "../../services/search.service";
 import {SearchResult} from "../../models/search";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-nav',
@@ -27,7 +28,8 @@ export class NavComponent implements OnInit {
 
   constructor(private readonly authService: AuthService,
               private readonly router: Router,
-              private readonly searchService: SearchService) {
+              private readonly searchService: SearchService,
+              private readonly toastrService: ToastrService,) {
   }
 
   ngOnInit(): void {
@@ -60,7 +62,7 @@ export class NavComponent implements OnInit {
       results => {
         this.searchResults = results.data as SearchResult[]
       },
-      error => console.error(error)
+      error => this.toastrService.error(error.error.message)
     );
   }
 
