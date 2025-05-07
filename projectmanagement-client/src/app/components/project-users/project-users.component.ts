@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {UserService} from "../../services/user.service";
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -12,7 +12,8 @@ import Swal from "sweetalert2";
   selector: 'app-project-users',
   standalone: true,
   imports: [
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './project-users.component.html',
   styleUrl: './project-users.component.css'
