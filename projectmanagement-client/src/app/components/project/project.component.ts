@@ -39,6 +39,7 @@ export class ProjectComponent implements OnInit {
   pageable: Pageable={ page:0, size: 10}
   totalPages: number = 0;
   users: User[] = [];
+  owner: User = {} as User;
 
   ngOnInit(): void {
     const projectId = Number(this.route.snapshot.paramMap.get('id'));
@@ -58,12 +59,18 @@ export class ProjectComponent implements OnInit {
       let data = res.data as PageableTasks;
       this.tasks = data.tasks;
       this.totalPages = data.totalPages;
+    }, error => {
+      Swal.fire('Error', error.error.message, 'error');
     })
   }
 
   private getProjectById(projectId: number) {
     this.projectService.getProjectById(projectId).subscribe(res => {
-      this.project = res.data as Project;
+      let data = res.data as Project;
+      this.project = data;
+      this.getProjectOwner(data.ownerId);
+    }, error => {
+      Swal.fire('Error', error.error.message, 'error');
     })
   }
 
@@ -333,5 +340,13 @@ export class ProjectComponent implements OnInit {
 
   onProjectUserManage() {
 
+  }
+
+  private getProjectOwner(ownerId: number) {
+    this.userService.getUserById(ownerId).subscribe(res => {
+      this.owner = res.data as User;
+    }, error => {
+      Swal.fire('Error', error.error.message, 'error');
+    })
   }
 }

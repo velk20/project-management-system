@@ -12,6 +12,10 @@ export class ProjectService {
 
   constructor(private readonly http: HttpClient) { }
 
+  getAll(): Observable<AppResponse>{
+    return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}`);
+  }
+
   getAllProjectsForUser(userId: number): Observable<AppResponse> {
     return this.http.get<AppResponse>(`${Constant.PROJECTS_URL}/user/${userId}`);
   }

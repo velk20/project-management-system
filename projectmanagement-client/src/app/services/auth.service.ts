@@ -55,6 +55,10 @@ export class AuthService {
     return this.getUserFromJwt().role;
   }
 
+  isAdmin(): boolean {
+    return this.getUserFromJwt().role == 'ADMIN';
+  }
+
   isLoggedIn(): boolean {
     return !!this.getJwtToken();
   }

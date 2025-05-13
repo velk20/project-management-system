@@ -83,6 +83,18 @@
                 </mat-list-item>
               </mat-list>
             </mat-card>
+            <br>
+            <mat-card  *ngIf="isAdmin" class="section-card">
+              <mat-card-header>
+                <mat-card-title>All Projects</mat-card-title>
+              </mat-card-header>
+              <mat-list>
+                <mat-list-item *ngFor="let project of allProjects" class="project-item" routerLink="/project/{{project.id}}">
+                  <mat-icon>folder</mat-icon>
+                  <span>{{ project.name }}</span>
+                </mat-list-item>
+              </mat-list>
+            </mat-card>
           </div>
 
           <!-- Tasks Content -->

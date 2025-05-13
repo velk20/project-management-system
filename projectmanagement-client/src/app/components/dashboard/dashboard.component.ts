@@ -4,7 +4,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
-import {NgForOf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
+import {NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault} from "@angular/common";
 import {TaskService} from "../../services/task.service";
 import {PageableTasks, Task} from "../../models/task";
 import {JwtPayload} from "../../models/auth";
@@ -40,7 +40,8 @@ import {Pageable} from "../../models/page";
     MatCardContent,
     MatCardHeader,
     RouterLink,
-    TasksComponent
+    TasksComponent,
+    NgIf
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
@@ -63,6 +64,7 @@ export class DashboardComponent implements OnInit {
 
   tasks: Task[] = [];
   projects: Project[] = [];
+  allProjects: Project[] = [];
   users: User[] = [];
   finishedTasks: Task[] = [];
   pendingTasks: Task[] = [];
@@ -77,12 +79,15 @@ export class DashboardComponent implements OnInit {
   ];
   selectedMenu: string = 'Dashboard';
 
+  isAdmin:boolean = false;
 
   ngOnInit(): void {
     const user: JwtPayload  = this.authService.getUserFromJwt();
+    this.isAdmin = this.authService.isAdmin();
 
     this.getUserTasks(user.id)
     this.getUserProjects(user.id)
+    this.getAllProjects()
     this.getFinishedTasks(user.id)
     this.getPendingTasks(user.id)
   }
@@ -285,4 +290,12 @@ export class DashboardComponent implements OnInit {
   }
 
   protected readonly TaskStatus = TaskStatus;
+
+  private getAllProjects() {
+    this.projectService.getAll().subscribe(res => {
+      this.allProjects = res.data as Project[];
+    }, error => {
+      Swal.fire('Error', error.error.message, 'error');
+    })
+  }
 }
