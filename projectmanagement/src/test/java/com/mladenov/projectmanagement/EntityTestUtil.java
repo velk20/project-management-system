@@ -1,9 +1,6 @@
 package com.mladenov.projectmanagement;
 
-import com.mladenov.projectmanagement.model.entity.ProjectEntity;
-import com.mladenov.projectmanagement.model.entity.TaskEntity;
-import com.mladenov.projectmanagement.model.entity.UserEntity;
-import com.mladenov.projectmanagement.model.entity.UserRoleEntity;
+import com.mladenov.projectmanagement.model.entity.*;
 import com.mladenov.projectmanagement.model.enums.TaskStatus;
 import com.mladenov.projectmanagement.model.enums.TaskType;
 
@@ -18,6 +15,15 @@ public class EntityTestUtil {
         taskEntity.setCreatedBy(createUserEntity(id));
         taskEntity.setProject(project);
         return taskEntity;
+    }
+
+    public static TaskCommentEntity createTaskComment(Long id) {
+        TaskCommentEntity taskCommentEntity = new TaskCommentEntity();
+        taskCommentEntity.setId(id);
+        taskCommentEntity.setAuthor(createUserEntity(id));
+        taskCommentEntity.setContent("dasda");
+        taskCommentEntity.setTask(createTaskEntity(id, createUserEntity(id), createProjectEntity(id)));
+        return taskCommentEntity;
     }
 
     public static ProjectEntity createProjectEntity(Long id) {
