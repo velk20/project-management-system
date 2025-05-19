@@ -82,11 +82,14 @@ public class TaskService implements ITaskService {
     @Override
     public TaskDTO updateTask(Long taskId, TaskDTO taskDTO) {
         TaskEntity taskEntity = getTaskEntityById(taskId);
-        UserEntity author = userService.getUserEntityById(taskDTO.getCreatorId());
         ProjectEntity projectEntity = projectService.getProjectEntity(taskDTO.getProjectId());
+        List<Long> membersIDs = projectEntity.getTeamMembers().stream().map(UserEntity::getId).toList();
+        Long currentLoggedUserId = UserPrincipalUtil.getCurrentLoggedUserId();
 
-        if (!Objects.equals(author.getId(), UserPrincipalUtil.getCurrentLoggedUserId())) {
-            throw new IllegalArgumentException("You are not the author of this task");
+        if (!UserPrincipalUtil.isUserAdmin()){
+            if (currentLoggedUserId != null && !membersIDs.contains(currentLoggedUserId)) {
+                throw new IllegalArgumentException("You are not member of the project to change this task");
+            }
         }
 
         if(taskDTO.getAssigneeId() != null) {
