@@ -74,12 +74,9 @@ public class TaskServiceTest {
         dto.setAssigneeId(2L);
         dto.setProjectId(100L);
 
-        UserEntity creator = new UserEntity();
-        creator.setId(1L);
-        UserEntity assignee = new UserEntity();
-        assignee.setId(2L);
-        ProjectEntity project = new ProjectEntity();
-        project.setId(100L);
+        UserEntity creator = EntityTestUtil.createUserEntity(1L);
+        UserEntity assignee = EntityTestUtil.createUserEntity(2L);
+        ProjectEntity project = EntityTestUtil.createProjectEntity(100L);
 
         when(userService.getUserEntityById(1L)).thenReturn(creator);
         when(userService.getUserEntityById(2L)).thenReturn(assignee);
@@ -122,22 +119,23 @@ public class TaskServiceTest {
             userStatic.when(UserPrincipalUtil::getCurrentLoggedUserId).thenReturn(42L);
             mapStatic.when(() -> MappingEntityUtil.mapTaskToDTO(any())).thenReturn(dto);
 
-            TaskDTO result = taskService.updateTask(taskId, dto);
-            assertEquals("Updated", result.getTitle());
+            IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskService.updateTask(taskId, dto));
+
+            assertEquals("You are not member of the project to change this task", exception.getMessage());
         }
     }
 
     @Test
     void testUpdateTask_Unauthorized_Throws() {
-        TaskEntity task = new TaskEntity();
-        task.setId(1L);
-        UserEntity creator = new UserEntity();
-        creator.setId(1L);
-        task.setCreatedBy(creator);
+        UserEntity creator = EntityTestUtil.createUserEntity(1L);
+        ProjectEntity projectEntity = EntityTestUtil.createProjectEntity(1L);
+        TaskEntity task = EntityTestUtil.createTaskEntity(1L, creator, projectEntity);
 
         TaskDTO dto = new TaskDTO();
         dto.setCreatorId(1L);
+        dto.setProjectId(1L);
 
+        when(projectService.getProjectEntity(1L)).thenReturn(task.getProject());
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
         when(userService.getUserEntityById(1L)).thenReturn(creator);
 
