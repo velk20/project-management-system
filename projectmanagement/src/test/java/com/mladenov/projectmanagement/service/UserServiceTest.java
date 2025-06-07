@@ -18,6 +18,8 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,6 +38,82 @@ public class UserServiceTest {
         userRoleRepository = mock(UserRoleRepository.class);
         passwordEncoder = mock(PasswordEncoder.class);
         userService = new UserService(userRepository, userRoleRepository, passwordEncoder);
+    }
+
+    @Test
+    void testGetUserByEmail() {
+        UserEntity user = EntityTestUtil.createUserEntity(1L);
+        user.setEmail("test@gmail.com");
+
+        when(userRepository.findByEmail("test@gmail.com")).thenReturn(Optional.of(user));
+
+        UserEntity result = userService.getUserEntityByEmail("test@gmail.com");
+        assertEquals(1L, result.getId());
+        assertEquals("test@gmail.com", result.getEmail());
+    }
+
+    @Test
+    void testGetUserByEmailNotFound() {
+        UserEntity user = EntityTestUtil.createUserEntity(1L);
+
+        when(userRepository.findByEmail("test@gmail.com")).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.getUserEntityByEmail("test@gmail.com"));
+
+    }
+
+    @Test
+    void testGetUserRoleEntityByUserRole() {
+        UserRoleEntity userRoleEntity = EntityTestUtil.createUserRoleEntity("Admin");
+
+        when(userRoleRepository.findUserRoleByUserRole("Admin")).thenReturn(Optional.of(userRoleEntity));
+
+        UserRoleEntity userRole = userService.getUserRoleEntityByUserRole("Admin");
+
+        assertEquals("Admin", userRole.getUserRole());
+    }
+
+    @Test
+    void testGetUserRoleEntityByUserRoleNotFound() {
+        UserRoleEntity userRoleEntity = EntityTestUtil.createUserRoleEntity("Admin");
+
+        when(userRoleRepository.findUserRoleByUserRole("Admin")).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> userService.getUserRoleEntityByUserRole("Admin"));
+
+
+    }
+
+    @Test
+    void testGetUserById() {
+        UserEntity user = EntityTestUtil.createUserEntity(1L);
+        user.setUsername("test");
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        UserDTO userDTO = userService.getUserById(1L);
+        assertEquals("test", userDTO.getUsername());
+    }
+
+    @Test
+    void testGetAllUsers(){
+        UserEntity user = EntityTestUtil.createUserEntity(1L);
+        UserEntity user1 = EntityTestUtil.createUserEntity(2L);
+        UserEntity user2 = EntityTestUtil.createUserEntity(3L);
+        List<UserEntity> users = Arrays.asList(user, user1, user2);
+
+        when(userRepository.findAll()).thenReturn(users);
+        List<UserDTO> userDTOs = userService.getAllUsers();
+        assertEquals(3, userDTOs.size());
+    }
+
+    @Test
+    void searchUsersByUsername() {
+        UserEntity user = EntityTestUtil.createUserEntity(1L);
+        user.setUsername("test");
+        List<UserEntity> users = List.of(user);
+        when(userRepository.searchByUsername("test")).thenReturn(users);
+
+        assertEquals(1, userService.searchUsersByUsername("test").size());
     }
 
     @Test
@@ -111,6 +189,7 @@ public class UserServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> userService.updateProfile(1L, dto));
     }
+
 
     @Test
     void testChangePassword_Success() {
