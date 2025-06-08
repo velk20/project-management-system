@@ -14,7 +14,8 @@ Built with a modern tech stack, it offers an intuitive interface for managing pr
 
 - **Frontend**: Angular, TypeScript, HTML, CSS
 - **Backend**: Java, Spring Boot
-- **Security**: JWT 
+- **Security**: JWT
+- **Aditional**: Docker, Redis
 - **Version Control**: Git
 
 ## Getting Started
@@ -23,9 +24,11 @@ Built with a modern tech stack, it offers an intuitive interface for managing pr
 
 - Java Development Kit (JDK) installed
 - Node.js and npm installed
+- Docker engine installed
+- MySQL installed
 - Git installed
 
-### Installation
+### Starting project
 
 1. Clone the repository:
    ```bash
@@ -33,10 +36,11 @@ Built with a modern tech stack, it offers an intuitive interface for managing pr
    cd project-management-system
    ```
 
-2. Navigate to the backend directory and start the server:
+2. Navigate to the backend directory and start the Docker file and the server:
    ```bash
    cd projectmanagement
-   mvn spring-boot:run
+   docker compose up -d -> This start the Redis container
+   mvn spring-boot:run -> Starts the spring boot backed
    ```
 
 3. Navigate to the frontend directory and start the client:
