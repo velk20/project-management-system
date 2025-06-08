@@ -152,6 +152,18 @@ INSERT INTO tasks (id, created_at, description, status, title, type, updated_at,
 VALUES (49, '2025-01-01 00:00:00', 'Description 49', 'In_Progress', 'Title 49', 'Bug', '2025-01-02 00:00:00', 10, 10, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
 VALUES (50, '2025-01-01 00:00:00', 'Description 50', 'Resolved', 'Title 50', 'Epic', '2025-01-02 00:00:00', 1, 1, 1);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (51, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 51', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (52, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 52', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (53, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 53', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (54, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 54', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (55, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 55', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
+VALUES (56, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 56', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
 
 -- Inserting into tasks_comments
 INSERT INTO tasks_comments (id, content, created_at, updated_at, author_id, task_id)
