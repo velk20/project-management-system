@@ -44,9 +44,6 @@ public class ProjectService implements IProjectService {
         isProjectWithNameExist(projectDTO.getName());
         UserEntity owner = userService.getUserEntityById(projectDTO.getOwnerId());
 
-        List<UserEntity> members = new ArrayList<>();
-        members.add(owner);
-
         ProjectEntity projectEntity = new ProjectEntity(
                 projectDTO.getName(),
                 projectDTO.getDescription(),
@@ -54,7 +51,7 @@ public class ProjectService implements IProjectService {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 new ArrayList<>(),
-                members
+                List.of(owner)
         );
 
         return MappingEntityUtil.mapProjectDTO(projectRepository.save(projectEntity));
