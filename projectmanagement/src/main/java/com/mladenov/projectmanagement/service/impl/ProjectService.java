@@ -40,24 +40,6 @@ public class ProjectService implements IProjectService {
     }
 
     @Override
-    public ProjectEntity getProjectEntity(Long projectId) {
-        return projectRepository
-                .findById(projectId)
-                .orElseThrow(() -> new EntityNotFoundException("Project with id=" + projectId + " not found"));
-    }
-
-    private void isProjectWithNameExist(String name) {
-        projectRepository.findByName(name).ifPresent(projectEntity -> {
-            throw new IllegalArgumentException("Project with name=" + name + " already exists");
-        });
-    }
-
-    @Override
-    public List<ProjectDTO> getAllProjects() {
-        return this.projectRepository.findAll().stream().map(MappingEntityUtil::mapProjectDTO).toList();
-    }
-
-    @Override
     public ProjectDTO createProject(ProjectDTO projectDTO) {
         isProjectWithNameExist(projectDTO.getName());
         UserEntity owner = userService.getUserEntityById(projectDTO.getOwnerId());
@@ -76,6 +58,24 @@ public class ProjectService implements IProjectService {
         );
 
         return MappingEntityUtil.mapProjectDTO(projectRepository.save(projectEntity));
+    }
+
+    @Override
+    public ProjectEntity getProjectEntity(Long projectId) {
+        return projectRepository
+                .findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project with id=" + projectId + " not found"));
+    }
+
+    private void isProjectWithNameExist(String name) {
+        projectRepository.findByName(name).ifPresent(projectEntity -> {
+            throw new IllegalArgumentException("Project with name=" + name + " already exists");
+        });
+    }
+
+    @Override
+    public List<ProjectDTO> getAllProjects() {
+        return this.projectRepository.findAll().stream().map(MappingEntityUtil::mapProjectDTO).toList();
     }
 
     @Override
