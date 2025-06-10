@@ -41,7 +41,7 @@ public class ProjectService implements IProjectService {
 
     @Override
     public ProjectDTO createProject(ProjectDTO projectDTO) {
-        isProjectWithNameExist(projectDTO.getName());
+        this.isProjectWithNameExist(projectDTO.getName());
         UserEntity owner = userService.getUserEntityById(projectDTO.getOwnerId());
 
         ProjectEntity projectEntity = new ProjectEntity(
