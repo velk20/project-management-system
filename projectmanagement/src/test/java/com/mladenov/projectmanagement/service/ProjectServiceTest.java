@@ -66,9 +66,7 @@ public class ProjectServiceTest {
 
         when(userService.getUserEntityById(1L)).thenReturn(owner);
         when(projectRepository.findByName("New Project")).thenReturn(Optional.empty());
-
-        ArgumentCaptor<ProjectEntity> captor = ArgumentCaptor.forClass(ProjectEntity.class);
-        when(projectRepository.save(captor.capture())).thenAnswer(inv -> inv.getArgument(0));
+        when(projectRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         ProjectDTO result = projectService.createProject(dto);
 
