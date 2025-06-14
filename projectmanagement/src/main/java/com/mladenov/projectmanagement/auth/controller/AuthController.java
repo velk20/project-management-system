@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +84,13 @@ public class AuthController {
 
         return AppResponseUtil.success()
                 .withMessage("All tokens were invalidated")
+                .build();
+    }
+
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<?> handleAuthorizationDeniedException(AuthorizationDeniedException ex) {
+        return AppResponseUtil.error(HttpStatus.UNAUTHORIZED)
+                .withMessage(ex.getMessage())
                 .build();
     }
 
