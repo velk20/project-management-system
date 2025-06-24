@@ -12,7 +12,9 @@ import com.mladenov.projectmanagement.service.IProjectService;
 import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,14 +25,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProjectService implements IProjectService {
+    @Value("${kafka.topic.project.invitation}")
+    private String projectInvitationTopic;
+
     private final ProjectRepository projectRepository;
     private final IUserService userService;
     private final ITaskService taskService;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public ProjectService(ProjectRepository projectRepository, IUserService userService, @Lazy ITaskService taskService) {
+    public ProjectService(ProjectRepository projectRepository, IUserService userService, @Lazy ITaskService taskService, KafkaTemplate<String, String> kafkaTemplate) {
         this.projectRepository = projectRepository;
         this.userService = userService;
         this.taskService = taskService;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -123,11 +130,23 @@ public class ProjectService implements IProjectService {
         if (!projectDTO.getTeamMembersId().isEmpty()) {
             List<Long> teamMembersId = projectDTO.getTeamMembersId();
 
-            for (Long id : teamMembersId) {
+            Set<Long> existingMemberIds = projectEntity.getTeamMembers().stream()
+                    .map(UserEntity::getId)
+                    .collect(Collectors.toSet());
+
+            List<Long> newMemberIds = teamMembersId.stream()
+                    .filter(id -> !existingMemberIds.contains(id))
+                    .toList();
+
+            for (Long id : newMemberIds) {
                 UserEntity userEntity = userService.getUserEntityById(id);
                 updatedTeamMembers.add(userEntity);
+
+                String message = userEntity.getEmail() + ":" + projectEntity.getName();
+                kafkaTemplate.send(projectInvitationTopic, message);
             }
 
+            updatedTeamMembers.addAll(projectEntity.getTeamMembers());
             projectEntity.setTeamMembers(updatedTeamMembers);
         }
     }

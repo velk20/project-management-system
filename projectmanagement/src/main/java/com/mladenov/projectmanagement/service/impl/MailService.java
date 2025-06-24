@@ -30,7 +30,7 @@ public class MailService {
         this.taskService = taskService;
     }
 
-    public void sendNotificationEmails() {
+    public void sendDailyStatusEmails() {
         List<UserEntity> users = userRepository.findAll();
 
         for (UserEntity user : users) {
@@ -48,7 +48,7 @@ public class MailService {
         return buildPendingTasksEmail(tasks);
     }
 
-    public String buildPendingTasksEmail(List<TaskDTO> tasks) {
+    private String buildPendingTasksEmail(List<TaskDTO> tasks) {
         List<TaskDTO> pendingTasks = tasks.stream()
                 .filter(t -> !"Closed".equalsIgnoreCase(t.getStatus()))
                 .toList();
@@ -75,7 +75,7 @@ public class MailService {
     }
 
 
-    private void sendEmail(String userEmail, String subject, String text) {
+    public void sendEmail(String userEmail, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(myEmail);
         message.setTo(userEmail);

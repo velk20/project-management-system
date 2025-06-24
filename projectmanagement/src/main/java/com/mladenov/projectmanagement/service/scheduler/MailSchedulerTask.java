@@ -14,6 +14,6 @@ public class MailSchedulerTask {
 
     @Scheduled(cron = "0 0 9 * * ?")
     public void dailyMailTask() {
-        this.mailService.sendNotificationEmails();
+        this.mailService.sendDailyStatusEmails();
     }
 }

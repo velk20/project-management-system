@@ -12,6 +12,7 @@ import com.mladenov.projectmanagement.service.impl.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,13 +29,15 @@ public class ProjectServiceTest {
     private IUserService userService;
     private ITaskService taskService;
     private ProjectService projectService;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @BeforeEach
     void setUp() {
         projectRepository = mock(ProjectRepository.class);
         userService = mock(IUserService.class);
         taskService = mock(ITaskService.class);
-        projectService = new ProjectService(projectRepository, userService, taskService);
+        kafkaTemplate = mock(KafkaTemplate.class);
+        projectService = new ProjectService(projectRepository, userService, taskService, kafkaTemplate);
     }
 
     @Test

@@ -14,9 +14,11 @@ import com.mladenov.projectmanagement.service.ITaskService;
 import com.mladenov.projectmanagement.service.IUserService;
 import com.mladenov.projectmanagement.util.MappingEntityUtil;
 import com.mladenov.projectmanagement.util.UserPrincipalUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,14 +28,19 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService implements ITaskService {
+    @Value("${kafka.topic.task.assignee}")
+    private String taskAssigneeTopic;
+
     private final TaskRepository taskRepository;
     private final IUserService userService;
     private final IProjectService projectService;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public TaskService(TaskRepository taskRepository, IUserService userService, IProjectService projectService) {
+    public TaskService(TaskRepository taskRepository, IUserService userService, IProjectService projectService, KafkaTemplate<String, String> kafkaTemplate) {
         this.taskRepository = taskRepository;
         this.userService = userService;
         this.projectService = projectService;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -95,6 +102,9 @@ public class TaskService implements ITaskService {
         if(taskDTO.getAssigneeId() != null) {
             UserEntity assignee = userService.getUserEntityById(taskDTO.getAssigneeId());
             taskEntity.setAssignedTo(assignee);
+
+            String message = assignee.getEmail() + ":" + taskEntity.getTitle();
+            kafkaTemplate.send(taskAssigneeTopic, message);
         }
 
         taskEntity.setProject(projectEntity);
