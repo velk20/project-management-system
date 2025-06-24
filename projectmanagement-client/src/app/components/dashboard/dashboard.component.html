@@ -29,41 +29,7 @@
         <ng-container [ngSwitch]="selectedMenu">
           <!-- Dashboard Content -->
           <div *ngSwitchCase="'Dashboard'" class="dashboard-grid">
-            <mat-card class="dashboard-card dashboard-card-projects" (click)="selectedMenu = 'Projects'">
-              <mat-card-header>
-                <mat-card-title>Total Projects</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="dashboard-card-content">
-                  <mat-icon>folder_open</mat-icon>
-                  <span class="count">{{ projects.length }}</span>
-                </div>
-              </mat-card-content>
-            </mat-card>
-
-            <mat-card class="dashboard-card dashboard-card-tasks" [routerLink]="['/user-tasks']" [queryParams]="{ status: TaskStatus.Closed }">
-              <mat-card-header>
-                <mat-card-title>Finished tasks</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="dashboard-card-content">
-                  <mat-icon>assignment</mat-icon>
-                  <span class="count">{{ finishedTasks.length }}</span>
-                </div>
-              </mat-card-content>
-            </mat-card>
-
-            <mat-card class="dashboard-card dashboard-card-team" [routerLink]="['/user-tasks']" [queryParams]="{ not_status: TaskStatus.Closed }">
-              <mat-card-header>
-                <mat-card-title>Pending Tasks</mat-card-title>
-              </mat-card-header>
-              <mat-card-content>
-                <div class="dashboard-card-content">
-                  <mat-icon>task</mat-icon>
-                  <span class="count">{{pendingTasks.length}}</span>
-                </div>
-              </mat-card-content>
-            </mat-card>
+            <div class="kanban-container">
 
             <div class="kanban-board">
               <div
@@ -75,7 +41,7 @@
                 #todoList="cdkDropList"
               >
                 <div class="kanban-header">To Do</div>
-                <div class="kanban-card" *ngFor="let task of todoTasks" cdkDrag>
+                <div class="kanban-card" *ngFor="let task of todoTasks" cdkDrag routerLink="/task/{{task.id}}">
                   <mat-icon class="kanban-icon">assignment</mat-icon>
                   <span>{{ task.title }}</span>
                 </div>
@@ -90,7 +56,7 @@
                 #inProgressList="cdkDropList"
               >
                 <div class="kanban-header">In Progress</div>
-                <div class="kanban-card" *ngFor="let task of inProgressTasks" cdkDrag>
+                <div class="kanban-card" *ngFor="let task of inProgressTasks" cdkDrag routerLink="/task/{{task.id}}">
                   <mat-icon class="kanban-icon">autorenew</mat-icon>
                   <span>{{ task.title }}</span>
                 </div>
@@ -105,12 +71,13 @@
                 #doneList="cdkDropList"
               >
                 <div class="kanban-header">Done</div>
-                <div class="kanban-card" *ngFor="let task of doneTasks" cdkDrag>
+                <div class="kanban-card" *ngFor="let task of doneTasks" cdkDrag routerLink="/task/{{task.id}}">
                   <mat-icon class="kanban-icon">check_circle</mat-icon>
                   <span>{{ task.title }}</span>
                 </div>
               </div>
             </div>
+          </div>
           </div>
           <!-- Projects Content -->
           <div *ngSwitchCase="'Projects'" class="projects-section">

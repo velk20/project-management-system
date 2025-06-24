@@ -199,24 +199,53 @@
   color: #888;
 }
 
+html, body, app-root {
+  height: 100%;
+  margin: 0;
+}
+
+.dashboard-container,
+.dashboard-grid,
+.kanban-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.kanban-container {
+  padding: 24px;
+  height: 100%;
+  box-sizing: border-box;
+
+  /* NEW: Limit width and center */
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .kanban-board {
   display: flex;
   gap: 24px;
-  margin-top: 30px;
-  padding: 10px 0;
+  height: 100%;
 }
+
 
 .kanban-column {
   flex: 1;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  padding: 16px;
-  min-height: 300px;
   display: flex;
   flex-direction: column;
-  transition: background-color 0.2s ease-in-out;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  overflow-y: auto;
 }
+
+
 
 .kanban-header {
   font-weight: 600;
@@ -259,5 +288,11 @@
 
 .kanban-icon {
   color: #777;
+}
+
+.sidenav-container {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
