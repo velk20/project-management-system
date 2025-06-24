@@ -13,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     {provide: LOCALE_ID, useValue: 'bg'},
     provideRouter(routes),
     provideAnimations(),
+
     provideToastr(),
     provideHttpClient(withInterceptorsFromDi()),
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, provideAnimationsAsync()

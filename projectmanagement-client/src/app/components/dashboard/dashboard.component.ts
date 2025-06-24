@@ -21,11 +21,14 @@ import Swal from 'sweetalert2';
 import {TaskStatus} from "../../models/task-status.enum";
 import {TaskType} from "../../models/task-type.enum";
 import {Pageable} from "../../models/page";
+import {CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    DragDropModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
@@ -59,6 +62,7 @@ export class DashboardComponent implements OnInit {
               private readonly projectService: ProjectService,
               private readonly userService: UserService,
               private readonly authService: AuthService,
+              private readonly toaster: ToastrService,
               private readonly router: Router) {
   }
 
@@ -69,7 +73,13 @@ export class DashboardComponent implements OnInit {
   finishedTasks: Task[] = [];
   pendingTasks: Task[] = [];
 
+  todoTasks:Task[] = [];
+  inProgressTasks:Task[] = [];
+  doneTasks:Task[] = [];
+
   pageable: Pageable={ page:0, size: 10}
+  kanbanPageable: Pageable={ page:0, size: 1000}
+
   totalPages: number = 0;
 
   menuItems = [
@@ -90,6 +100,9 @@ export class DashboardComponent implements OnInit {
     this.getAllProjects()
     this.getFinishedTasks(user.id)
     this.getPendingTasks(user.id)
+    this.getTodoTasks(user.id)
+    this.getInProgressTasks(user.id)
+    this.getDoneTasks(user.id)
   }
 
   onMenuItemClick(item: any): void {
@@ -297,5 +310,61 @@ export class DashboardComponent implements OnInit {
     }, error => {
       Swal.fire('Error', error.error.message, 'error');
     })
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
+
+    const movedTask:Task = event.container.data[event.currentIndex] as Task;
+    movedTask.status = this.getStatusFromContainerId(event.container.id) as TaskStatus;
+
+    this.taskService.updateTask(movedTask.id, movedTask).subscribe(res => {
+      this.toaster.success(res.message, 'success');
+    }, err => {
+      let message = err.error.message;
+      this.toaster.error(message);
+    })
+  }
+
+  private getTodoTasks(userId: number) {
+    this.taskService.searchTask(userId, '', TaskStatus.New,'', this.kanbanPageable).subscribe(res => {
+      let pageableTasks = res.data as PageableTasks;
+      this.todoTasks = pageableTasks.tasks;
+    });
+  }
+
+  private getInProgressTasks(userId: number) {
+    this.taskService.searchTask(userId, '', TaskStatus.InProgress,'', this.kanbanPageable).subscribe(res => {
+      let pageableTasks = res.data as PageableTasks;
+      this.inProgressTasks = pageableTasks.tasks;
+    });
+  }
+
+  private getDoneTasks(userId: number) {
+    this.taskService.searchTask(userId, '', TaskStatus.Closed,'', this.kanbanPageable).subscribe(res => {
+      let pageableTasks = res.data as PageableTasks;
+      this.doneTasks = pageableTasks.tasks;
+    });
+  }
+
+  private getStatusFromContainerId(id: string) {
+    if (id.includes('0')) {
+      return TaskStatus.New;
+    } else if (id.includes('1')) {
+      return TaskStatus.InProgress;
+    } else if (id.includes('2')) {
+      return TaskStatus.Closed;
+    } else {
+      throw new Error(`Unknown container ID: ${id}`);
+    }
   }
 }

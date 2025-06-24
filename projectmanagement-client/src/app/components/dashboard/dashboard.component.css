@@ -198,3 +198,66 @@
 .task-due-date {
   color: #888;
 }
+
+.kanban-board {
+  display: flex;
+  gap: 24px;
+  margin-top: 30px;
+  padding: 10px 0;
+}
+
+.kanban-column {
+  flex: 1;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 16px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.kanban-header {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.todo .kanban-header {
+  background-color: #2196f3;
+}
+
+.inprogress .kanban-header {
+  background-color: #ff9800;
+}
+
+.done .kanban-header {
+  background-color: #4caf50;
+}
+
+.kanban-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+  cursor: move;
+}
+
+.kanban-card:hover {
+  transform: translateY(-2px);
+}
+
+.kanban-icon {
+  color: #777;
+}
+

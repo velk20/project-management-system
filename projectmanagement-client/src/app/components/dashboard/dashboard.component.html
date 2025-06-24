@@ -64,8 +64,54 @@
                 </div>
               </mat-card-content>
             </mat-card>
-          </div>
 
+            <div class="kanban-board">
+              <div
+                class="kanban-column todo"
+                cdkDropList
+                [cdkDropListData]="todoTasks"
+                [cdkDropListConnectedTo]="[inProgressList, doneList]"
+                (cdkDropListDropped)="drop($event)"
+                #todoList="cdkDropList"
+              >
+                <div class="kanban-header">To Do</div>
+                <div class="kanban-card" *ngFor="let task of todoTasks" cdkDrag>
+                  <mat-icon class="kanban-icon">assignment</mat-icon>
+                  <span>{{ task.title }}</span>
+                </div>
+              </div>
+
+              <div
+                class="kanban-column inprogress"
+                cdkDropList
+                [cdkDropListData]="inProgressTasks"
+                [cdkDropListConnectedTo]="[todoList, doneList]"
+                (cdkDropListDropped)="drop($event)"
+                #inProgressList="cdkDropList"
+              >
+                <div class="kanban-header">In Progress</div>
+                <div class="kanban-card" *ngFor="let task of inProgressTasks" cdkDrag>
+                  <mat-icon class="kanban-icon">autorenew</mat-icon>
+                  <span>{{ task.title }}</span>
+                </div>
+              </div>
+
+              <div
+                class="kanban-column done"
+                cdkDropList
+                [cdkDropListData]="doneTasks"
+                [cdkDropListConnectedTo]="[todoList, inProgressList]"
+                (cdkDropListDropped)="drop($event)"
+                #doneList="cdkDropList"
+              >
+                <div class="kanban-header">Done</div>
+                <div class="kanban-card" *ngFor="let task of doneTasks" cdkDrag>
+                  <mat-icon class="kanban-icon">check_circle</mat-icon>
+                  <span>{{ task.title }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <!-- Projects Content -->
           <div *ngSwitchCase="'Projects'" class="projects-section">
             <button type="button" class="btn btn-success d-flex align-items-center gap-2 mb-2" (click)="onCreateProject()">
