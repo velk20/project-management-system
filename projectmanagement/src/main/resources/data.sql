@@ -4,16 +4,16 @@ values ('1','ADMIN', 'Admin Permissions'),
 
 INSERT INTO users (id, email, first_name, active, last_name, password, username, created_at, last_modified, user_role_id)
 VALUES
-    ('1', 'admin@admin.com', 'Admin', 1, 'Adminov', '$2a$10$uLYimymH.0qx1cFGMLdqau8FGkAv3zxiRYGp/skhrqHLCPhdgN37G', 'admin',  '2023-08-25T15:14:40.733400800', '2023-08-25T15:14:40.733400800', '1'),
-    ('2', 'user@user.com', 'User', 1, 'Userov', '$2a$10$QnuZfkRUcaMzXbw0Rs4cA.nL.7iRS8Mv2fN1Su4g0nqOeg.nVukEW', 'user', '2023-08-25T15:14:40.733400800', '2023-08-25T15:14:40.733400800', '2'),
-    ('3', 'alice.smith@example.com', 'Alice', 1, 'Smith', '$2a$10$abc123abc123abc123abcOeHd3TzYYWkMntJKjtrAI5QXZC7gVbK', 'alices', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
-    ('4', 'bob.johnson@example.com', 'Bob', 1, 'Johnson', '$2a$10$def456def456def456defJQjkr4Y3OZx98gh2MjduieoL0RvzUu', 'bobj', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
-    ('5', 'carol.williams@example.com', 'Carol', 1, 'Williams', '$2a$10$ghi789ghi789ghi789ghiGHJKlkj4uQwe9YhnLpknJHG8uLNk', 'carolw', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 1),
-    ('6', 'david.brown@example.com', 'David', 1, 'Brown', '$2a$10$jkl012jkl012jkl012jklIUYTRdsaPlkjg876GhtrQweklNM7p', 'davidb', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
-    ('7', 'eva.jones@example.com', 'Eva', 1, 'Jones', '$2a$10$mno345mno345mno345mnoTREWQasdFlkjH7ytgbVcxzWqpoIUY', 'evaj', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
-    ('8', 'frank.miller@example.com', 'Frank', 1, 'Miller', '$2a$10$pqr678pqr678pqr678pqrZXCVMNBasdf1234lkjhgfdqwerty', 'frankm', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 1),
-    ('9', 'grace.davis@example.com', 'Grace', 1, 'Davis', '$2a$10$stu901stu901stu901stuLKJHGFDsaqw1234mnbvcztyuiop', 'graced', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
-    ('10', 'henry.wilson@example.com', 'Henry', 1, 'Wilson', '$2a$10$vwx234vwx234vwx234vwxQAZXSWEDCFR12345TGBNM098765', 'henryw', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2);
+    ('1', 'admin32132123@gmail.com', 'Admin', 1, 'Adminov', '$2a$10$uLYimymH.0qx1cFGMLdqau8FGkAv3zxiRYGp/skhrqHLCPhdgN37G', 'admin',  '2023-08-25T15:14:40.733400800', '2023-08-25T15:14:40.733400800', '1'),
+    ('2', 'user321321@gmail.com', 'User', 1, 'Userov', '$2a$10$QnuZfkRUcaMzXbw0Rs4cA.nL.7iRS8Mv2fN1Su4g0nqOeg.nVukEW', 'user', '2023-08-25T15:14:40.733400800', '2023-08-25T15:14:40.733400800', '2'),
+    ('3', 'alice.smith112@gmail.com', 'Alice', 1, 'Smith', '$2a$10$abc123abc123abc123abcOeHd3TzYYWkMntJKjtrAI5QXZC7gVbK', 'alices', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
+    ('4', 'bob.johnson123@gmail.com', 'Bob', 1, 'Johnson', '$2a$10$def456def456def456defJQjkr4Y3OZx98gh2MjduieoL0RvzUu', 'bobj', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
+    ('5', 'carol.williams321@gmail.com', 'Carol', 1, 'Williams', '$2a$10$ghi789ghi789ghi789ghiGHJKlkj4uQwe9YhnLpknJHG8uLNk', 'carolw', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 1),
+    ('6', 'david.brown321312@gmail.com', 'David', 1, 'Brown', '$2a$10$jkl012jkl012jkl012jklIUYTRdsaPlkjg876GhtrQweklNM7p', 'davidb', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
+    ('7', 'eva.jones321321@gmail.com', 'Eva', 1, 'Jones', '$2a$10$mno345mno345mno345mnoTREWQasdFlkjH7ytgbVcxzWqpoIUY', 'evaj', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
+    ('8', 'frank.miller321@gmail.com', 'Frank', 1, 'Miller', '$2a$10$pqr678pqr678pqr678pqrZXCVMNBasdf1234lkjhgfdqwerty', 'frankm', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 1),
+    ('9', 'grace.davis123@gmail.com', 'Grace', 1, 'Davis', '$2a$10$stu901stu901stu901stuLKJHGFDsaqw1234mnbvcztyuiop', 'graced', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2),
+    ('10', 'henry.wilson321@gmail.com', 'Henry', 1, 'Wilson', '$2a$10$vwx234vwx234vwx234vwxQAZXSWEDCFR12345TGBNM098765', 'henryw', '2023-08-25 15:14:40.733', '2023-08-25 15:14:40.733', 2);
 
 
 -- Inserting into projects
@@ -53,117 +53,117 @@ INSERT INTO project_users (project_id, user_id) VALUES (5, 8);
 INSERT INTO project_users (project_id, user_id) VALUES (5, 10);
 
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (1, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 1', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (1, '2025-01-01 00:00:00', 'Description 1', 'Rejected', 'Refactor user interface', 'Feature', '2025-01-02 00:00:00', 8, 4, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (2, '2025-01-01 00:00:00', 'Description 2', 'Resolved', 'Title 2', 'Bug', '2025-01-02 00:00:00', 3, 3, 3);
+VALUES (2, '2025-01-01 00:00:00', 'Description 2', 'In_Progress', 'Fix reporting module', 'Story', '2025-01-02 00:00:00', 5, 2, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (3, '2025-01-01 00:00:00', 'Description 3', 'New', 'Title 3', 'Feature', '2025-01-02 00:00:00', 4, 4, 4);
+VALUES (3, '2025-01-01 00:00:00', 'Description 3', 'New', 'Deploy project settings', 'Feature', '2025-01-02 00:00:00', 4, 5, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (4, '2025-01-01 00:00:00', 'Description 4', 'In_Progress', 'Title 4', 'Bug', '2025-01-02 00:00:00', 5, 5, 5);
+VALUES (4, '2025-01-01 00:00:00', 'Description 4', 'New', 'Create task assignment', 'Epic', '2025-01-02 00:00:00', 4, 6, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (5, '2025-01-01 00:00:00', 'Description 5', 'Resolved', 'Title 5', 'Story', '2025-01-02 00:00:00', 6, 6, 1);
+VALUES (5, '2025-01-01 00:00:00', 'Description 5', 'New', 'Design email system', 'Bug', '2025-01-02 00:00:00', 8, 2, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (6, '2025-01-01 00:00:00', 'Description 6', 'New', 'Title 6', 'Feature', '2025-01-02 00:00:00', 7, 7, 2);
+VALUES (6, '2025-01-01 00:00:00', 'Description 6', 'Closed', 'Optimize access control', 'Epic', '2025-01-02 00:00:00', 3, 7, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (7, '2025-01-01 00:00:00', 'Description 7', 'In_Progress', 'Title 7', 'Bug', '2025-01-02 00:00:00', 8, 8, 3);
+VALUES (7, '2025-01-01 00:00:00', 'Description 7', 'In_Progress', 'Create notification service', 'Story', '2025-01-02 00:00:00', 3, 8, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (8, '2025-01-01 00:00:00', 'Description 8', 'Resolved', 'Title 8', 'Story', '2025-01-02 00:00:00', 9, 9, 4);
+VALUES (8, '2025-01-01 00:00:00', 'Description 8', 'In_Progress', 'Validate access control', 'Bug', '2025-01-02 00:00:00', 10, 5, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (9, '2025-01-01 00:00:00', 'Description 9', 'New', 'Title 9', 'Feature', '2025-01-02 00:00:00', 10, 10, 5);
+VALUES (9, '2025-01-01 00:00:00', 'Description 9', 'New', 'Remove user interface', 'Epic', '2025-01-02 00:00:00', 8, 6, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (10, '2025-01-01 00:00:00', 'Description 10', 'In_Progress', 'Title 10', 'Bug', '2025-01-02 00:00:00', 1, 1, 1);
+VALUES (10, '2025-01-01 00:00:00', 'Description 10', 'Rejected', 'Improve project settings', 'Story', '2025-01-02 00:00:00', 4, 6, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (11, '2025-01-01 00:00:00', 'Description 11', 'Resolved', 'Title 11', 'Story', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (11, '2025-01-01 00:00:00', 'Description 11', 'Closed', 'Fix logging', 'Bug', '2025-01-02 00:00:00', 5, 2, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (12, '2025-01-01 00:00:00', 'Description 12', 'New', 'Title 12', 'Feature', '2025-01-02 00:00:00', 3, 3, 3);
+VALUES (12, '2025-01-01 00:00:00', 'Description 12', 'In_Progress', 'Update task assignment', 'Story', '2025-01-02 00:00:00', 6, 9, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (13, '2025-01-01 00:00:00', 'Description 13', 'In_Progress', 'Title 13', 'Bug', '2025-01-02 00:00:00', 4, 4, 4);
+VALUES (13, '2025-01-01 00:00:00', 'Description 13', 'In_Progress', 'Implement logging', 'Epic', '2025-01-02 00:00:00', 9, 6, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (14, '2025-01-01 00:00:00', 'Description 14', 'Resolved', 'Title 14', 'Story', '2025-01-02 00:00:00', 5, 5, 5);
+VALUES (14, '2025-01-01 00:00:00', 'Description 14', 'Rejected', 'Design API endpoint', 'Story', '2025-01-02 00:00:00', 6, 8, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (15, '2025-01-01 00:00:00', 'Description 15', 'New', 'Title 15', 'Feature', '2025-01-02 00:00:00', 6, 6, 1);
+VALUES (15, '2025-01-01 00:00:00', 'Description 15', 'New', 'Improve API endpoint', 'Bug', '2025-01-02 00:00:00', 3, 6, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (16, '2025-01-01 00:00:00', 'Description 16', 'In_Progress', 'Title 16', 'Bug', '2025-01-02 00:00:00', 7, 7, 2);
+VALUES (16, '2025-01-01 00:00:00', 'Description 16', 'Closed', 'Validate project settings', 'Feature', '2025-01-02 00:00:00', 5, 2, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (17, '2025-01-01 00:00:00', 'Description 17', 'Resolved', 'Title 17', 'Epic', '2025-01-02 00:00:00', 8, 8, 3);
+VALUES (17, '2025-01-01 00:00:00', 'Description 17', 'Rejected', 'Design dashboard', 'Bug', '2025-01-02 00:00:00', 6, 6, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (18, '2025-01-01 00:00:00', 'Description 18', 'New', 'Title 18', 'Feature', '2025-01-02 00:00:00', 9, 9, 4);
+VALUES (18, '2025-01-01 00:00:00', 'Description 18', 'New', 'Optimize database schema', 'Story', '2025-01-02 00:00:00', 5, 2, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (19, '2025-01-01 00:00:00', 'Description 19', 'In_Progress', 'Title 19', 'Bug', '2025-01-02 00:00:00', 10, 10, 5);
+VALUES (19, '2025-01-01 00:00:00', 'Description 19', 'Closed', 'Deploy task assignment', 'Feature', '2025-01-02 00:00:00', 2, 8, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (20, '2025-01-01 00:00:00', 'Description 20', 'Resolved', 'Title 20', 'Epic', '2025-01-02 00:00:00', 1, 1, 1);
+VALUES (20, '2025-01-01 00:00:00', 'Description 20', 'New', 'Improve task assignment', 'Epic', '2025-01-02 00:00:00', 5, 2, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (21, '2025-01-01 00:00:00', 'Description 21', 'New', 'Title 21', 'Feature', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (21, '2025-01-01 00:00:00', 'Description 21', 'Closed', 'Implement reporting module', 'Epic', '2025-01-02 00:00:00', 6, 5, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (22, '2025-01-01 00:00:00', 'Description 22', 'In_Progress', 'Title 22', 'Bug', '2025-01-02 00:00:00', 3, 3, 3);
+VALUES (22, '2025-01-01 00:00:00', 'Description 22', 'Rejected', 'Analyze authentication', 'Story', '2025-01-02 00:00:00', 7, 1, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (23, '2025-01-01 00:00:00', 'Description 23', 'Resolved', 'Title 23', 'Epic', '2025-01-02 00:00:00', 4, 4, 4);
+VALUES (23, '2025-01-01 00:00:00', 'Description 23', 'In_Progress', 'Optimize API endpoint', 'Feature', '2025-01-02 00:00:00', 7, 8, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (24, '2025-01-01 00:00:00', 'Description 24', 'New', 'Title 24', 'Feature', '2025-01-02 00:00:00', 5, 5, 5);
+VALUES (24, '2025-01-01 00:00:00', 'Description 24', 'New', 'Improve reporting module', 'Story', '2025-01-02 00:00:00', 8, 9, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (25, '2025-01-01 00:00:00', 'Description 25', 'In_Progress', 'Title 25', 'Bug', '2025-01-02 00:00:00', 6, 6, 1);
+VALUES (25, '2025-01-01 00:00:00', 'Description 25', 'In_Progress', 'Refactor reporting module', 'Epic', '2025-01-02 00:00:00', 1, 7, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (26, '2025-01-01 00:00:00', 'Description 26', 'Resolved', 'Title 26', 'Epic', '2025-01-02 00:00:00', 7, 7, 2);
+VALUES (26, '2025-01-01 00:00:00', 'Description 26', 'Rejected', 'Refactor project settings', 'Feature', '2025-01-02 00:00:00', 4, 6, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (27, '2025-01-01 00:00:00', 'Description 27', 'New', 'Title 27', 'Feature', '2025-01-02 00:00:00', 8, 8, 3);
+VALUES (27, '2025-01-01 00:00:00', 'Description 27', 'In_Progress', 'Analyze reporting module', 'Story', '2025-01-02 00:00:00', 6, 4, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (28, '2025-01-01 00:00:00', 'Description 28', 'In_Progress', 'Title 28', 'Bug', '2025-01-02 00:00:00', 9, 9, 4);
+VALUES (28, '2025-01-01 00:00:00', 'Description 28', 'In_Progress', 'Refactor database schema', 'Feature', '2025-01-02 00:00:00', 7, 4, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (29, '2025-01-01 00:00:00', 'Description 29', 'Resolved', 'Title 29', 'Epic', '2025-01-02 00:00:00', 10, 10, 5);
+VALUES (29, '2025-01-01 00:00:00', 'Description 29', 'Rejected', 'Validate search function', 'Story', '2025-01-02 00:00:00', 8, 5, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (30, '2025-01-01 00:00:00', 'Description 30', 'New', 'Title 30', 'Feature', '2025-01-02 00:00:00', 1, 1, 1);
+VALUES (30, '2025-01-01 00:00:00', 'Description 30', 'In_Progress', 'Fix database schema', 'Bug', '2025-01-02 00:00:00', 2, 10, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (31, '2025-01-01 00:00:00', 'Description 31', 'In_Progress', 'Title 31', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (31, '2025-01-01 00:00:00', 'Description 31', 'New', 'Analyze API endpoint', 'Epic', '2025-01-02 00:00:00', 7, 2, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (32, '2025-01-01 00:00:00', 'Description 32', 'Resolved', 'Title 32', 'Epic', '2025-01-02 00:00:00', 3, 3, 3);
+VALUES (32, '2025-01-01 00:00:00', 'Description 32', 'Closed', 'Remove email system', 'Epic', '2025-01-02 00:00:00', 2, 8, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (33, '2025-01-01 00:00:00', 'Description 33', 'New', 'Title 33', 'Feature', '2025-01-02 00:00:00', 4, 4, 4);
+VALUES (33, '2025-01-01 00:00:00', 'Description 33', 'New', 'Improve logging', 'Feature', '2025-01-02 00:00:00', 6, 4, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (34, '2025-01-01 00:00:00', 'Description 34', 'In_Progress', 'Title 34', 'Bug', '2025-01-02 00:00:00', 5, 5, 5);
+VALUES (34, '2025-01-01 00:00:00', 'Description 34', 'In_Progress', 'Create logging', 'Feature', '2025-01-02 00:00:00', 6, 6, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (35, '2025-01-01 00:00:00', 'Description 35', 'Resolved', 'Title 35', 'Epic', '2025-01-02 00:00:00', 6, 6, 1);
+VALUES (35, '2025-01-01 00:00:00', 'Description 35', 'Closed', 'Validate dashboard', 'Epic', '2025-01-02 00:00:00', 4, 6, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (36, '2025-01-01 00:00:00', 'Description 36', 'New', 'Title 36', 'Feature', '2025-01-02 00:00:00', 7, 7, 2);
+VALUES (36, '2025-01-01 00:00:00', 'Description 36', 'Closed', 'Design access control', 'Story', '2025-01-02 00:00:00', 3, 3, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (37, '2025-01-01 00:00:00', 'Description 37', 'In_Progress', 'Title 37', 'Bug', '2025-01-02 00:00:00', 8, 8, 3);
+VALUES (37, '2025-01-01 00:00:00', 'Description 37', 'New', 'Design reporting module', 'Bug', '2025-01-02 00:00:00', 1, 3, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (38, '2025-01-01 00:00:00', 'Description 38', 'Resolved', 'Title 38', 'Epic', '2025-01-02 00:00:00', 9, 9, 4);
+VALUES (38, '2025-01-01 00:00:00', 'Description 38', 'Closed', 'Design authentication', 'Bug', '2025-01-02 00:00:00', 6, 6, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (39, '2025-01-01 00:00:00', 'Description 39', 'New', 'Title 39', 'Feature', '2025-01-02 00:00:00', 10, 10, 5);
+VALUES (39, '2025-01-01 00:00:00', 'Description 39', 'Closed', 'Update reporting module', 'Story', '2025-01-02 00:00:00', 3, 5, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (40, '2025-01-01 00:00:00', 'Description 40', 'In_Progress', 'Title 40', 'Bug', '2025-01-02 00:00:00', 1, 1, 1);
+VALUES (40, '2025-01-01 00:00:00', 'Description 40', 'Rejected', 'Create dashboard', 'Story', '2025-01-02 00:00:00', 4, 1, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (41, '2025-01-01 00:00:00', 'Description 41', 'Resolved', 'Title 41', 'Epic', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (41, '2025-01-01 00:00:00', 'Description 41', 'New', 'Optimize email system', 'Feature', '2025-01-02 00:00:00', 9, 7, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (42, '2025-01-01 00:00:00', 'Description 42', 'New', 'Title 42', 'Feature', '2025-01-02 00:00:00', 3, 3, 3);
+VALUES (42, '2025-01-01 00:00:00', 'Description 42', 'Rejected', 'Analyze project settings', 'Epic', '2025-01-02 00:00:00', 5, 10, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (43, '2025-01-01 00:00:00', 'Description 43', 'In_Progress', 'Title 43', 'Bug', '2025-01-02 00:00:00', 4, 4, 4);
+VALUES (43, '2025-01-01 00:00:00', 'Description 43', 'In_Progress', 'Design search function', 'Story', '2025-01-02 00:00:00', 8, 4, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (44, '2025-01-01 00:00:00', 'Description 44', 'Resolved', 'Title 44', 'Epic', '2025-01-02 00:00:00', 5, 5, 5);
+VALUES (44, '2025-01-01 00:00:00', 'Description 44', 'In_Progress', 'Remove database schema', 'Bug', '2025-01-02 00:00:00', 4, 6, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (45, '2025-01-01 00:00:00', 'Description 45', 'New', 'Title 45', 'Feature', '2025-01-02 00:00:00', 6, 6, 1);
+VALUES (45, '2025-01-01 00:00:00', 'Description 45', 'In_Progress', 'Deploy authentication', 'Epic', '2025-01-02 00:00:00', 8, 6, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (46, '2025-01-01 00:00:00', 'Description 46', 'In_Progress', 'Title 46', 'Bug', '2025-01-02 00:00:00', 7, 7, 2);
+VALUES (46, '2025-01-01 00:00:00', 'Description 46', 'In_Progress', 'Optimize task assignment', 'Story', '2025-01-02 00:00:00', 4, 6, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (47, '2025-01-01 00:00:00', 'Description 47', 'Resolved', 'Title 47', 'Epic', '2025-01-02 00:00:00', 8, 8, 3);
+VALUES (47, '2025-01-01 00:00:00', 'Description 47', 'Closed', 'Remove access control', 'Feature', '2025-01-02 00:00:00', 1, 8, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (48, '2025-01-01 00:00:00', 'Description 48', 'New', 'Title 48', 'Feature', '2025-01-02 00:00:00', 9, 9, 4);
+VALUES (48, '2025-01-01 00:00:00', 'Description 48', 'Rejected', 'Refactor search function', 'Feature', '2025-01-02 00:00:00', 1, 10, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (49, '2025-01-01 00:00:00', 'Description 49', 'In_Progress', 'Title 49', 'Bug', '2025-01-02 00:00:00', 10, 10, 5);
+VALUES (49, '2025-01-01 00:00:00', 'Description 49', 'Closed', 'Design database schema', 'Feature', '2025-01-02 00:00:00', 1, 9, 4);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (50, '2025-01-01 00:00:00', 'Description 50', 'Resolved', 'Title 50', 'Epic', '2025-01-02 00:00:00', 1, 1, 1);
+VALUES (50, '2025-01-01 00:00:00', 'Description 50', 'In_Progress', 'Improve notification service', 'Epic', '2025-01-02 00:00:00', 2, 2, 1);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (51, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 51', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (51, '2025-01-01 00:00:00', 'Description 51', 'Closed', 'Remove reporting module', 'Epic', '2025-01-02 00:00:00', 9, 8, 2);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (52, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 52', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (52, '2025-01-01 00:00:00', 'Description 52', 'In_Progress', 'Implement notification service', 'Feature', '2025-01-02 00:00:00', 9, 1, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (53, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 53', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (53, '2025-01-01 00:00:00', 'Description 53', 'New', 'Refactor dashboard', 'Bug', '2025-01-02 00:00:00', 6, 8, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (54, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 54', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (54, '2025-01-01 00:00:00', 'Description 54', 'In_Progress', 'Remove logging', 'Feature', '2025-01-02 00:00:00', 4, 5, 3);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (55, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 55', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (55, '2025-01-01 00:00:00', 'Description 55', 'New', 'Update email system', 'Story', '2025-01-02 00:00:00', 2, 6, 5);
 INSERT INTO tasks (id, created_at, description, status, title, type, updated_at, assigned_to, user_id, project_id)
-VALUES (56, '2025-01-01 00:00:00', 'Description 1', 'In_Progress', 'Title 56', 'Bug', '2025-01-02 00:00:00', 2, 2, 2);
+VALUES (56, '2025-01-01 00:00:00', 'Description 56', 'Closed', 'Remove API endpoint', 'Epic', '2025-01-02 00:00:00', 8, 9, 4);
 
 -- Inserting into tasks_comments
 INSERT INTO tasks_comments (id, content, created_at, updated_at, author_id, task_id)
