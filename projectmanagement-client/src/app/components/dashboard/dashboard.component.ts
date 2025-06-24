@@ -357,14 +357,17 @@ export class DashboardComponent implements OnInit {
   }
 
   private getStatusFromContainerId(id: string) {
-    if (id.includes('0')) {
-      return TaskStatus.New;
-    } else if (id.includes('1')) {
-      return TaskStatus.InProgress;
-    } else if (id.includes('2')) {
-      return TaskStatus.Closed;
-    } else {
-      throw new Error(`Unknown container ID: ${id}`);
+    switch (id) {
+      case 'todoList':
+        return TaskStatus.New;
+      case 'inProgressList':
+        return TaskStatus.InProgress;
+      case 'doneList':
+        return TaskStatus.Closed;
+      default:
+        let error = new Error(`Unknown container ID: ${id}`);
+        console.log(error)
+        throw error;
     }
   }
 }
