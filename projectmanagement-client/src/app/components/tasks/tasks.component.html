@@ -11,6 +11,6 @@
   </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let task of tasks" app-task-list-item [task]="task"></tr>
+    <tr *ngFor="let task of tasks" app-task-list-item [task]="task" routerLink="/task/{{task.id}}"></tr>
   </tbody>
 </table>

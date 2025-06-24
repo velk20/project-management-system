@@ -4,6 +4,7 @@ import {Task} from "../../models/task";
 import {TypeComponent} from "../type/type.component";
 import {StatusComponent} from "../status/status.component";
 import {TaskListItemComponent} from "../task-list-item/task-list-item.component";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-tasks',
@@ -13,7 +14,8 @@ import {TaskListItemComponent} from "../task-list-item/task-list-item.component"
     TypeComponent,
     StatusComponent,
     DatePipe,
-    TaskListItemComponent
+    TaskListItemComponent,
+    RouterLink
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
