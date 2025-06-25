@@ -365,9 +365,7 @@ export class DashboardComponent implements OnInit {
       case 'doneList':
         return TaskStatus.Closed;
       default:
-        let error = new Error(`Unknown container ID: ${id}`);
-        console.log(error)
-        throw error;
+        throw new Error(`Unknown container ID: ${id}`);
     }
   }
 }
