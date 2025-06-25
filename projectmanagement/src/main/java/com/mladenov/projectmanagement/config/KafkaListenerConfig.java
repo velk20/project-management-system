@@ -18,7 +18,9 @@ public class KafkaListenerConfig {
         String email = parts[0];
         String projectName = parts[1];
 
-        this.mailService.sendEmail(email, "Project Invitation", "You have been successfully added to project with name:" + projectName);
+        this.mailService.sendEmail(email,
+                "Project Invitation",
+                "You have been successfully added to project with name:" + projectName);
     }
 
     @KafkaListener(topics = "${kafka.topic.task.assignee}", groupId = "default-group")
@@ -27,6 +29,8 @@ public class KafkaListenerConfig {
         String email = parts[0];
         String taskTitle = parts[1];
 
-        this.mailService.sendEmail(email, "Task Assigned", "You have been added as assignee for task with title:" + taskTitle);
+        this.mailService.sendEmail(email,
+                "Task Assigned",
+                "You have been added as assignee for task with title:" + taskTitle);
     }
 }
