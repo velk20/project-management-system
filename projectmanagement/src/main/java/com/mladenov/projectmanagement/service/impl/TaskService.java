@@ -99,7 +99,7 @@ public class TaskService implements ITaskService {
             }
         }
 
-        if(taskDTO.getAssigneeId() != null) {
+        if(taskDTO.getAssigneeId() != null && !Objects.equals(taskEntity.getAssignedTo().getId(), taskDTO.getAssigneeId())) {
             UserEntity assignee = userService.getUserEntityById(taskDTO.getAssigneeId());
             taskEntity.setAssignedTo(assignee);
 
