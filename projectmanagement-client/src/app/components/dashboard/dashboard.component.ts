@@ -328,7 +328,7 @@ export class DashboardComponent implements OnInit {
     movedTask.status = this.getStatusFromContainerId(event.container.id) as TaskStatus;
 
     this.taskService.updateTask(movedTask.id, movedTask).subscribe(res => {
-      this.toaster.success(res.message, 'success');
+      this.toaster.success(res.message, 'Success');
     }, err => {
       let message = err.error.message;
       this.toaster.error(message);
